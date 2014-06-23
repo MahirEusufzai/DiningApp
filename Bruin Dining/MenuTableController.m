@@ -59,19 +59,19 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *simpleTableIdentifier = @"SimpleTableCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuCell"];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+        cell = (MenuCell*)[tableView dequeueReusableCellWithIdentifier:@"MenuCell"];
+       // cell = [[MenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
     }
     NSString *key = [self.hallPicker titleForSegmentAtIndex:self.hallPicker.selectedSegmentIndex];
     Station *s = [currentMenu getStation:indexPath.section ForHall:key];
-    
     MenuItem* food = [s.foodList objectAtIndex:indexPath.row];
-    cell.textLabel.text = food.name;
-    cell.textLabel.font = [UIFont systemFontOfSize:14];
+  
+    cell.foodLabel.text = food.name;
+    cell.foodLabel.font = [UIFont systemFontOfSize:14];
 
     return cell;
 }
@@ -87,11 +87,11 @@
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
 {
     
-    view.tintColor = [UIColor colorWithRed:41/255.0f green:128/255.0f blue:185/255.0f alpha:1];
-    
+    //view.tintColor = [UIColor colorWithRed:41/255.0f green:128/255.0f blue:185/255.0f alpha:1];
+    view.tintColor = [UIColor colorWithRed:216/255.0f green:216/255.0f blue:216/255.0f alpha:1];
     // if you have index/header text in your tableview change your index text color
     UITableViewHeaderFooterView *headerIndexText = (UITableViewHeaderFooterView *)view;
-    [headerIndexText.textLabel setTextColor:[UIColor whiteColor]];
+    [headerIndexText.textLabel setTextColor:[UIColor darkGrayColor]];
     
 }
 

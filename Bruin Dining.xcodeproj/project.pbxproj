@@ -31,6 +31,7 @@
 		C83E00AB18E916B500F3EE1B /* Meal.m in Sources */ = {isa = PBXBuildFile; fileRef = C83E00A618E916B500F3EE1B /* Meal.m */; };
 		C83E00AC18E916B500F3EE1B /* DiningHall.m in Sources */ = {isa = PBXBuildFile; fileRef = C83E00A818E916B500F3EE1B /* DiningHall.m */; };
 		C83E00AF18E9188E00F3EE1B /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C83E00AE18E9188E00F3EE1B /* libxml2.dylib */; };
+		C8463F091957E1830028E1DD /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8463F081957E1830028E1DD /* MenuCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,8 @@
 		C83E00A718E916B500F3EE1B /* DiningHall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiningHall.h; sourceTree = "<group>"; };
 		C83E00A818E916B500F3EE1B /* DiningHall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiningHall.m; sourceTree = "<group>"; };
 		C83E00AE18E9188E00F3EE1B /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		C8463F071957E1830028E1DD /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
+		C8463F081957E1830028E1DD /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +156,8 @@
 				C837D61F18EBFF2B003A86A8 /* MenuTableController.m */,
 				C837D62118ECE6EE003A86A8 /* MenuLoader.h */,
 				C837D62218ECE6EE003A86A8 /* MenuLoader.m */,
+				C8463F071957E1830028E1DD /* MenuCell.h */,
+				C8463F081957E1830028E1DD /* MenuCell.m */,
 				C83E007418E9160600F3EE1B /* Main.storyboard */,
 				C83E007A18E9160600F3EE1B /* Images.xcassets */,
 				C83E006918E9160500F3EE1B /* Supporting Files */,
@@ -322,6 +327,7 @@
 				C83E00A918E916B500F3EE1B /* MenuItem.m in Sources */,
 				C83E009D18E9167700F3EE1B /* TFHpple.m in Sources */,
 				C83E009F18E9167700F3EE1B /* XPathQuery.m in Sources */,
+				C8463F091957E1830028E1DD /* MenuCell.m in Sources */,
 				C837D62318ECE6EE003A86A8 /* MenuLoader.m in Sources */,
 				C83E00AA18E916B500F3EE1B /* Station.m in Sources */,
 				C83E00AB18E916B500F3EE1B /* Meal.m in Sources */,

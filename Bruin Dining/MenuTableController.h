@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "DiningHall.h"
 #import "MenuLoader.h"
+#import "MenuCell.h"
+
 @interface MenuTableController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 {
     
