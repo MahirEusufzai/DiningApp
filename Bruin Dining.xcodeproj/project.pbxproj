@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		846F8A35195BDFBB000401E8 /* DiningHoursViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F8A34195BDFBB000401E8 /* DiningHoursViewController.m */; };
 		C837D62018EBFF2B003A86A8 /* MenuTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = C837D61F18EBFF2B003A86A8 /* MenuTableController.m */; };
 		C837D62318ECE6EE003A86A8 /* MenuLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = C837D62218ECE6EE003A86A8 /* MenuLoader.m */; };
 		C83E006318E9160500F3EE1B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C83E006218E9160500F3EE1B /* Foundation.framework */; };
@@ -45,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		846F8A33195BDFBB000401E8 /* DiningHoursViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiningHoursViewController.h; sourceTree = "<group>"; };
+		846F8A34195BDFBB000401E8 /* DiningHoursViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiningHoursViewController.m; sourceTree = "<group>"; };
 		C837D61E18EBFF2B003A86A8 /* MenuTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableController.h; sourceTree = "<group>"; };
 		C837D61F18EBFF2B003A86A8 /* MenuTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableController.m; sourceTree = "<group>"; };
 		C837D62118ECE6EE003A86A8 /* MenuLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuLoader.h; sourceTree = "<group>"; };
@@ -158,6 +161,8 @@
 				C837D62218ECE6EE003A86A8 /* MenuLoader.m */,
 				C8463F071957E1830028E1DD /* MenuCell.h */,
 				C8463F081957E1830028E1DD /* MenuCell.m */,
+				846F8A33195BDFBB000401E8 /* DiningHoursViewController.h */,
+				846F8A34195BDFBB000401E8 /* DiningHoursViewController.m */,
 				C83E007418E9160600F3EE1B /* Main.storyboard */,
 				C83E007A18E9160600F3EE1B /* Images.xcassets */,
 				C83E006918E9160500F3EE1B /* Supporting Files */,
@@ -330,6 +335,7 @@
 				C8463F091957E1830028E1DD /* MenuCell.m in Sources */,
 				C837D62318ECE6EE003A86A8 /* MenuLoader.m in Sources */,
 				C83E00AA18E916B500F3EE1B /* Station.m in Sources */,
+				846F8A35195BDFBB000401E8 /* DiningHoursViewController.m in Sources */,
 				C83E00AB18E916B500F3EE1B /* Meal.m in Sources */,
 				C83E009E18E9167700F3EE1B /* TFHppleElement.m in Sources */,
 			);
