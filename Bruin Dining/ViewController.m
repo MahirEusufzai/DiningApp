@@ -30,8 +30,8 @@
         vc.currentMeal = @"lunch";
     if ([[segue identifier] isEqualToString:@"pushDinner"])
         vc.currentMeal = @"dinner";
-        
-}
+    
+  }
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

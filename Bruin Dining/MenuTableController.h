@@ -28,5 +28,4 @@
 @property (nonatomic, retain) NSString *currentMeal;
 - (void) switchSpecific;
 - (void) switchHall;
-
 @end

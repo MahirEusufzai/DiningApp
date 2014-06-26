@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface MenuCell : UITableViewCell
 
 @property (nonatomic, retain) IBOutlet UIButton *favButton;
 @property (nonatomic, retain) IBOutlet UILabel *foodLabel;
+
+- (IBAction)registerFavorite:(id)sender;
+
 @end
