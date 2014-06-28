@@ -16,6 +16,8 @@
     self = [super init];
     if (self) {
         self.name = n;
+        self.isVegetarian = FALSE;
+        self.link = nil;
     }
     return self;
 }

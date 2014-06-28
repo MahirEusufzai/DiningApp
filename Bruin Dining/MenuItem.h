@@ -11,7 +11,8 @@
 @interface MenuItem : NSObject
 
 @property (nonatomic, retain) NSString *name;
-//TO DO: URL
+@property (nonatomic, assign) BOOL isVegetarian;
+@property (nonatomic, retain) NSURL *link;
 
 - (id)initWithName:(NSString*)n andURL:(NSString*)url;
 @end

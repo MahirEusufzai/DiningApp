@@ -71,6 +71,9 @@
   
     cell.foodLabel.text = food.name;
     cell.foodLabel.font = [UIFont systemFontOfSize:14];
+   
+    if (food.isVegetarian)
+        cell.foodLabel.textColor = [UIColor greenColor];
 
     return cell;
 }

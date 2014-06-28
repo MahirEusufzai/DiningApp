@@ -42,6 +42,7 @@ static const NSString *SUMMARY = @"http://menu.ha.ucla.edu/foodpro/default.asp?d
             NSArray *listChildren = [listNode childrenWithTagName:@"li"];
             TFHppleElement *title = listChildren[0];
             Station *station = [[Station alloc] initWithName:title.text];
+          
             //iterate through each food
             for (TFHppleElement *listElement in listChildren) {
                 
