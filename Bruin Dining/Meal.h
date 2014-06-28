@@ -14,6 +14,8 @@
 
 @property (nonatomic, retain) NSMutableDictionary *hallList;
 @property (nonatomic, retain) NSString* name;
+@property (nonatomic, assign) BOOL isVegetarian;
+@property (nonatomic, retain) NSURL *link;
 
 - (id) initWithName:(NSString*)n;
 - (void) addHall:(DiningHall*)hall;
