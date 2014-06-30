@@ -10,7 +10,6 @@
 		846F8A35195BDFBB000401E8 /* DiningHoursViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F8A34195BDFBB000401E8 /* DiningHoursViewController.m */; };
 		C837D62018EBFF2B003A86A8 /* MenuTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = C837D61F18EBFF2B003A86A8 /* MenuTableController.m */; };
 		C837D62318ECE6EE003A86A8 /* MenuLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = C837D62218ECE6EE003A86A8 /* MenuLoader.m */; };
-		C83E006318E9160500F3EE1B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C83E006218E9160500F3EE1B /* Foundation.framework */; };
 		C83E006518E9160500F3EE1B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C83E006418E9160500F3EE1B /* CoreGraphics.framework */; };
 		C83E006718E9160500F3EE1B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C83E006618E9160500F3EE1B /* UIKit.framework */; };
 		C83E006D18E9160500F3EE1B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C83E006B18E9160500F3EE1B /* InfoPlist.strings */; };
@@ -43,6 +42,7 @@
 		C8463F19195A1CFD0028E1DD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8463F18195A1CFD0028E1DD /* Security.framework */; };
 		C8463F1B195A1D030028E1DD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8463F1A195A1D030028E1DD /* StoreKit.framework */; };
 		C8463F1D195A1D0E0028E1DD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8463F1C195A1D0E0028E1DD /* SystemConfiguration.framework */; };
+		C8C7BADC19613F2F005C862B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C83E006218E9160500F3EE1B /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8C7BADC19613F2F005C862B /* Foundation.framework in Frameworks */,
 				C8463F1D195A1D0E0028E1DD /* SystemConfiguration.framework in Frameworks */,
 				C8463F1B195A1D030028E1DD /* StoreKit.framework in Frameworks */,
 				C8463F19195A1CFD0028E1DD /* Security.framework in Frameworks */,
@@ -127,7 +128,6 @@
 				C8463F0D195A1CCA0028E1DD /* AudioToolbox.framework in Frameworks */,
 				C83E00AF18E9188E00F3EE1B /* libxml2.dylib in Frameworks */,
 				C83E006718E9160500F3EE1B /* UIKit.framework in Frameworks */,
-				C83E006318E9160500F3EE1B /* Foundation.framework in Frameworks */,
 				C8463F0B195A1C110028E1DD /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -444,7 +444,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zaki Eusufzai (T7MU273323)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zaki Eusufzai (T7MU273323)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -483,7 +484,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zaki Eusufzai (T7MU273323)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zaki Eusufzai (T7MU273323)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -504,6 +506,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zaki Eusufzai (T7MU273323)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/mahireusufzai/Desktop/xcode_projects/Bruin\\ Dining",
@@ -514,6 +517,7 @@
 				INFOPLIST_FILE = "Bruin Dining/Bruin Dining-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -523,6 +527,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zaki Eusufzai (T7MU273323)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/mahireusufzai/Desktop/xcode_projects/Bruin\\ Dining",
@@ -533,6 +538,7 @@
 				INFOPLIST_FILE = "Bruin Dining/Bruin Dining-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
