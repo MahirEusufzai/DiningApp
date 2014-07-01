@@ -28,13 +28,29 @@
 
 - (void)registerFavorite:(id)sender {
     
-   /*
-    */
+    PFInstallation *installation = [PFInstallation currentInstallation];
+    [installation addUniqueObject:self.foodLabel.text forKey:@"favorites"];
+    [installation saveInBackground];
+    
+    //test
+    // Create our Installation query
+    PFQuery *pushQuery = [PFInstallation query];
+    [pushQuery whereKey:@"favorites" equalTo:@"Fried Eggs"];
+    
+    // Send push notification to query
+    PFPush *push = [[PFPush alloc] init];
+    [push setQuery:pushQuery]; // Set our Installation query
+    [push setMessage:@"Covel is serving fried eggs"];
+    [push sendPushInBackground];
+    
+    /*
+     
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *parseID = [defaults stringForKey:@"parseID"];
-   // NSLog(@"id is %@", parseID);
+
     if (parseID) {
-        NSLog(@"seasoned veteran");
+        NSLog(@"returning user");
         //user has saved favorites before
 
         PFQuery *query = [PFQuery queryWithClassName:@"User"];
@@ -61,12 +77,9 @@
                  
              }];
 
-        
-        
-       // [user save];//InBackground];
-      
     }
-  
+  */
 
+    [self.favButton setImage:[UIImage imageNamed:@"star_full.png"] forState:UIControlStateNormal];
 }
 @end

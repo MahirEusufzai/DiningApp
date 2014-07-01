@@ -43,6 +43,8 @@
 		C8463F1B195A1D030028E1DD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8463F1A195A1D030028E1DD /* StoreKit.framework */; };
 		C8463F1D195A1D0E0028E1DD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8463F1C195A1D0E0028E1DD /* SystemConfiguration.framework */; };
 		C8C7BADC19613F2F005C862B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C83E006218E9160500F3EE1B /* Foundation.framework */; };
+		C8D1B08C1962ADB300A823AA /* star_full.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D1B08A1962ADB300A823AA /* star_full.png */; };
+		C8D1B08D1962ADB300A823AA /* star_none.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D1B08B1962ADB300A823AA /* star_none.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +110,8 @@
 		C8463F18195A1CFD0028E1DD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C8463F1A195A1D030028E1DD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		C8463F1C195A1D0E0028E1DD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		C8D1B08A1962ADB300A823AA /* star_full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_full.png; sourceTree = "<group>"; };
+		C8D1B08B1962ADB300A823AA /* star_none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_none.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +152,8 @@
 		C83E005618E9160400F3EE1B = {
 			isa = PBXGroup;
 			children = (
+				C8D1B08A1962ADB300A823AA /* star_full.png */,
+				C8D1B08B1962ADB300A823AA /* star_none.png */,
 				C83E006818E9160500F3EE1B /* Bruin Dining */,
 				C83E008718E9160600F3EE1B /* Bruin DiningTests */,
 				C83E006118E9160500F3EE1B /* Frameworks */,
@@ -343,6 +349,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8D1B08D1962ADB300A823AA /* star_none.png in Resources */,
+				C8D1B08C1962ADB300A823AA /* star_full.png in Resources */,
 				C83E007B18E9160600F3EE1B /* Images.xcassets in Resources */,
 				C83E006D18E9160500F3EE1B /* InfoPlist.strings in Resources */,
 				C83E007618E9160600F3EE1B /* Main.storyboard in Resources */,

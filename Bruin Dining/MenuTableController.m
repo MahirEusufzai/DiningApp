@@ -26,7 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.hallName.text = [self.hallPicker titleForSegmentAtIndex:self.hallPicker.selectedSegmentIndex];
     [self.hallPicker addTarget:self action:@selector(switchHall) forControlEvents:UIControlEventValueChanged];
     
     [self.specificPicker addTarget:self action:@selector(switchSpecific) forControlEvents:UIControlEventValueChanged];
@@ -89,16 +89,17 @@
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
 {
     
-    view.tintColor = [UIColor colorWithRed:41/255.0f green:128/255.0f blue:185/255.0f alpha:1];
+    view.tintColor = [UIColor colorWithRed:234/255.0f green:200/255.0f blue:105/255.0f alpha:1];
     // if you have index/header text in your tableview change your index text color
     UITableViewHeaderFooterView *headerIndexText = (UITableViewHeaderFooterView *)view;
-    [headerIndexText.textLabel setTextColor:[UIColor whiteColor]];
+    [headerIndexText.textLabel setTextColor:[UIColor blackColor]];
     
 }
 
 #pragma mark -- segmented control
 - (void)switchHall {
-
+   
+    self.hallName.text = [self.hallPicker titleForSegmentAtIndex:self.hallPicker.selectedSegmentIndex];
     [self.table reloadData];
 }
 

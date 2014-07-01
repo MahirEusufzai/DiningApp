@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Bruin Dining": {
+            "applicationId": "KP0Vo4VPPEcQrTyNRJVZeBWpXHYaW4pK8AzfptI5", 
+            "masterKey": "sDwLurgZBCAGfxOEDTaPhVKBvM53UnXZSQ2SBqjb"
+        }, 
+        "_default": {
+            "link": "Bruin Dining"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.18"
+    }
+}
