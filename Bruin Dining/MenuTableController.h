@@ -24,7 +24,7 @@
 @property (nonatomic, retain) IBOutlet UISegmentedControl* hallPicker;
 @property (nonatomic, retain) IBOutlet UISegmentedControl* specificPicker;
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *spinner;
-
+@property (nonatomic, retain) IBOutlet UILabel *hallName;
 @property (nonatomic, retain) NSString *currentMeal;
 - (void) switchSpecific;
 - (void) switchHall;
