@@ -48,9 +48,19 @@ static const NSString *SUMMARY = @"http://menu.ha.ucla.edu/foodpro/default.asp?d
                 
                 if (listElement != listChildren[0]){  //first element is title
                 
-                TFHppleElement *aNode = [listElement firstChildWithTagName:@"a"];
-                MenuItem *food = [[MenuItem alloc] initWithName:aNode.text andURL:nil];
-                [station addFood:food];
+                    TFHppleElement *aNode = [listElement firstChildWithTagName:@"a"];
+                    MenuItem *food = [[MenuItem alloc] initWithName:aNode.text andURL:nil];
+                    TFHppleElement *anotherNode = [listElement firstChildWithTagName:@"img"];
+                    
+                    //Add link property to food
+                    food.link = [aNode objectForKey:@"href"];
+                    //Detect vegan/vegetarian
+                    if ([[anotherNode objectForKey:@"alt"] isEqualToString:@"Vegan Menu Option"])
+                        food.isVegan = YES;
+                    if ([[anotherNode objectForKey:@"alt"] isEqualToString:@"Vegetarian Menu Option"])
+                        food.isVegetarian = YES;
+
+                    [station addFood:food];
                 }
             }
             DiningHall *curr = [m.hallList objectForKey:[hallNames objectAtIndex:count%4]];

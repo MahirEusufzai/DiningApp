@@ -11,8 +11,9 @@
 @interface DiningHoursViewController ()
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
-
-
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+@property (nonatomic) BOOL webViewDidFinishLoad;
+@property (nonatomic) BOOL loadFailed;
 
 @end
 
@@ -28,15 +29,47 @@
     return self;
 }
 
+
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+    
+    _webViewDidFinishLoad = NO;
+    _loadFailed = NO;
+    
+}
+
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    
+    _loadFailed = YES;
+}
+
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    
+    if (!_loadFailed)
+    {
+         _webViewDidFinishLoad = YES;
+        [self.spinner stopAnimating];
+    }
+    
+    
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [_webView setDelegate:self];
     // Do any additional setup after loading the view.
     //self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0,0,1024,768)];
+    [_spinner startAnimating];
     NSString *address = @"https://secure5.ha.ucla.edu/restauranthours/dining-hall-hours-by-day.cfm"; //@"http://m.dining.ucla.edu/restaurant-hours.cfm";
     NSURL *url = [NSURL URLWithString:address];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [_webView loadRequest:request];
+        
+    
+            
     
     
 }
