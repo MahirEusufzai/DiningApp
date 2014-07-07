@@ -12,6 +12,7 @@
 
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, assign) BOOL isVegetarian;
+@property (nonatomic, assign) BOOL isVegan; //added for correctness
 @property (nonatomic, retain) NSURL *link;
 
 - (id)initWithName:(NSString*)n andURL:(NSString*)url;

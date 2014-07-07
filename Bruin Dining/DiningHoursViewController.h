@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DiningHoursViewController : UIViewController
+@interface DiningHoursViewController : UIViewController <UIWebViewDelegate>
 
 @end
