@@ -14,7 +14,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
+        self.foodLabel.font = [UIFont fontWithName:@"Helvetica Neue Light" size:14];
     }
     return self;
 }

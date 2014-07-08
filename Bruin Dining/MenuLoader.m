@@ -8,10 +8,10 @@
 
 #import "MenuLoader.h"
 
-static const NSString *BREAKFAST_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?date=7%2F09%2F2014&meal=1&threshold=2";
-static const NSString *LUNCH_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?date=7%2F09%2F2014&meal=2&threshold=2";
-static const NSString *DINNER_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?date=7%2F09%2F2014&meal=3&threshold=2";
-static const NSString *SUMMARY = @"http://menu.ha.ucla.edu/foodpro/default.asp?date=7%2F09%2F2014";
+static const NSString *BREAKFAST_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=1&threshold=2";
+static const NSString *LUNCH_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=2&threshold=2";
+static const NSString *DINNER_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=3&threshold=2";
+static const NSString *SUMMARY = @"http://menu.ha.ucla.edu/foodpro/default.asp";
 
 @implementation MenuLoader
 

@@ -70,17 +70,15 @@
     MenuItem* food = [s.foodList objectAtIndex:indexPath.row];
   
     cell.foodLabel.text = food.name;
-    cell.foodLabel.font = [UIFont systemFontOfSize:14];
-   
-    if (food.isVegetarian)
-        cell.foodLabel.textColor = [UIColor greenColor];
+    if (food.isVegetarian || food.isVegan)
+        cell.foodLabel.textColor = [UIColor greenColor]; //possibly distinguish vegetarian and vegan later
 
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
-    return 40;
+    return 30;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -93,6 +91,8 @@
     // if you have index/header text in your tableview change your index text color
     UITableViewHeaderFooterView *headerIndexText = (UITableViewHeaderFooterView *)view;
     [headerIndexText.textLabel setTextColor:[UIColor blackColor]];
+    [headerIndexText.textLabel setFont: [UIFont fontWithName:@"Helvetica Neue Light" size:14]];
+
     
 }
 

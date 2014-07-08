@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		846F8A35195BDFBB000401E8 /* DiningHoursViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F8A34195BDFBB000401E8 /* DiningHoursViewController.m */; };
-		846F8A4A1964B234000401E8 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846F8A491964B234000401E8 /* Parse.framework */; };
 		C837D62018EBFF2B003A86A8 /* MenuTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = C837D61F18EBFF2B003A86A8 /* MenuTableController.m */; };
 		C837D62318ECE6EE003A86A8 /* MenuLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = C837D62218ECE6EE003A86A8 /* MenuLoader.m */; };
 		C83E006518E9160500F3EE1B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C83E006418E9160500F3EE1B /* CoreGraphics.framework */; };
@@ -45,6 +44,7 @@
 		C8C7BADC19613F2F005C862B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C83E006218E9160500F3EE1B /* Foundation.framework */; };
 		C8D1B08C1962ADB300A823AA /* star_full.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D1B08A1962ADB300A823AA /* star_full.png */; };
 		C8D1B08D1962ADB300A823AA /* star_none.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D1B08B1962ADB300A823AA /* star_none.png */; };
+		C8D1B08F196B447B00A823AA /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8D1B08E196B447B00A823AA /* Parse.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,7 +60,6 @@
 /* Begin PBXFileReference section */
 		846F8A33195BDFBB000401E8 /* DiningHoursViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiningHoursViewController.h; sourceTree = "<group>"; };
 		846F8A34195BDFBB000401E8 /* DiningHoursViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiningHoursViewController.m; sourceTree = "<group>"; };
-		846F8A491964B234000401E8 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../../../../Downloads/Parse.framework; sourceTree = "<group>"; };
 		C837D61E18EBFF2B003A86A8 /* MenuTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableController.h; sourceTree = "<group>"; };
 		C837D61F18EBFF2B003A86A8 /* MenuTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableController.m; sourceTree = "<group>"; };
 		C837D62118ECE6EE003A86A8 /* MenuLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuLoader.h; sourceTree = "<group>"; };
@@ -112,6 +111,7 @@
 		C8463F1C195A1D0E0028E1DD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C8D1B08A1962ADB300A823AA /* star_full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_full.png; sourceTree = "<group>"; };
 		C8D1B08B1962ADB300A823AA /* star_none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_none.png; sourceTree = "<group>"; };
+		C8D1B08E196B447B00A823AA /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,7 +129,7 @@
 				C8463F11195A1CDF0028E1DD /* CoreLocation.framework in Frameworks */,
 				C83E006518E9160500F3EE1B /* CoreGraphics.framework in Frameworks */,
 				C8463F0F195A1CD00028E1DD /* CFNetwork.framework in Frameworks */,
-				846F8A4A1964B234000401E8 /* Parse.framework in Frameworks */,
+				C8D1B08F196B447B00A823AA /* Parse.framework in Frameworks */,
 				C8463F0D195A1CCA0028E1DD /* AudioToolbox.framework in Frameworks */,
 				C83E00AF18E9188E00F3EE1B /* libxml2.dylib in Frameworks */,
 				C83E006718E9160500F3EE1B /* UIKit.framework in Frameworks */,
@@ -173,7 +173,7 @@
 		C83E006118E9160500F3EE1B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				846F8A491964B234000401E8 /* Parse.framework */,
+				C8D1B08E196B447B00A823AA /* Parse.framework */,
 				C8463F1C195A1D0E0028E1DD /* SystemConfiguration.framework */,
 				C8463F1A195A1D030028E1DD /* StoreKit.framework */,
 				C8463F18195A1CFD0028E1DD /* Security.framework */,
@@ -321,7 +321,7 @@
 				ORGANIZATIONNAME = "Mahir Eusufzai";
 				TargetAttributes = {
 					C83E005E18E9160400F3EE1B = {
-						DevelopmentTeam = X8C323275L;
+						DevelopmentTeam = Y5T38JMS29;
 					};
 					C83E007F18E9160600F3EE1B = {
 						TestTargetID = C83E005E18E9160400F3EE1B;
@@ -522,6 +522,7 @@
 					/Users/mahireusufzai/Desktop/xcode_projects/Bruin,
 					Dining,
 					/Users/Gu/Downloads,
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bruin Dining/Bruin Dining-Prefix.pch";
@@ -546,6 +547,7 @@
 					/Users/mahireusufzai/Desktop/xcode_projects/Bruin,
 					Dining,
 					/Users/Gu/Downloads,
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bruin Dining/Bruin Dining-Prefix.pch";
