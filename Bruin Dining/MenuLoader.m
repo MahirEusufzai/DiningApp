@@ -50,14 +50,16 @@ static const NSString *SUMMARY = @"http://menu.ha.ucla.edu/foodpro/default.asp";
                 
                     TFHppleElement *aNode = [listElement firstChildWithTagName:@"a"];
                     MenuItem *food = [[MenuItem alloc] initWithName:aNode.text andURL:nil];
-                    TFHppleElement *anotherNode = [listElement firstChildWithTagName:@"img"];
+                    TFHppleElement *imageNode = [listElement firstChildWithTagName:@"img"];
                     
                     //Add link property to food
-                    food.link = [aNode objectForKey:@"href"];
+                    NSString *linkAddress = [aNode objectForKey:@"href"];
+                    if (linkAddress)
+                        food.link = [NSURL URLWithString:linkAddress];
                     //Detect vegan/vegetarian
-                    if ([[anotherNode objectForKey:@"alt"] isEqualToString:@"Vegan Menu Option"])
+                    if ([[imageNode objectForKey:@"alt"] isEqualToString:@"Vegan Menu Option"])
                         food.isVegan = YES;
-                    if ([[anotherNode objectForKey:@"alt"] isEqualToString:@"Vegetarian Menu Option"])
+                    if ([[imageNode objectForKey:@"alt"] isEqualToString:@"Vegetarian Menu Option"])
                         food.isVegetarian = YES;
 
                     [station addFood:food];
