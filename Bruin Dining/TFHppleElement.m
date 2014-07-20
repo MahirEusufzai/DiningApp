@@ -81,7 +81,7 @@ static NSString * const TFHppleTextNodeName            = @"text";
 
 - (NSString *) content
 {
-  return [node objectForKey:TFHppleNodeContentKey];
+  return [[node objectForKey:TFHppleNodeContentKey] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
 

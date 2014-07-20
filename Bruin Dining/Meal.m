@@ -21,7 +21,7 @@
       
         //TO DO: Don't hard code dining hall names
         [self addHall:[[DiningHall alloc] initWithName:@"Covel"]];
-        [self addHall:[[DiningHall alloc] initWithName:@"De Neve"]];
+        [self addHall:[[DiningHall alloc] initWithName:@"Hedrick"]];
         [self addHall:[[DiningHall alloc] initWithName:@"B Plate"]];
         [self addHall:[[DiningHall alloc] initWithName:@"Feast"]];
     }

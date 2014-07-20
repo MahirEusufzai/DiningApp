@@ -14,7 +14,8 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.foodLabel.font = [UIFont fontWithName:@"Helvetica Neue Light" size:14];
+       
+         self.foodLabel.font = [UIFont fontWithName:@"Arial" size:12];
     }
     return self;
 }

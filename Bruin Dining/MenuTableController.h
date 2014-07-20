@@ -10,7 +10,7 @@
 #import "DiningHall.h"
 #import "MenuLoader.h"
 #import "MenuCell.h"
-
+#import "HMSegmentedControl.h"
 @interface MenuTableController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 {
     
@@ -23,8 +23,12 @@
 @property (nonatomic, retain) IBOutlet UITableView* table;
 @property (nonatomic, retain) IBOutlet UISegmentedControl* hallPicker;
 @property (nonatomic, retain) IBOutlet UISegmentedControl* specificPicker; //curently removed from storyboard
+@property (nonatomic, retain) IBOutlet HMSegmentedControl *hallSelector;
+
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *spinner;
 @property (nonatomic, retain) IBOutlet UILabel *hallName;
+@property (nonatomic, retain) IBOutlet UILabel *timeLabel;
+
 @property (nonatomic, retain) NSString *currentMeal;
 - (void) switchSpecific;
 - (void) switchHall;

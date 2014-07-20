@@ -25,5 +25,5 @@ typedef NS_ENUM(NSInteger, Specificity) {
 
 //specificity = summary vs full menu
 - (Meal*) loadDiningDataForMeal:(NSString*)meal Specificity:(Specificity)spec;
-
+- (void) loadHours;
 @end

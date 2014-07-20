@@ -15,9 +15,12 @@
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSURL *url;
 @property (nonatomic, retain) NSMutableDictionary *stationList;
-
+@property (nonatomic, retain) NSDate *openingTime;
+@property (nonatomic, retain) NSDate *closingTime;
+@property (nonatomic, retain) NSDate *nextOpeningTime;
 
 - (id) initWithName:(NSString*)n;
 - (void) addStation:(Station*)station;
-
+- (void) setHoursFromData:(NSArray*)data;
+- (BOOL) isOpen;
 @end

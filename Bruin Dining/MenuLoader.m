@@ -12,7 +12,7 @@ static const NSString *BREAKFAST_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/de
 static const NSString *LUNCH_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=2&threshold=2";
 static const NSString *DINNER_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=3&threshold=2";
 static const NSString *SUMMARY = @"http://menu.ha.ucla.edu/foodpro/default.asp";
-
+static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/dining-hall-hours-by-day.cfm";
 @implementation MenuLoader
 
 - (id)init
@@ -27,9 +27,15 @@ static const NSString *SUMMARY = @"http://menu.ha.ucla.edu/foodpro/default.asp";
 - (Meal *)loadDiningDataForMeal:(NSString *)meal Specificity:(Specificity)spec {
     
     Meal *m = [[Meal alloc] initWithName:meal];
+    //set hours
+    TFHpple *urlData = [self getNodeDataForURL:HOURS];
+    for (DiningHall *hall in [m.hallList allValues]) {
+        NSArray *data = [self getHourDataForHall:hall.name Meal:meal data:urlData];
+        [hall setHoursFromData:data];
+    }
     NSArray *tableCells = [self getTableEntriesForMeal:meal Type:spec];
     
-    NSArray *hallNames = [NSArray arrayWithObjects: @"Covel", @"De Neve", @"B Plate", @"Feast", nil];
+    NSArray *hallNames = [NSArray arrayWithObjects: @"Covel", @"Hedrick", @"B Plate", @"Feast", nil];
     
     int count = 0;
     
@@ -81,38 +87,171 @@ static const NSString *SUMMARY = @"http://menu.ha.ucla.edu/foodpro/default.asp";
     
     //no summary menu available for breakfast, so always so full menu
     if ([meal isEqualToString:@"breakfast"]){
-        url = [NSURL URLWithString:BREAKFAST_COMPLETE];
+        url = BREAKFAST_COMPLETE;
     }
     //summary available for lunch and dinner
     else if (spec == specificitySummary)
-        url = [NSURL URLWithString:SUMMARY];
+        url = SUMMARY;
     
     else if ([meal isEqualToString:@"lunch"])
-        url = [NSURL URLWithString:LUNCH_COMPLETE];
+        url = LUNCH_COMPLETE;
     
     else
-        url = [NSURL URLWithString:DINNER_COMPLETE];
+        url = DINNER_COMPLETE;
     
+    TFHpple *parser = [self getNodeDataForURL:url];
     
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-    
-    NSData *pageData = [NSData dataWithContentsOfURL:url];
-    TFHpple *parser = [TFHpple hppleWithHTMLData:pageData];
-    
+    NSString *TDString = @"//td[starts-with(@class, 'menugridcell')]";
+
     if ((![meal isEqualToString:@"breakfast"]) && spec == specificitySummary) {
         
         NSString *queryString = @"//table[starts-with(@class, 'menugridtable')]";
         NSArray *mealCells = [parser searchWithXPathQuery:queryString];
         
         if ([meal isEqualToString:@"lunch"])
-            return [mealCells[0] searchWithXPathQuery:@"//td[starts-with(@class, 'menugridcell')]"];
+            return [mealCells[0] searchWithXPathQuery:TDString];
         else
-            return [mealCells[1] searchWithXPathQuery:@"//td[starts-with(@class, 'menugridcell')]"];
+            return [mealCells[1] searchWithXPathQuery:TDString];
         
     }
-    return [parser searchWithXPathQuery:@"//td[starts-with(@class, 'menugridcell')]"];
+    return [parser searchWithXPathQuery:TDString];
     
 }
 
+#pragma mark -- hour data 
+
+-(NSArray*) getHourDataForHall:(NSString*)hall Meal:(NSString*)meal data:(TFHppleElement*)pageData {
+    
+    NSArray *tables = [pageData searchWithXPathQuery:@"//table"];
+    TFHppleElement *hoursTable;
+    for (TFHppleElement *table in tables)
+        if ([table childrenWithTagName:@"tr"].count>=4) //largest table
+            hoursTable = table;
+    if (!hoursTable)
+        hoursTable = tables[8];
+    
+    NSArray *rows = [hoursTable childrenWithTagName:@"tr"];
+    
+    TFHppleElement *desiredRow;
+    
+    for (TFHppleElement *row in rows) {
+        TFHppleElement* td = [row firstChildWithTagName:@"td"];
+        TFHppleElement* strong = [td firstChildWithTagName:@"strong"];
+        TFHppleElement* text = [strong firstChildWithTagName:@"text"];
+    
+        
+        NSString *title = text.content;
+       // NSLog(@"%@", title);
+        
+        if ([hall isEqualToString:@"Covel"] && [title isEqualToString:@"Covel"])
+            desiredRow = row;
+        
+        else if ([hall isEqualToString:@"Feast"] && [title isEqualToString:@"FEAST at Rieber"])
+            desiredRow = row;
+        else if ([hall isEqualToString:@"Hedrick"] && [title isEqualToString:@"Hedrick"])
+            desiredRow = row;
+        
+        else if ([hall isEqualToString:@"B Plate"] && [title isEqualToString:@"Sproul"])
+            desiredRow = row;
+    
+    }
+    return [self getHourDataForRow:desiredRow Meal:meal];
+}
+
+- (NSArray*) getHourDataForRow:(TFHppleElement*)row Meal:(NSString*)meal {
+    
+    NSArray *meals = [row childrenWithTagName:@"td"];
+    NSArray *mealNames = [NSArray arrayWithObjects:@"breakfast", @"lunch", @"dinner", nil];
+    int index = [mealNames indexOfObject:meal]+1;
+    TFHppleElement *cell = meals[index];
+    NSArray *strong = [cell childrenWithTagName:@"strong"];
+    
+    NSMutableString* raw = [NSMutableString stringWithString:@""];
+    for (TFHppleElement *element in strong){
+    TFHppleElement* text = [element firstChildWithTagName:@"text"];
+        [raw appendString:text.content];
+    }
+    NSMutableArray *retArr = [NSMutableArray array];
+    NSArray *begAndClose = [raw componentsSeparatedByString:@" -"];
+
+    NSDate *first = [self dateFromString:begAndClose[0]];
+    if (first)
+    [retArr addObject:first];
+    else
+        [retArr addObject:[NSNull null]];
+    
+    if (begAndClose.count > 1)
+        [retArr addObject: [self dateFromString:begAndClose[1]]];
+    else
+        [retArr addObject:[NSNull null]]; //nil if closed
+    
+    if (index +1 <= 3){
+        
+        TFHppleElement *nextCell = meals[index+1];
+        NSArray *strong = [nextCell childrenWithTagName:@"strong"];
+        TFHppleElement* text = [strong[0] firstChildWithTagName:@"text"];
+        [retArr addObject:[self dateFromString:text.content]];
+    }
+    else
+        [retArr addObject:[NSNull null]];
+
+    return retArr;
+}
+
+- (NSArray*) delimitHourText:(NSString*)text {
+    
+    
+    if ([text isEqualToString:@"CLOSED"])
+        return nil;
+    
+    
+    NSArray *rawTimes = [text componentsSeparatedByString:@" -"];
+    
+    NSMutableArray *retArr = [NSMutableArray array];
+    
+    for (NSString *time in rawTimes) {
+        NSArray *digits = [time componentsSeparatedByCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]];
+     
+        int hour = [digits[0] intValue];
+        hour+= (([time rangeOfString:@"pm"].location == NSNotFound) ? 0:12) ;
+        int minutes = [digits[1] intValue];
+        //format nsdate
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *components = [calendar components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit ) fromDate:[NSDate date]];
+        [components setHour:hour];
+        [components setMinute:minutes];
+        NSDate *time = [calendar dateFromComponents:components];
+        [retArr addObject:time];
+    
+    }
+    return retArr;
+}
+
+
+- (NSDate*) dateFromString:(NSString*)time {
+    
+    if ([time isEqualToString:@"CLOSED"])
+        return nil;
+    
+        NSArray *digits = [time componentsSeparatedByCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]];
+        
+        int hour = [digits[0] intValue];
+        hour+= (([time rangeOfString:@"pm"].location == NSNotFound) ? 0:12) ; //add 12 for pm
+        int minutes = [digits[1] intValue];
+        //format nsdate
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *components = [calendar components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit ) fromDate:[NSDate date]];
+        [components setHour:hour];
+        [components setMinute:minutes];
+        return [calendar dateFromComponents:components];
+    
+}
+    
+- (TFHpple*) getNodeDataForURL:(NSString*)urlString {
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSData *pageData = [NSData dataWithContentsOfURL:url];
+    return [TFHpple hppleWithHTMLData:pageData];
+}
 
 @end

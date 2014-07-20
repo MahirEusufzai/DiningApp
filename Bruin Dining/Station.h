@@ -14,6 +14,7 @@
 
 
 @property (nonatomic, retain) NSMutableArray *foodList;
+@property (nonatomic, retain) NSMutableArray *vegetarianFoodList;
 @property (nonatomic, retain) NSString *name;
 
 - (id) initWithName:(NSString*)n;

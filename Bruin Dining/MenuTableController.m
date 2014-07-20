@@ -26,33 +26,35 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.hallName.text = [self.hallPicker titleForSegmentAtIndex:self.hallPicker.selectedSegmentIndex];
-    [self.hallPicker addTarget:self action:@selector(switchHall) forControlEvents:UIControlEventValueChanged];
-    
-    [self.specificPicker addTarget:self action:@selector(switchSpecific) forControlEvents:UIControlEventValueChanged];
    
+    
     currentSpec = specificitySummary;
     [self setCurrentMenu];
+    
+    [self.specificPicker addTarget:self action:@selector(switchSpecific) forControlEvents:UIControlEventValueChanged];
+
+
     
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSString *key = [self.hallPicker titleForSegmentAtIndex:self.hallPicker.selectedSegmentIndex];
+    NSString *key =  [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];
+    //NSString *key = [self.hallPicker titleForSegmentAtIndex:self.hallPicker.selectedSegmentIndex];
     Station *s = [currentMenu getStation:section ForHall:key];
     return s.foodList.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSString *key = [self.hallPicker titleForSegmentAtIndex:self.hallPicker.selectedSegmentIndex];
+    NSString *key =  [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];
     DiningHall *d = [currentMenu.hallList valueForKey:key];
     return d.stationList.count;
 }
 
 - (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 
-    NSString *key = [self.hallPicker titleForSegmentAtIndex:self.hallPicker.selectedSegmentIndex];
+    NSString *key =  [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];
     Station *s = [currentMenu getStation:section ForHall:key];
     return s.name;
 }
@@ -65,33 +67,35 @@
     if (cell == nil)
         cell = (MenuCell*)[tableView dequeueReusableCellWithIdentifier:@"MenuCell"];
     
-    NSString *key = [self.hallPicker titleForSegmentAtIndex:self.hallPicker.selectedSegmentIndex];
+    NSString *key =  [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];
     Station *s = [currentMenu getStation:indexPath.section ForHall:key];
     MenuItem* food = [s.foodList objectAtIndex:indexPath.row];
   
     cell.foodLabel.text = food.name;
+  //  cell.foodLabel.font = [UIFont fontWithName:@"Helvetica Neue Light" size:12];
+
     if (food.isVegetarian || food.isVegan)
-        cell.foodLabel.textColor = [UIColor greenColor]; //possibly distinguish vegetarian and vegan later
+        cell.foodLabel.textColor = [UIColor colorWithRed:0/255.0f green:100/255.0f blue:0/255.0f alpha:1]; //possibly distinguish vegetarian and vegan later
 
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
-    return 30;
+    return 25;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 40;
+    return 50;
 }
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
 {
     
-    view.tintColor = [UIColor colorWithRed:234/255.0f green:200/255.0f blue:105/255.0f alpha:1];
+    view.tintColor = [UIColor colorWithRed:233/255.0f green:181/255.0f blue:41/255.0f alpha:1];
     // if you have index/header text in your tableview change your index text color
     UITableViewHeaderFooterView *headerIndexText = (UITableViewHeaderFooterView *)view;
     [headerIndexText.textLabel setTextColor:[UIColor blackColor]];
-    [headerIndexText.textLabel setFont: [UIFont fontWithName:@"Helvetica Neue Light" size:14]];
+    [headerIndexText.textLabel setFont: [UIFont fontWithName:@"Helvetica Light" size:14]];
 
     
 }
@@ -99,7 +103,8 @@
 #pragma mark -- segmented control
 - (void)switchHall {
    
-    self.hallName.text = [self.hallPicker titleForSegmentAtIndex:self.hallPicker.selectedSegmentIndex];
+    self.hallName.text = [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];
+
     [self.table reloadData];
 }
 
@@ -130,11 +135,42 @@
         dispatch_async(dispatch_get_main_queue(), ^(void) {
             [self.spinner stopAnimating];
             self.table.hidden = NO;
+            [self setHours];
             [self.table reloadData];
-            
+
+           
         });
     });
     
+}
+
+-(void) setHours {
+    
+    NSArray *halls = [currentMenu.hallList allValues];
+    NSMutableArray *hallNames = [NSMutableArray array];
+    NSMutableArray *hallImages = [NSMutableArray array];
+    UIImage *open = [UIImage imageNamed:@"open.png"];
+    UIImage *closed = [UIImage imageNamed:@"closed.png"];
+
+    for (DiningHall* hall in halls){
+         [hallNames addObject:hall.name];
+        [hallImages addObject:(hall.isOpen ? open :closed)];
+    
+    }
+
+     self.hallSelector.sectionTitles = hallNames;
+    self.hallSelector.type = HMSegmentedControlTypeTextImages;
+    self.hallSelector.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+    self.hallSelector.font = [UIFont fontWithName:@"Helvetica Light" size:14];
+    self.hallSelector.backgroundColor = [UIColor colorWithRed:233/256.0 green:233/256.0 blue:233/256.0  alpha:1];
+    
+    self.hallSelector.sectionImages =  hallImages;
+    self.hallSelector.sectionSelectedImages = self.hallSelector.sectionImages;
+    self.hallSelector.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
+    [self.hallSelector addTarget:self action:@selector(switchHall) forControlEvents:UIControlEventValueChanged];
+    
+    self.hallName.text = [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];
+    [self.hallSelector setNeedsDisplay];
 }
 - (void)didReceiveMemoryWarning
 {

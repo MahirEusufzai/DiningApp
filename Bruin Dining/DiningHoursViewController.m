@@ -9,11 +9,14 @@
 #import "DiningHoursViewController.h"
 
 @interface DiningHoursViewController ()
+{
+    BOOL webViewDidFinishLoad;
+    BOOL loadFailed;
+}
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
-@property (nonatomic) BOOL webViewDidFinishLoad;
-@property (nonatomic) BOOL loadFailed;
+
 
 @end
 
@@ -32,23 +35,23 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
     
-    _webViewDidFinishLoad = NO;
-    _loadFailed = NO;
+    webViewDidFinishLoad = NO;
+    loadFailed = NO;
     
 }
 
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     
-    _loadFailed = YES;
+    loadFailed = YES;
 }
 
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     
-    if (!_loadFailed)
+    if (!loadFailed)
     {
-         _webViewDidFinishLoad = YES;
+        webViewDidFinishLoad = YES;
         [self.spinner stopAnimating];
     }
     
@@ -67,9 +70,9 @@
     NSURL *url = [NSURL URLWithString:address];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [_webView loadRequest:request];
-        
     
-            
+    
+    
     
     
 }
@@ -81,14 +84,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

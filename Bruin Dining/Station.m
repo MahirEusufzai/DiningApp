@@ -18,12 +18,17 @@
     if (self) {
         self.name = n;
         self.foodList = [[NSMutableArray alloc] init];
+        self.vegetarianFoodList = [[NSMutableArray alloc] init];
+
     }
     return self;
 }
 
 - (void)addFood:(MenuItem *)food {
     [self.foodList addObject:food];
+    
+    if (food.isVegetarian || food.isVegan)
+        [self.vegetarianFoodList addObject:food];
     
 }
 
