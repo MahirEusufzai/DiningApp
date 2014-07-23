@@ -18,22 +18,41 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        
+        /*
+         if >= dinner time, show dinner
+         else if >= lunch time, show lunch
+         else show breakfast
+         
+         if      < lunch, show breakfast
+         eles if < dinner, show lunch
+         eles              show dinner
+         */
     }
     return self;
+         
 }
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-   
+    
     
     currentSpec = specificitySummary;
     [self setCurrentMenu];
     
     [self.specificPicker addTarget:self action:@selector(switchSpecific) forControlEvents:UIControlEventValueChanged];
-
-
+    
+    UISwipeGestureRecognizer * swipeleft=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeleft:)];
+    swipeleft.direction=UISwipeGestureRecognizerDirectionLeft;
+    [self.view addGestureRecognizer:swipeleft];
+    
+    UISwipeGestureRecognizer * swiperight=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swiperight:)];
+    swiperight.direction=UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:swiperight];
+    
+    
     
 }
 
@@ -53,7 +72,7 @@
 }
 
 - (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-
+    
     NSString *key =  [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];
     Station *s = [currentMenu getStation:section ForHall:key];
     return s.name;
@@ -70,13 +89,13 @@
     NSString *key =  [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];
     Station *s = [currentMenu getStation:indexPath.section ForHall:key];
     MenuItem* food = [s.foodList objectAtIndex:indexPath.row];
-  
+    
     cell.foodLabel.text = food.name;
-  //  cell.foodLabel.font = [UIFont fontWithName:@"Helvetica Neue Light" size:12];
-
+    //  cell.foodLabel.font = [UIFont fontWithName:@"Helvetica Neue Light" size:12];
+    
     if (food.isVegetarian || food.isVegan)
         cell.foodLabel.textColor = [UIColor colorWithRed:0/255.0f green:100/255.0f blue:0/255.0f alpha:1]; //possibly distinguish vegetarian and vegan later
-
+    
     return cell;
 }
 
@@ -96,21 +115,22 @@
     UITableViewHeaderFooterView *headerIndexText = (UITableViewHeaderFooterView *)view;
     [headerIndexText.textLabel setTextColor:[UIColor blackColor]];
     [headerIndexText.textLabel setFont: [UIFont fontWithName:@"Helvetica Light" size:14]];
-
+    
     
 }
 
 #pragma mark -- segmented control
 - (void)switchHall {
-   
-    self.hallName.text = [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];
-
+    
+    _hallName.text = [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];
+    
+    [self setOpeningClosingTimes];
     [self.table reloadData];
 }
 
 
 - (void)switchSpecific {
-   //loads new page data if necessary
+    //loads new page data if necessary
     
     Specificity old = currentSpec;
     currentSpec = (Specificity)(self.specificPicker.selectedSegmentIndex);
@@ -121,14 +141,15 @@
 
 # pragma mark -- helper functions
 - (void) setCurrentMenu {
-
+    
+    //hide table while loading data
     self.table.hidden=YES;
     self.spinner.hidden = NO;
     [self.spinner startAnimating];
-
+    
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-
+        
         MenuLoader *mL = [[MenuLoader alloc] init];
         currentMenu = [mL loadDiningDataForMeal:self.currentMeal Specificity:currentSpec];
         
@@ -137,8 +158,8 @@
             self.table.hidden = NO;
             [self setHours];
             [self.table reloadData];
-
-           
+            
+            
         });
     });
     
@@ -151,17 +172,18 @@
     NSMutableArray *hallImages = [NSMutableArray array];
     UIImage *open = [UIImage imageNamed:@"open.png"];
     UIImage *closed = [UIImage imageNamed:@"closed.png"];
-
-    for (DiningHall* hall in halls){
-         [hallNames addObject:hall.name];
-        [hallImages addObject:(hall.isOpen ? open :closed)];
     
+    for (DiningHall* hall in halls){
+        [hallNames addObject:hall.name];
+        [hallImages addObject:(hall.isOpen ? open :open)];
+        
     }
-
-     self.hallSelector.sectionTitles = hallNames;
+    
+    self.hallSelector.sectionTitles = hallNames;
     self.hallSelector.type = HMSegmentedControlTypeTextImages;
     self.hallSelector.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     self.hallSelector.font = [UIFont fontWithName:@"Helvetica Light" size:14];
+    // self.hallSelector.textColor = [UIColor whiteColor];
     self.hallSelector.backgroundColor = [UIColor colorWithRed:233/256.0 green:233/256.0 blue:233/256.0  alpha:1];
     
     self.hallSelector.sectionImages =  hallImages;
@@ -171,6 +193,35 @@
     
     self.hallName.text = [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];
     [self.hallSelector setNeedsDisplay];
+    [self setOpeningClosingTimes];
+    
+}
+
+- (void) setOpeningClosingTimes {
+    
+    DiningHall *currHall = [currentMenu.hallList valueForKey:_hallName.text];
+    
+    if ([currHall isOpen]){
+        NSInteger time = [currHall getTimeUntilCloses];
+        self.timeLabel.text = [NSString stringWithFormat:@"Closes in %d hours %d minutes", time/3600, (time/60) %60];
+    }
+    else{
+        NSInteger time = [currHall getTimeUntilOpens];
+        if (time<0) //hall isn't open for current or subsequent meal
+            self.timeLabel.text = [NSString stringWithFormat:@"Closed for %@", _currentMeal];
+        else
+            self.timeLabel.text = [NSString stringWithFormat:@"Opens in %d hours %d minutes", time/3600, (time/60) %60];
+    }
+}
+
+-(void)swipeleft:(UISwipeGestureRecognizer*)gestureRecognizer
+{
+    NSLog(@"left");
+}
+
+-(void)swiperight:(UISwipeGestureRecognizer*)gestureRecognizer
+{
+    NSLog(@"right");
 }
 - (void)didReceiveMemoryWarning
 {

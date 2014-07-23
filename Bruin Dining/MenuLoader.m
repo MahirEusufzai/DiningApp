@@ -29,6 +29,7 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     Meal *m = [[Meal alloc] initWithName:meal];
     //set hours
     TFHpple *urlData = [self getNodeDataForURL:HOURS];
+   
     for (DiningHall *hall in [m.hallList allValues]) {
         NSArray *data = [self getHourDataForHall:hall.name Meal:meal data:urlData];
         [hall setHoursFromData:data];
@@ -198,34 +199,6 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     return retArr;
 }
 
-- (NSArray*) delimitHourText:(NSString*)text {
-    
-    
-    if ([text isEqualToString:@"CLOSED"])
-        return nil;
-    
-    
-    NSArray *rawTimes = [text componentsSeparatedByString:@" -"];
-    
-    NSMutableArray *retArr = [NSMutableArray array];
-    
-    for (NSString *time in rawTimes) {
-        NSArray *digits = [time componentsSeparatedByCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]];
-     
-        int hour = [digits[0] intValue];
-        hour+= (([time rangeOfString:@"pm"].location == NSNotFound) ? 0:12) ;
-        int minutes = [digits[1] intValue];
-        //format nsdate
-        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        NSDateComponents *components = [calendar components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit ) fromDate:[NSDate date]];
-        [components setHour:hour];
-        [components setMinute:minutes];
-        NSDate *time = [calendar dateFromComponents:components];
-        [retArr addObject:time];
-    
-    }
-    return retArr;
-}
 
 
 - (NSDate*) dateFromString:(NSString*)time {

@@ -50,10 +50,41 @@
     NSComparisonResult compareOpen = [[NSDate date] compare : _openingTime];
     NSComparisonResult compareClose = [[NSDate date] compare : _closingTime];
 
+    //check if current time in between open and close
     if ((compareOpen == NSOrderedDescending || compareOpen == NSOrderedSame) && (compareClose == NSOrderedAscending || compareOpen == NSOrderedSame))
         return true;
     
     return false;
 }
 
+- (NSInteger)getTimeUntilOpens {
+    //if meal hasn't started, show opening time for current meal; otherwise, show opening time for next meal
+    
+    if (self.closedForCurrentMeal)
+        return -1; //return of -1 signifies no opening time
+
+    
+    NSInteger timeUntilCurrentMealOpens = [_openingTime timeIntervalSinceDate:[NSDate date]];
+    if (timeUntilCurrentMealOpens >=0)
+        return timeUntilCurrentMealOpens;
+    
+    if (self.closedForNextMeal)
+        return -1;
+    
+    return (NSInteger)[_nextOpeningTime timeIntervalSinceDate:[NSDate date]];
+}
+
+
+- (NSInteger)getTimeUntilCloses {
+    
+    return (NSInteger)[[NSDate date] timeIntervalSinceDate:_closingTime];
+}
+
+- (BOOL)closedForCurrentMeal {
+    return (_openingTime == nil);
+}
+
+- (BOOL)closedForNextMeal {
+    return (_nextOpeningTime == nil);
+}
 @end

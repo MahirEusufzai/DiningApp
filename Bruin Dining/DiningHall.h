@@ -23,4 +23,9 @@
 - (void) addStation:(Station*)station;
 - (void) setHoursFromData:(NSArray*)data;
 - (BOOL) isOpen;
+- (BOOL) closedForCurrentMeal;
+- (BOOL) closedForNextMeal;
+- (NSInteger) getTimeUntilOpens;
+- (NSInteger) getTimeUntilCloses;
+
 @end
