@@ -20,10 +20,12 @@
         self.hallList = [[NSMutableDictionary alloc] init];
       
         //TO DO: Don't hard code dining hall names
-        [self addHall:[[DiningHall alloc] initWithName:@"Covel"]];
-        [self addHall:[[DiningHall alloc] initWithName:@"Hedrick"]];
-        [self addHall:[[DiningHall alloc] initWithName:@"B Plate"]];
-        [self addHall:[[DiningHall alloc] initWithName:@"Feast"]];
+        
+        NSArray *names = [NSArray arrayWithObjects: @"Covel", @"Hedrick", @"B Plate", @"Feast", nil];
+        
+        for (NSString *name in names)
+            [self addHall:[[DiningHall alloc] initWithName:name]];
+       
     }
     return self;
 }

@@ -10,7 +10,7 @@
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ZCv-xB-ZXL">
@@ -20,9 +20,6 @@
                                 <state key="normal" title="Breakfast">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="IRa-Qz-0B6" kind="push" identifier="pushBreakfast" id="fIT-bl-Ych"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vOz-Cs-3b2">
                                 <rect key="frame" x="136" y="149" width="48" height="33"/>
@@ -31,9 +28,6 @@
                                 <state key="normal" title="Lunch">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="IRa-Qz-0B6" kind="push" identifier="pushLunch" id="ou5-Bx-vim"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="adG-9K-1jR">
                                 <rect key="frame" x="235" y="149" width="50" height="33"/>
@@ -42,9 +36,6 @@
                                 <state key="normal" title="Dinner">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="IRa-Qz-0B6" kind="push" identifier="pushDinner" id="8bz-TH-4wi"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="GDl-CE-3gL">
                                 <rect key="frame" x="117" y="483" width="89" height="30"/>
@@ -52,9 +43,6 @@
                                 <state key="normal" title="Dining Hours">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="huz-44-abD" kind="push" id="93M-mR-4rW"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -63,12 +51,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="974" y="-106"/>
+            <point key="canvasLocation" x="-585" y="-634"/>
         </scene>
         <!--Menu Table Controller - Menu-->
         <scene sceneID="Jrl-pn-tWW">
             <objects>
-                <viewController title="Menu" modalTransitionStyle="flipHorizontal" id="IRa-Qz-0B6" customClass="MenuTableController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Menu" title="Menu" modalTransitionStyle="flipHorizontal" id="IRa-Qz-0B6" customClass="MenuTableController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5uh-nE-Ojy">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -162,7 +150,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Olq-sm-c2s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1483" y="-106"/>
+            <point key="canvasLocation" x="943" y="-122"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="bon-sb-9bC">
@@ -172,36 +160,44 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add favorites to receive push alerts when they appear on the menu" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ddg-k0-Ydk">
-                                <rect key="frame" x="24" y="0.0" width="272" height="132"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <searchBar appearanceType="aqua" contentMode="redraw" id="WCf-Fg-v1c">
-                                <rect key="frame" x="0.0" y="109" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="feA-Za-B4i" id="JN6-vf-d0i"/>
-                                </connections>
-                            </searchBar>
-                            <tableView appearanceType="aqua" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="fhM-UJ-wfw">
-                                <rect key="frame" x="0.0" y="214" width="320" height="232"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                             <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Suggestions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bdq-2A-5yU">
-                                <rect key="frame" x="24" y="185" width="96" height="21"/>
+                                <rect key="frame" x="20" y="237" width="96" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bLu-K7-DR0">
+                                <rect key="frame" x="113" y="456" width="94" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Edit Favorites">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Table to go here...." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="shr-dX-kan">
+                                <rect key="frame" x="89" y="344" width="143" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add favorites to receive push alerts when they appear on the menu" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ddg-k0-Ydk">
+                                <rect key="frame" x="24" y="37" width="272" height="132"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <searchBar appearanceType="aqua" contentMode="redraw" id="Lko-cW-0Ao">
+                                <rect key="frame" x="0.0" y="144" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="XOd-h6-duy"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="Qvo-o3-T51" id="EHH-RA-YvX"/>
                     </connections>
@@ -210,14 +206,30 @@
                 <searchDisplayController id="Qvo-o3-T51">
                     <connections>
                         <outlet property="delegate" destination="feA-Za-B4i" id="zto-80-jAb"/>
-                        <outlet property="searchBar" destination="WCf-Fg-v1c" id="gZ2-6H-vtf"/>
                         <outlet property="searchContentsController" destination="feA-Za-B4i" id="XhO-zk-WY6"/>
                         <outlet property="searchResultsDataSource" destination="feA-Za-B4i" id="rSE-z2-idi"/>
                         <outlet property="searchResultsDelegate" destination="feA-Za-B4i" id="Ics-5b-Zkh"/>
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-585" y="315"/>
+            <point key="canvasLocation" x="-189" y="955"/>
+        </scene>
+        <!--Navigation Controller - Push Alerts-->
+        <scene sceneID="ZdT-L7-XX3">
+            <objects>
+                <navigationController id="Qqa-bb-0pZ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Push Alerts" id="dK1-ot-eKw"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="GgO-0H-hm8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="feA-Za-B4i" kind="relationship" relationship="rootViewController" id="zZ8-WX-8gJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mcl-7L-3lM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-631" y="238"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="XmO-6f-dhc">
@@ -232,6 +244,7 @@
                     <connections>
                         <segue destination="wbq-vt-dPC" kind="relationship" relationship="viewControllers" id="Nj9-6z-KuY"/>
                         <segue destination="huz-44-abD" kind="relationship" relationship="viewControllers" id="GCv-qx-DOt"/>
+                        <segue destination="Qqa-bb-0pZ" kind="relationship" relationship="viewControllers" id="CHu-qu-9sX"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gOR-0S-mgq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -253,23 +266,23 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="oC8-qL-frr"/>
+                        <segue destination="IRa-Qz-0B6" kind="relationship" relationship="rootViewController" id="WcC-MM-8vk"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oOO-Cb-W5I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="572" y="-106"/>
+            <point key="canvasLocation" x="365" y="-92"/>
         </scene>
         <!--Dining Hours View Controller - Hours-->
         <scene sceneID="Rig-r2-XSb">
             <objects>
                 <viewController id="huz-44-abD" customClass="DiningHoursViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lHG-qE-JQO">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" scalesPageToFit="YES" id="H4e-U3-HKi">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
@@ -280,7 +293,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Hours" id="Akl-Ns-rJy"/>
+                    <tabBarItem key="tabBarItem" title="Hours" image="hours.png" selectedImage="hours.png" id="Akl-Ns-rJy"/>
                     <navigationItem key="navigationItem" id="sYC-5e-jcS"/>
                     <connections>
                         <outlet property="spinner" destination="24M-vG-V0y" id="so3-fj-G00"/>
@@ -289,10 +302,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pzx-Ok-E7H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="572" y="645"/>
+            <point key="canvasLocation" x="340" y="681"/>
         </scene>
     </scenes>
     <resources>
+        <image name="hours.png" width="25" height="25"/>
         <image name="star_none.png" width="128" height="128"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -300,8 +314,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="93M-mR-4rW"/>
-        <segue reference="8bz-TH-4wi"/>
-    </inferredMetricsTieBreakers>
 </document>

@@ -18,21 +18,21 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
-        /*
-         if >= dinner time, show dinner
-         else if >= lunch time, show lunch
-         else show breakfast
-         
-         if      < lunch, show breakfast
-         eles if < dinner, show lunch
-         eles              show dinner
-         */
     }
     return self;
          
 }
 
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        MenuLoader *mL = [[MenuLoader alloc] init];
+        self.currentMeal = [mL determineMealFromTime:nil data:nil];
+        self.title = self.currentMeal;
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -175,7 +175,7 @@
     
     for (DiningHall* hall in halls){
         [hallNames addObject:hall.name];
-        [hallImages addObject:(hall.isOpen ? open :open)];
+        [hallImages addObject:(hall.isOpen ? open :closed)];
         
     }
     
@@ -216,7 +216,10 @@
 
 -(void)swipeleft:(UISwipeGestureRecognizer*)gestureRecognizer
 {
-    NSLog(@"left");
+    
+    MenuTableController *newMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"Menu"];
+    newMenu.currentMeal = @"dinner";
+    [self.navigationController pushViewController:newMenu animated:YES];
 }
 
 -(void)swiperight:(UISwipeGestureRecognizer*)gestureRecognizer

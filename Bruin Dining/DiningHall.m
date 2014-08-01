@@ -36,9 +36,10 @@
     _closingTime = data[1];
     
     }
-    
+   /*
     if (data[2] != [NSNull null])
     _nextOpeningTime = data[2];
+    */
     
 }
 
@@ -58,7 +59,7 @@
 }
 
 - (NSInteger)getTimeUntilOpens {
-    //if meal hasn't started, show opening time for current meal; otherwise, show opening time for next meal
+    //if meal hasn't started, show opening time for current meal;
     
     if (self.closedForCurrentMeal)
         return -1; //return of -1 signifies no opening time
@@ -67,17 +68,20 @@
     NSInteger timeUntilCurrentMealOpens = [_openingTime timeIntervalSinceDate:[NSDate date]];
     if (timeUntilCurrentMealOpens >=0)
         return timeUntilCurrentMealOpens;
-    
+    else
+        return -1;
+    /*
     if (self.closedForNextMeal)
         return -1;
     
     return (NSInteger)[_nextOpeningTime timeIntervalSinceDate:[NSDate date]];
+     */
 }
 
 
 - (NSInteger)getTimeUntilCloses {
     
-    return (NSInteger)[[NSDate date] timeIntervalSinceDate:_closingTime];
+    return (NSInteger)[_closingTime timeIntervalSinceDate:[NSDate date]];
 }
 
 - (BOOL)closedForCurrentMeal {

@@ -16,7 +16,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-   
+    NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024
+                                                         diskCapacity:20 * 1024 * 1024
+                                                             diskPath:nil];
+    [NSURLCache setSharedURLCache:URLCache];
+    
     [Parse setApplicationId:@"KP0Vo4VPPEcQrTyNRJVZeBWpXHYaW4pK8AzfptI5" clientKey:@"MEMWpt1gfLiHnm5h6O0dsUnz2mEGlMsrUhlFaCez"];
  
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];

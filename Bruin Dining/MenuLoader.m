@@ -7,7 +7,7 @@
 //
 
 #import "MenuLoader.h"
-
+#import "Hours.h"
 static const NSString *BREAKFAST_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=1&threshold=2";
 static const NSString *LUNCH_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=2&threshold=2";
 static const NSString *DINNER_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=3&threshold=2";
@@ -24,14 +24,118 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     return self;
 }
 
+- (NSString*)determineMealFromTime:(NSDate*)time data:(TFHpple*)data {
+    
+ //   [self setHours];
+    
+    NSDate *lunch = [self dateFromString:@"11:00am"];
+    NSDate *dinner = [self dateFromString:@"5:00pm"];
+    
+    NSComparisonResult lunchComparison = [[NSDate date] compare : lunch];
+    NSComparisonResult dinnerComparison = [[NSDate date] compare : dinner];
+    
+    if (lunchComparison == NSOrderedAscending)
+        return @"breakfast";
+    else if (dinnerComparison == NSOrderedAscending)
+        return @"lunch";
+    else
+        return @"dinner";
+    
+    /*
+     
+     
+     if      < lunch, show breakfast
+     eles if < dinner, show lunch
+     eles              show dinner
+     */
+    
+    
+}
+
+- (Hours*) getHours {
+    // check if hours exist for current date, otherwise parse from website
+   
+    return [self parseHoursFromServer];
+    /*NSDictionary *d = [self stateFromDocumentNamed:@"Hours"];
+    if (d == nil) {
+        NSLog(@"nil");
+        [self saveStateToDocumentNamed:@"Hours"];
+        return [self parseHoursFromServer];
+    } else {
+        NSLog(@"exists");
+        return [d valueForKey:@"Hours"];
+    }
+     */
+   
+}
+
+- (Hours*)parseHoursFromServer {
+    
+    Hours *h = [[Hours alloc] init];
+    //set hours
+    TFHpple *urlData = [self getNodeDataForURL:HOURS];
+    
+    NSArray *tables = [urlData searchWithXPathQuery:@"//table"];
+    TFHppleElement *hoursTable;
+    for (TFHppleElement *table in tables)
+        if ([table childrenWithTagName:@"tr"].count>=4) //largest table
+            hoursTable = table;
+    if (!hoursTable)
+        hoursTable = tables[8];
+    
+    NSArray *rows = [hoursTable childrenWithTagName:@"tr"];
+    int count = 0;
+    for (TFHppleElement *row in rows) {
+        
+        if (count>=2) {
+            
+            TFHppleElement* td = [row firstChildWithTagName:@"td"];
+            TFHppleElement* strong = [td firstChildWithTagName:@"strong"];
+            NSString *text = [strong firstChildWithTagName:@"text"].content;
+            
+            [h addHall:text];
+            [self setRow:row Named:text ForHours:h];
+        }
+        count++;
+        
+    }
+    return h;
+    
+}
+- (void)setRow:(TFHppleElement*)row Named:(NSString*)hallName ForHours:(Hours*)h {
+    NSArray *meals = [NSArray arrayWithObjects:@"breakfast",@"lunch", @"dinner", nil];
+   
+    NSArray *td = [row childrenWithTagName:@"td"];
+    for (int i = 1; i <=3; i++) {
+        TFHppleElement *currentMeal = td[i];
+        NSArray *strong = [currentMeal childrenWithTagName:@"strong"];
+        
+        NSString *opening = [strong[0] firstChildWithTagName:@"text"].content;
+        NSDate *openingAsDate = [self dateFromString:opening];
+        [h addOpeningTime:openingAsDate ToMeal:meals[i-1] Hall:hallName];
+        NSDate *closingAsDate;
+        if (openingAsDate){
+        NSString *closing = [strong[1] firstChildWithTagName:@"text"].content;
+         closingAsDate = [self dateFromString:closing];
+        }
+        else
+        closingAsDate = nil;
+        
+        [h addClosingTime:closingAsDate ToMeal:meals[i-1] Hall:hallName];
+    }
+
+}
+
+
 - (Meal *)loadDiningDataForMeal:(NSString *)meal Specificity:(Specificity)spec {
     
     Meal *m = [[Meal alloc] initWithName:meal];
     //set hours
     TFHpple *urlData = [self getNodeDataForURL:HOURS];
-   
+    Hours *h = [self getHours];
     for (DiningHall *hall in [m.hallList allValues]) {
-        NSArray *data = [self getHourDataForHall:hall.name Meal:meal data:urlData];
+        NSArray *data = [h getHoursForMeal:meal Hall:hall.name];
+        //NSArray *data = [self getHourDataForHall:hall.name Meal:meal data:urlData];
         [hall setHoursFromData:data];
     }
     NSArray *tableCells = [self getTableEntriesForMeal:meal Type:spec];
@@ -49,12 +153,12 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
             NSArray *listChildren = [listNode childrenWithTagName:@"li"];
             TFHppleElement *title = listChildren[0];
             Station *station = [[Station alloc] initWithName:title.text];
-          
+            
             //iterate through each food
             for (TFHppleElement *listElement in listChildren) {
                 
                 if (listElement != listChildren[0]){  //first element is title
-                
+                    
                     TFHppleElement *aNode = [listElement firstChildWithTagName:@"a"];
                     MenuItem *food = [[MenuItem alloc] initWithName:aNode.text andURL:nil];
                     TFHppleElement *imageNode = [listElement firstChildWithTagName:@"img"];
@@ -68,7 +172,7 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
                         food.isVegan = YES;
                     if ([[imageNode objectForKey:@"alt"] isEqualToString:@"Vegetarian Menu Option"])
                         food.isVegetarian = YES;
-
+                    
                     [station addFood:food];
                 }
             }
@@ -103,7 +207,7 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     TFHpple *parser = [self getNodeDataForURL:url];
     
     NSString *TDString = @"//td[starts-with(@class, 'menugridcell')]";
-
+    
     if ((![meal isEqualToString:@"breakfast"]) && spec == specificitySummary) {
         
         NSString *queryString = @"//table[starts-with(@class, 'menugridtable')]";
@@ -119,7 +223,7 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     
 }
 
-#pragma mark -- hour data 
+#pragma mark -- hour data
 
 -(NSArray*) getHourDataForHall:(NSString*)hall Meal:(NSString*)meal data:(TFHppleElement*)pageData {
     
@@ -134,15 +238,14 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     NSArray *rows = [hoursTable childrenWithTagName:@"tr"];
     
     TFHppleElement *desiredRow;
-    
     for (TFHppleElement *row in rows) {
         TFHppleElement* td = [row firstChildWithTagName:@"td"];
         TFHppleElement* strong = [td firstChildWithTagName:@"strong"];
         TFHppleElement* text = [strong firstChildWithTagName:@"text"];
-    
+        
         
         NSString *title = text.content;
-       // NSLog(@"%@", title);
+        // NSLog(@"%@", title);
         
         if ([hall isEqualToString:@"Covel"] && [title isEqualToString:@"Covel"])
             desiredRow = row;
@@ -154,7 +257,7 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
         
         else if ([hall isEqualToString:@"B Plate"] && [title isEqualToString:@"Sproul"])
             desiredRow = row;
-    
+        
     }
     return [self getHourDataForRow:desiredRow Meal:meal];
 }
@@ -167,64 +270,94 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     TFHppleElement *cell = meals[index];
     NSArray *strong = [cell childrenWithTagName:@"strong"];
     
-    NSMutableString* raw = [NSMutableString stringWithString:@""];
-    for (TFHppleElement *element in strong){
-    TFHppleElement* text = [element firstChildWithTagName:@"text"];
-        [raw appendString:text.content];
-    }
     NSMutableArray *retArr = [NSMutableArray array];
-    NSArray *begAndClose = [raw componentsSeparatedByString:@" -"];
-
-    NSDate *first = [self dateFromString:begAndClose[0]];
-    if (first)
-    [retArr addObject:first];
-    else
+    
+    NSString *opening = [strong[0] firstChildWithTagName:@"text"].content;
+    NSDate *openingAsDate = [self dateFromString:opening];
+    if (openingAsDate){
+        [retArr addObject:openingAsDate];
+        NSString *closing = [strong[1] firstChildWithTagName:@"text"].content;
+        [retArr addObject:[self dateFromString:closing]];
+    }
+    else{
         [retArr addObject:[NSNull null]];
+        [retArr addObject:[NSNull null]];
+    }
     
-    if (begAndClose.count > 1)
-        [retArr addObject: [self dateFromString:begAndClose[1]]];
-    else
-        [retArr addObject:[NSNull null]]; //nil if closed
-    
-    if (index +1 <= 3){
+    if (index +1 <= 3){ //nextOpeningTime is always nil for dinner
         
         TFHppleElement *nextCell = meals[index+1];
-        NSArray *strong = [nextCell childrenWithTagName:@"strong"];
-        TFHppleElement* text = [strong[0] firstChildWithTagName:@"text"];
-        [retArr addObject:[self dateFromString:text.content]];
+        NSArray *strong1 = [nextCell childrenWithTagName:@"strong"];
+        NSString* nextOpening = [strong1[0] firstChildWithTagName:@"text"].content;
+        [retArr addObject:[self dateFromString:nextOpening]];
     }
     else
         [retArr addObject:[NSNull null]];
-
+    
     return retArr;
 }
 
-
-
 - (NSDate*) dateFromString:(NSString*)time {
+    
     
     if ([time isEqualToString:@"CLOSED"])
         return nil;
     
-        NSArray *digits = [time componentsSeparatedByCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]];
-        
-        int hour = [digits[0] intValue];
-        hour+= (([time rangeOfString:@"pm"].location == NSNotFound) ? 0:12) ; //add 12 for pm
-        int minutes = [digits[1] intValue];
-        //format nsdate
-        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        NSDateComponents *components = [calendar components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit ) fromDate:[NSDate date]];
-        [components setHour:hour];
-        [components setMinute:minutes];
-        return [calendar dateFromComponents:components];
+    NSArray *digits = [time componentsSeparatedByCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]];
+    
+    int hour = [digits[0] intValue];
+    hour+= (([time rangeOfString:@"pm"].location == NSNotFound) ? 0:12) ; //add 12 for pm
+    int minutes = [digits[1] intValue];
+    //format nsdate
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *components = [calendar components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit ) fromDate:[NSDate date]];
+    [components setHour:hour];
+    [components setMinute:minutes];
+    return [calendar dateFromComponents:components];
     
 }
-    
+
+
 - (TFHpple*) getNodeDataForURL:(NSString*)urlString {
     
     NSURL *url = [NSURL URLWithString:urlString];
     NSData *pageData = [NSData dataWithContentsOfURL:url];
     return [TFHpple hppleWithHTMLData:pageData];
+}
+
+- (void) saveStateToDocumentNamed:(NSString*)docName
+{
+    NSLog(@"saving");
+    NSError       *error;
+    NSFileManager *fileMan = [NSFileManager defaultManager];
+    NSArray       *paths   = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString      *docPath = [paths[0] stringByAppendingPathComponent:docName];
+    
+    if ([fileMan fileExistsAtPath:docPath])
+        [fileMan removeItemAtPath:docPath error:&error];
+    
+    // Create the dictionary with all the stuff you want to store locally
+    
+    NSDictionary *state = [NSDictionary dictionaryWithObjectsAndKeys:[self parseHoursFromServer], @"Hours", nil];
+    
+    // There are many ways to write the state to a file. This is the simplest
+    // but lacks error checking and recovery options.
+    [NSKeyedArchiver archiveRootObject:state toFile:docPath];
+    NSLog(@"end");
+}
+
+- (NSDictionary*) stateFromDocumentNamed:(NSString*)docName
+{
+    NSLog(@"checking cache");
+    NSError       *error;
+    NSFileManager *fileMan = [NSFileManager defaultManager];
+    NSArray       *paths   = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString      *docPath = [paths[0] stringByAppendingPathComponent:docName];
+    
+    if ([fileMan fileExistsAtPath:docPath])
+        return [NSKeyedUnarchiver unarchiveObjectWithFile:docPath];
+    
+    return nil;
 }
 
 @end

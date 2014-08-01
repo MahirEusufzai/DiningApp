@@ -48,6 +48,12 @@
 		C8D1B08C1962ADB300A823AA /* star_full.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D1B08A1962ADB300A823AA /* star_full.png */; };
 		C8D1B08D1962ADB300A823AA /* star_none.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D1B08B1962ADB300A823AA /* star_none.png */; };
 		C8D1B08F196B447B00A823AA /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8D1B08E196B447B00A823AA /* Parse.framework */; };
+		C8DC4BDA1984B5C300897069 /* Hours.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DC4BD91984B5C300897069 /* Hours.m */; };
+		C8DC4BDD1984B64400897069 /* HourMeal.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DC4BDC1984B64400897069 /* HourMeal.m */; };
+		C8DC4BE01984B66600897069 /* HourHalls.m in Sources */ = {isa = PBXBuildFile; fileRef = C8DC4BDF1984B66600897069 /* HourHalls.m */; };
+		C8DC4BE21989F33200897069 /* hours@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8DC4BE11989F33100897069 /* hours@2x.png */; };
+		C8DC4BE4198A58A600897069 /* hours.png in Resources */ = {isa = PBXBuildFile; fileRef = C8DC4BE3198A58A600897069 /* hours.png */; };
+		C8DC4BE6198A59DF00897069 /* hours_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = C8DC4BE5198A59DF00897069 /* hours_selected.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,11 +120,20 @@
 		C88904B219711015003B8588 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C88904B41975542E003B8588 /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
 		C88904B51975542E003B8588 /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
-		C88904B719766767003B8588 /* open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = open.png; sourceTree = "<group>"; };
-		C88FEB9A1979452C002AFCEB /* closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = closed.png; sourceTree = "<group>"; };
+		C88904B719766767003B8588 /* open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = open.png; path = "Bruin Dining/open.png"; sourceTree = "<group>"; };
+		C88FEB9A1979452C002AFCEB /* closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = closed.png; path = "Bruin Dining/closed.png"; sourceTree = "<group>"; };
 		C8D1B08A1962ADB300A823AA /* star_full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_full.png; sourceTree = "<group>"; };
 		C8D1B08B1962ADB300A823AA /* star_none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_none.png; sourceTree = "<group>"; };
 		C8D1B08E196B447B00A823AA /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		C8DC4BD81984B5C300897069 /* Hours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hours.h; sourceTree = "<group>"; };
+		C8DC4BD91984B5C300897069 /* Hours.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hours.m; sourceTree = "<group>"; };
+		C8DC4BDB1984B64400897069 /* HourMeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HourMeal.h; sourceTree = "<group>"; };
+		C8DC4BDC1984B64400897069 /* HourMeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HourMeal.m; sourceTree = "<group>"; };
+		C8DC4BDE1984B66600897069 /* HourHalls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HourHalls.h; sourceTree = "<group>"; };
+		C8DC4BDF1984B66600897069 /* HourHalls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HourHalls.m; sourceTree = "<group>"; };
+		C8DC4BE11989F33100897069 /* hours@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hours@2x.png"; sourceTree = "<group>"; };
+		C8DC4BE3198A58A600897069 /* hours.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hours.png; sourceTree = "<group>"; };
+		C8DC4BE5198A59DF00897069 /* hours_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hours_selected.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +176,12 @@
 			children = (
 				C8D1B08A1962ADB300A823AA /* star_full.png */,
 				C8D1B08B1962ADB300A823AA /* star_none.png */,
+				C88904B719766767003B8588 /* open.png */,
+				C88FEB9A1979452C002AFCEB /* closed.png */,
+				C8DC4BE11989F33100897069 /* hours@2x.png */,
+				C8DC4BE3198A58A600897069 /* hours.png */,
+				C8DC4BE5198A59DF00897069 /* hours_selected.png */,
+				C83E00A018E9168800F3EE1B /* TFHpple */,
 				C83E006818E9160500F3EE1B /* Bruin Dining */,
 				C83E008718E9160600F3EE1B /* Bruin DiningTests */,
 				C83E006118E9160500F3EE1B /* Frameworks */,
@@ -202,22 +223,15 @@
 		C83E006818E9160500F3EE1B /* Bruin Dining */ = {
 			isa = PBXGroup;
 			children = (
-				C88904B719766767003B8588 /* open.png */,
-				C88FEB9A1979452C002AFCEB /* closed.png */,
-				C83E00A018E9168800F3EE1B /* TFHpple */,
-				C83E00AD18E916C100F3EE1B /* Dining Data */,
 				C83E007118E9160500F3EE1B /* AppDelegate.h */,
 				C83E007218E9160500F3EE1B /* AppDelegate.m */,
-				C83E007718E9160600F3EE1B /* ViewController.h */,
-				C83E007818E9160600F3EE1B /* ViewController.m */,
-				C837D61E18EBFF2B003A86A8 /* MenuTableController.h */,
-				C837D61F18EBFF2B003A86A8 /* MenuTableController.m */,
+				C8DC4BD71984B50E00897069 /* Hours Data */,
+				C83E00AD18E916C100F3EE1B /* Food Data */,
+				C8DC4BD61984B4AB00897069 /* VC */,
 				C837D62118ECE6EE003A86A8 /* MenuLoader.h */,
 				C837D62218ECE6EE003A86A8 /* MenuLoader.m */,
 				C8463F071957E1830028E1DD /* MenuCell.h */,
 				C8463F081957E1830028E1DD /* MenuCell.m */,
-				846F8A33195BDFBB000401E8 /* DiningHoursViewController.h */,
-				846F8A34195BDFBB000401E8 /* DiningHoursViewController.m */,
 				C88904B41975542E003B8588 /* HMSegmentedControl.h */,
 				C88904B51975542E003B8588 /* HMSegmentedControl.m */,
 				C88904B119711015003B8588 /* Main.storyboard */,
@@ -267,9 +281,10 @@
 				C83E009C18E9167700F3EE1B /* XPathQuery.m */,
 			);
 			name = TFHpple;
+			path = "Bruin Dining";
 			sourceTree = "<group>";
 		};
-		C83E00AD18E916C100F3EE1B /* Dining Data */ = {
+		C83E00AD18E916C100F3EE1B /* Food Data */ = {
 			isa = PBXGroup;
 			children = (
 				C83E00A118E916B500F3EE1B /* MenuItem.h */,
@@ -281,7 +296,33 @@
 				C83E00A718E916B500F3EE1B /* DiningHall.h */,
 				C83E00A818E916B500F3EE1B /* DiningHall.m */,
 			);
-			name = "Dining Data";
+			name = "Food Data";
+			sourceTree = "<group>";
+		};
+		C8DC4BD61984B4AB00897069 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				C83E007718E9160600F3EE1B /* ViewController.h */,
+				C83E007818E9160600F3EE1B /* ViewController.m */,
+				C837D61E18EBFF2B003A86A8 /* MenuTableController.h */,
+				C837D61F18EBFF2B003A86A8 /* MenuTableController.m */,
+				846F8A33195BDFBB000401E8 /* DiningHoursViewController.h */,
+				846F8A34195BDFBB000401E8 /* DiningHoursViewController.m */,
+			);
+			name = VC;
+			sourceTree = "<group>";
+		};
+		C8DC4BD71984B50E00897069 /* Hours Data */ = {
+			isa = PBXGroup;
+			children = (
+				C8DC4BD81984B5C300897069 /* Hours.h */,
+				C8DC4BD91984B5C300897069 /* Hours.m */,
+				C8DC4BDB1984B64400897069 /* HourMeal.h */,
+				C8DC4BDC1984B64400897069 /* HourMeal.m */,
+				C8DC4BDE1984B66600897069 /* HourHalls.h */,
+				C8DC4BDF1984B66600897069 /* HourHalls.m */,
+			);
+			name = "Hours Data";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -364,12 +405,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8D1B08D1962ADB300A823AA /* star_none.png in Resources */,
+				C8DC4BE4198A58A600897069 /* hours.png in Resources */,
 				C88904B319711015003B8588 /* Main.storyboard in Resources */,
+				C8DC4BE21989F33200897069 /* hours@2x.png in Resources */,
 				C88904B819766767003B8588 /* open.png in Resources */,
 				C8D1B08C1962ADB300A823AA /* star_full.png in Resources */,
 				C83E007B18E9160600F3EE1B /* Images.xcassets in Resources */,
 				C88FEB9B1979452C002AFCEB /* closed.png in Resources */,
 				C83E006D18E9160500F3EE1B /* InfoPlist.strings in Resources */,
+				C8DC4BE6198A59DF00897069 /* hours_selected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,14 +435,17 @@
 				C83E007918E9160600F3EE1B /* ViewController.m in Sources */,
 				C83E007318E9160500F3EE1B /* AppDelegate.m in Sources */,
 				C837D62018EBFF2B003A86A8 /* MenuTableController.m in Sources */,
+				C8DC4BDA1984B5C300897069 /* Hours.m in Sources */,
 				C83E006F18E9160500F3EE1B /* main.m in Sources */,
 				C83E00AC18E916B500F3EE1B /* DiningHall.m in Sources */,
 				C83E00A918E916B500F3EE1B /* MenuItem.m in Sources */,
 				C83E009D18E9167700F3EE1B /* TFHpple.m in Sources */,
+				C8DC4BE01984B66600897069 /* HourHalls.m in Sources */,
 				C83E009F18E9167700F3EE1B /* XPathQuery.m in Sources */,
 				C8463F091957E1830028E1DD /* MenuCell.m in Sources */,
 				C88904B61975542E003B8588 /* HMSegmentedControl.m in Sources */,
 				C837D62318ECE6EE003A86A8 /* MenuLoader.m in Sources */,
+				C8DC4BDD1984B64400897069 /* HourMeal.m in Sources */,
 				C83E00AA18E916B500F3EE1B /* Station.m in Sources */,
 				846F8A35195BDFBB000401E8 /* DiningHoursViewController.m in Sources */,
 				C83E00AB18E916B500F3EE1B /* Meal.m in Sources */,
