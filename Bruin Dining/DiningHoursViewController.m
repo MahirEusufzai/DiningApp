@@ -51,7 +51,11 @@
     
     if (!loadFailed)
     {
+<<<<<<< HEAD
         webViewDidFinishLoad = YES;
+=======
+         webViewDidFinishLoad = YES;
+>>>>>>> FETCH_HEAD
         [self.spinner stopAnimating];
     }
     
