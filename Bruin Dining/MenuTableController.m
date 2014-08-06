@@ -88,7 +88,7 @@
     
     MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuCell"];
     
-    if (cell == nil)
+    if (cell == nil) //This code makes no sense. If the cell is nil we should be making a new cell. (alloc/init) 
         cell = (MenuCell*)[tableView dequeueReusableCellWithIdentifier:@"MenuCell"];
     
     NSString *key =  [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];

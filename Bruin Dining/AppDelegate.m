@@ -26,8 +26,8 @@
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
    
     if (IS_OS_8_OR_LATER)
-        //NSLog(@"filler");
-        [application registerForRemoteNotifications];
+        NSLog(@"filler");
+        //[application registerForRemoteNotifications];
     else
         [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
     

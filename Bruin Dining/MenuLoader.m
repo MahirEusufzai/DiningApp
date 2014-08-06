@@ -80,7 +80,7 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
         if ([table childrenWithTagName:@"tr"].count>=4) //largest table
             hoursTable = table;
     if (!hoursTable)
-        hoursTable = tables[8];
+        hoursTable = tables[7]; //8
     
     NSArray *rows = [hoursTable childrenWithTagName:@"tr"];
     int count = 0;

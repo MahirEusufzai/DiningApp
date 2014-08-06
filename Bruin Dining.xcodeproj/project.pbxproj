@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		841133EE199284CA00B1CC84 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841133ED199284CA00B1CC84 /* SearchViewController.m */; };
 		846F8A35195BDFBB000401E8 /* DiningHoursViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F8A34195BDFBB000401E8 /* DiningHoursViewController.m */; };
 		C837D62018EBFF2B003A86A8 /* MenuTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = C837D61F18EBFF2B003A86A8 /* MenuTableController.m */; };
 		C837D62318ECE6EE003A86A8 /* MenuLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = C837D62218ECE6EE003A86A8 /* MenuLoader.m */; };
@@ -67,6 +68,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		841133EC199284CA00B1CC84 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		841133ED199284CA00B1CC84 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		846F8A33195BDFBB000401E8 /* DiningHoursViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiningHoursViewController.h; sourceTree = "<group>"; };
 		846F8A34195BDFBB000401E8 /* DiningHoursViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiningHoursViewController.m; sourceTree = "<group>"; };
 		C837D61E18EBFF2B003A86A8 /* MenuTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableController.h; sourceTree = "<group>"; };
@@ -308,6 +311,8 @@
 				C837D61F18EBFF2B003A86A8 /* MenuTableController.m */,
 				846F8A33195BDFBB000401E8 /* DiningHoursViewController.h */,
 				846F8A34195BDFBB000401E8 /* DiningHoursViewController.m */,
+				841133EC199284CA00B1CC84 /* SearchViewController.h */,
+				841133ED199284CA00B1CC84 /* SearchViewController.m */,
 			);
 			name = VC;
 			sourceTree = "<group>";
@@ -373,7 +378,7 @@
 				ORGANIZATIONNAME = "Mahir Eusufzai";
 				TargetAttributes = {
 					C83E005E18E9160400F3EE1B = {
-						DevelopmentTeam = Y5T38JMS29;
+						DevelopmentTeam = X8C323275L;
 					};
 					C83E007F18E9160600F3EE1B = {
 						TestTargetID = C83E005E18E9160400F3EE1B;
@@ -438,6 +443,7 @@
 				C8DC4BDA1984B5C300897069 /* Hours.m in Sources */,
 				C83E006F18E9160500F3EE1B /* main.m in Sources */,
 				C83E00AC18E916B500F3EE1B /* DiningHall.m in Sources */,
+				841133EE199284CA00B1CC84 /* SearchViewController.m in Sources */,
 				C83E00A918E916B500F3EE1B /* MenuItem.m in Sources */,
 				C83E009D18E9167700F3EE1B /* TFHpple.m in Sources */,
 				C8DC4BE01984B66600897069 /* HourHalls.m in Sources */,
