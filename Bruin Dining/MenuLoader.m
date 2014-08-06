@@ -24,7 +24,7 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     return self;
 }
 
-- (NSString*)determineMealFromTime:(NSDate*)time data:(TFHpple*)data {
+- (MealType)determineMealFromTime:(NSDate*)time data:(TFHpple*)data {
     
  //   [self setHours];
     
@@ -34,21 +34,20 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     NSComparisonResult lunchComparison = [[NSDate date] compare : lunch];
     NSComparisonResult dinnerComparison = [[NSDate date] compare : dinner];
     
-    if (lunchComparison == NSOrderedAscending)
-        return @"breakfast";
-    else if (dinnerComparison == NSOrderedAscending)
-        return @"lunch";
+    if (lunchComparison == NSOrderedAscending) //<lunch
+        return MealTypeBreakfast;
+    else if (dinnerComparison == NSOrderedAscending) //<dinner
+        return MealTypeLunch;
     else
-        return @"dinner";
+        return MealTypeDinner;
     
     /*
-     
      
      if      < lunch, show breakfast
      eles if < dinner, show lunch
      eles              show dinner
+     
      */
-    
     
 }
 
@@ -103,7 +102,10 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     
 }
 - (void)setRow:(TFHppleElement*)row Named:(NSString*)hallName ForHours:(Hours*)h {
-    NSArray *meals = [NSArray arrayWithObjects:@"breakfast",@"lunch", @"dinner", nil];
+    NSArray *meals = [NSArray arrayWithObjects:
+                      [NSNumber numberWithInt:MealTypeBreakfast],
+                       [NSNumber numberWithInt:MealTypeLunch],
+                       [NSNumber numberWithInt:MealTypeDinner], nil];
    
     NSArray *td = [row childrenWithTagName:@"td"];
     for (int i = 1; i <=3; i++) {
@@ -112,7 +114,7 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
         
         NSString *opening = [strong[0] firstChildWithTagName:@"text"].content;
         NSDate *openingAsDate = [self dateFromString:opening];
-        [h addOpeningTime:openingAsDate ToMeal:meals[i-1] Hall:hallName];
+        [h addOpeningTime:openingAsDate ToMeal:[meals[i-1] intValue] Hall:hallName];
         NSDate *closingAsDate;
         if (openingAsDate){
         NSString *closing = [strong[1] firstChildWithTagName:@"text"].content;
@@ -121,23 +123,24 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
         else
         closingAsDate = nil;
         
-        [h addClosingTime:closingAsDate ToMeal:meals[i-1] Hall:hallName];
+        [h addClosingTime:closingAsDate ToMeal:[meals[i-1] intValue] Hall:hallName];
     }
 
 }
 
 
-- (Meal *)loadDiningDataForMeal:(NSString *)meal Specificity:(Specificity)spec {
+- (Meal *)loadDiningDataForMeal:(MealType)meal Specificity:(Specificity)spec {
     
-    Meal *m = [[Meal alloc] initWithName:meal];
+    Meal *m = [[Meal alloc] initWithType:meal];
     //set hours
-    TFHpple *urlData = [self getNodeDataForURL:HOURS];
+    //TFHpple *urlData = [self getNodeDataForURL:HOURS];
     Hours *h = [self getHours];
     for (DiningHall *hall in [m.hallList allValues]) {
         NSArray *data = [h getHoursForMeal:meal Hall:hall.name];
         //NSArray *data = [self getHourDataForHall:hall.name Meal:meal data:urlData];
         [hall setHoursFromData:data];
     }
+    
     NSArray *tableCells = [self getTableEntriesForMeal:meal Type:spec];
     
     NSArray *hallNames = [NSArray arrayWithObjects: @"Covel", @"Hedrick", @"B Plate", @"Feast", nil];
@@ -186,34 +189,40 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     return m;
 }
 
-- (NSArray*)getTableEntriesForMeal:(NSString *)meal Type:(Specificity)spec {
+- (NSArray*)getTableEntriesForMeal:(MealType)mealType Type:(Specificity)spec {
     
     NSString *url;
-    
+    NSString* meal = [Meal stringForMealType:mealType];
     //no summary menu available for breakfast, so always so full menu
-    if ([meal isEqualToString:@"breakfast"]){
-        url = BREAKFAST_COMPLETE;
+    switch (mealType) {
+        case MealTypeBreakfast:
+            url = BREAKFAST_COMPLETE;
+            break;
+        case MealTypeLunch:
+            if (spec == specificitySummary)
+                url = SUMMARY;
+            else
+                url = LUNCH_COMPLETE;
+            break;
+        case MealTypeDinner:
+            if (spec == specificitySummary)
+                url = SUMMARY;
+            else
+                url = DINNER_COMPLETE;
+        default:
+            break;
     }
-    //summary available for lunch and dinner
-    else if (spec == specificitySummary)
-        url = SUMMARY;
-    
-    else if ([meal isEqualToString:@"lunch"])
-        url = LUNCH_COMPLETE;
-    
-    else
-        url = DINNER_COMPLETE;
     
     TFHpple *parser = [self getNodeDataForURL:url];
     
     NSString *TDString = @"//td[starts-with(@class, 'menugridcell')]";
     
-    if ((![meal isEqualToString:@"breakfast"]) && spec == specificitySummary) {
+    if ((mealType != MealTypeBreakfast) && spec == specificitySummary) {
         
         NSString *queryString = @"//table[starts-with(@class, 'menugridtable')]";
         NSArray *mealCells = [parser searchWithXPathQuery:queryString];
         
-        if ([meal isEqualToString:@"lunch"])
+        if (mealType == MealTypeLunch)
             return [mealCells[0] searchWithXPathQuery:TDString];
         else
             return [mealCells[1] searchWithXPathQuery:TDString];
@@ -360,4 +369,17 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     return nil;
 }
 
++(MealType)MealAfterMeal:(MealType)currentMeal {
+    if (currentMeal == MealTypeDinner)
+        return -1;
+    else
+        return currentMeal+1;
+}
+
++(MealType)MealBeforeMeal:(MealType)currentMeal {
+    if (currentMeal == MealTypeBreakfast)
+        return -1;
+    else
+        return currentMeal-1;
+}
 @end

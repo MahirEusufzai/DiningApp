@@ -25,22 +25,22 @@
      
 }
 
-- (void)addOpeningTime:(NSDate *)opening ToMeal:(NSString *)meal Hall:(NSString *)hall {
+- (void)addOpeningTime:(NSDate *)opening ToMeal:(MealType)meal Hall:(NSString *)hall {
     
     HourHalls* hall1 = [self.hallList objectForKey:hall];
     [hall1 setOpening:opening ForMeal:meal];
     
 }
 
-- (void)addClosingTime:(NSDate *)closing ToMeal:(NSString *)meal Hall:(NSString *)hall {
+- (void)addClosingTime:(NSDate *)closing ToMeal:(MealType)meal Hall:(NSString *)hall {
     
     HourHalls* hall1 = [self.hallList objectForKey:hall];
     [hall1 setClosing:closing ForMeal:meal];
     
 }
 
--(NSArray *)getHoursForMeal:(NSString *)meal Hall:(NSString *)hall {
-    
+-(NSArray *)getHoursForMeal:(MealType)meal Hall:(NSString *)hall {
+    NSLog(@"%d", meal);
     HourHalls* hall1 = [self.hallList objectForKey:[self realHallName:hall]];
     return [hall1 HoursForMeal:meal];
     

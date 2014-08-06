@@ -32,4 +32,16 @@
     
 }
 
+- (NSArray *)foodListForVegPref:(VegPreference)vegPref {
+    
+    switch (vegPref) {
+        case VegPrefAll:
+            return _foodList;
+        case VegPrefVegetarian:
+            return _vegetarianFoodList;
+        case VegPrefVegan:
+            return _vegetarianFoodList;
+    }
+}
+
 @end

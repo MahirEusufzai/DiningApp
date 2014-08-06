@@ -13,7 +13,7 @@
 
 @property (nonatomic, retain) NSMutableDictionary *mealList;
 
--(void)setOpening:(NSDate*)opening ForMeal:(NSString*)meal;
--(void)setClosing:(NSDate*)closing ForMeal:(NSString*)meal;
--(NSArray*)HoursForMeal:(NSString*)meal;
+-(void)setOpening:(NSDate*)opening ForMeal:(MealType)meal;
+-(void)setClosing:(NSDate*)closing ForMeal:(MealType)meal;
+-(NSArray*)HoursForMeal:(MealType)meal;
 @end

@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum VegPreference : NSUInteger {
+    VegPrefAll,
+    VegPrefVegetarian,
+    VegPrefVegan
+} VegPreference;
+
 @interface MenuItem : NSObject
 
 @property (nonatomic, retain) NSString *name;

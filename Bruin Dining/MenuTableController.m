@@ -27,9 +27,11 @@
 {
     self = [super initWithCoder:coder];
     if (self) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+
         MenuLoader *mL = [[MenuLoader alloc] init];
         self.currentMeal = [mL determineMealFromTime:nil data:nil];
-        self.title = self.currentMeal;
+        self.title = [Meal stringForMealType: self.currentMeal];
     }
     return self;
 }
@@ -52,6 +54,9 @@
     swiperight.direction=UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:swiperight];
     
+    [self.navigationItem setHidesBackButton:YES];
+
+    
     
     
 }
@@ -61,7 +66,7 @@
     NSString *key =  [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];
     //NSString *key = [self.hallPicker titleForSegmentAtIndex:self.hallPicker.selectedSegmentIndex];
     Station *s = [currentMenu getStation:section ForHall:key];
-    return s.foodList.count;
+    return [s foodListForVegPref:[self getVegPreference]].count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -88,7 +93,7 @@
     
     NSString *key =  [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];
     Station *s = [currentMenu getStation:indexPath.section ForHall:key];
-    MenuItem* food = [s.foodList objectAtIndex:indexPath.row];
+    MenuItem* food = [[s foodListForVegPref:[self getVegPreference]] objectAtIndex:indexPath.row];
     
     cell.foodLabel.text = food.name;
     //  cell.foodLabel.font = [UIFont fontWithName:@"Helvetica Neue Light" size:12];
@@ -208,7 +213,7 @@
     else{
         NSInteger time = [currHall getTimeUntilOpens];
         if (time<0) //hall isn't open for current or subsequent meal
-            self.timeLabel.text = [NSString stringWithFormat:@"Closed for %@", _currentMeal];
+            self.timeLabel.text = [NSString stringWithFormat:@"Closed for %@", [Meal stringForMealType: _currentMeal]];
         else
             self.timeLabel.text = [NSString stringWithFormat:@"Opens in %d hours %d minutes", time/3600, (time/60) %60];
     }
@@ -216,20 +221,55 @@
 
 -(void)swipeleft:(UISwipeGestureRecognizer*)gestureRecognizer
 {
-    
+    NSLog(@"left");
+    int newMeal = [MenuLoader MealAfterMeal:_currentMeal];
+    if (newMeal == -1)
+        return;
     MenuTableController *newMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"Menu"];
-    newMenu.currentMeal = @"dinner";
+    newMenu.currentMeal = newMeal;
     [self.navigationController pushViewController:newMenu animated:YES];
 }
 
 -(void)swiperight:(UISwipeGestureRecognizer*)gestureRecognizer
 {
     NSLog(@"right");
+    int newMeal = [MenuLoader MealBeforeMeal:_currentMeal];
+    if (newMeal == -1)
+        return;
+    
+    MenuTableController *newMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"Menu"];
+    newMenu.currentMeal = newMeal;
+    NSMutableArray *vcs =  [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+    [vcs insertObject:newMenu atIndex:[vcs count]-1];
+    [self.navigationController setViewControllers:vcs animated:NO];
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -- veg preferences
+
+-(VegPreference)getVegPreference {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *pref = [defaults stringForKey:@"vegPref"];
+    
+    if (!pref) {
+        [defaults setObject:[NSNumber numberWithInt:VegPrefAll] forKey:@"parseID"];
+        [defaults synchronize];
+        return VegPrefAll;
+    }
+    else
+        return [[defaults objectForKey:@"vegPref"]intValue];
+}
+
+-(void) vegPrefChanged {
+    
+    [_table reloadData];
 }
 
 @end

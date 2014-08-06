@@ -7,11 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "Meal.h"
 @interface HourMeal : NSObject
+
 
 @property (nonatomic, retain) NSDate *openingTime;
 @property (nonatomic, retain) NSDate *closingTime;
 
 -(NSArray*)getHours;
++ (NSString*)stringForMealType:(MealType)mealType;
+
 @end

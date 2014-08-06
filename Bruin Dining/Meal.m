@@ -1,3 +1,4 @@
+
 //
 //  Meal.m
 //  UCLA_Dining
@@ -11,12 +12,12 @@
 @implementation Meal
 
 
-- (id) initWithName:(NSString*)n
+- (id) initWithType:(MealType)meal
 {
     self = [super init];
     if (self) {
         
-        self.name = n;
+        self.name = [Meal stringForMealType:meal];
         self.hallList = [[NSMutableDictionary alloc] init];
       
         //TO DO: Don't hard code dining hall names
@@ -42,5 +43,10 @@
     return [stations objectAtIndex:stationIndex];
 
     
+}
+
++ (NSString *)stringForMealType:(MealType)mealType {
+    NSArray *m = [NSArray arrayWithObjects:@"Breakfast", @"Lunch", @"Dinner", nil];
+    return m[mealType];
 }
 @end

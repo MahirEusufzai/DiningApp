@@ -14,7 +14,7 @@
 @property (nonatomic, retain) NSMutableDictionary *hallList;
 
 - (void) addHall:(NSString*)hallName;
-- (void) addOpeningTime:(NSDate*)opening ToMeal:(NSString*)meal Hall:(NSString*)hall;
-- (void) addClosingTime:(NSDate*)closing ToMeal:(NSString*)meal Hall:(NSString*)hall;
-- (NSArray*) getHoursForMeal:(NSString*) meal Hall:(NSString*) hall;
+- (void) addOpeningTime:(NSDate*)opening ToMeal:(MealType)meal Hall:(NSString*)hall;
+- (void) addClosingTime:(NSDate*)closing ToMeal:(MealType)meal Hall:(NSString*)hall;
+- (NSArray*) getHoursForMeal:(MealType) meal Hall:(NSString*) hall;
 @end

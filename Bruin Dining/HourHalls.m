@@ -15,29 +15,29 @@
     self = [super init];
     if (self) {
         self.mealList = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-        [[HourMeal alloc]init], @"breakfast",
-        [[HourMeal alloc]init], @"lunch",
-        [[HourMeal alloc]init], @"dinner",
+        [[HourMeal alloc]init], @"Breakfast",
+        [[HourMeal alloc]init], @"Lunch",
+        [[HourMeal alloc]init], @"Dinner",
         nil];
     }
     return self;
 }
-- (void)setOpening:(NSDate *)opening ForMeal:(NSString *)meal {
+- (void)setOpening:(NSDate *)opening ForMeal:(MealType)meal {
     
-    HourMeal *m = [self.mealList objectForKey:meal];
+    HourMeal *m = [self.mealList objectForKey:[Meal stringForMealType:meal]];
     m.openingTime = opening;
+
 }
 
-- (void)setClosing:(NSDate *)closing ForMeal:(NSString *)meal {
+- (void)setClosing:(NSDate *)closing ForMeal:(MealType)meal {
   
-    HourMeal *m = [self.mealList objectForKey:meal];
+    HourMeal *m = [self.mealList objectForKey:[Meal stringForMealType:meal]];
     m.closingTime = closing;
+
 }
 
-- (NSArray *)HoursForMeal:(NSString *)meal {
-    
-    HourMeal *m = [self.mealList objectForKey:meal];
-    
+- (NSArray *)HoursForMeal:(MealType)meal {
+    HourMeal *m = [self.mealList objectForKey:[Meal stringForMealType:meal]];
     return [m getHours];
 }
 @end

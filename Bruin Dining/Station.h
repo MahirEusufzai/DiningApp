@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "MenuItem.h"
 
+
+
 @interface Station : NSObject
     
 
@@ -19,4 +21,5 @@
 
 - (id) initWithName:(NSString*)n;
 - (void) addFood:(MenuItem*)food;
+-(NSArray*)foodListForVegPref:(VegPreference)vegPref;
 @end

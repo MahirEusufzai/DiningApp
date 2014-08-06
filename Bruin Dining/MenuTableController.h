@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DiningHall.h"
+#import "Meal.h"
 #import "MenuLoader.h"
 #import "MenuCell.h"
 #import "HMSegmentedControl.h"
@@ -29,7 +29,7 @@
 @property (nonatomic, retain) IBOutlet UILabel *hallName;
 @property (nonatomic, retain) IBOutlet UILabel *timeLabel;
 
-@property (nonatomic, retain) NSString *currentMeal;
+@property (nonatomic, assign) MealType currentMeal;
 - (void) switchSpecific;
 - (void) switchHall;
 @end
