@@ -242,15 +242,16 @@
             </objects>
             <point key="canvasLocation" x="340" y="681"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Search View Controller-->
         <scene sceneID="Nwz-rn-nsy">
             <objects>
-                <tableViewController id="0RV-cY-xLJ" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zCH-a9-1Z3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController id="0RV-cY-xLJ" customClass="SearchViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="p6F-Ob-d7G">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableFooterView" appearanceType="aqua" contentMode="redraw" id="6ij-OE-Y3m">
+                        <searchBar key="tableHeaderView" appearanceType="aqua" contentMode="redraw" id="6ij-OE-Y3m">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
@@ -272,11 +273,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="naD-lb-45z"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="3Aj-lk-Wyf" id="b0K-D0-45N"/>
                     </connections>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zCH-a9-1Z3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <searchDisplayController id="3Aj-lk-Wyf">
                     <connections>
                         <outlet property="delegate" destination="0RV-cY-xLJ" id="UYm-dt-7Ih"/>

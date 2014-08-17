@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		846F8A35195BDFBB000401E8 /* DiningHoursViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F8A34195BDFBB000401E8 /* DiningHoursViewController.m */; };
+		C815328F199CBDE60060D1AC /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C815328D199CBDE60060D1AC /* SearchViewController.m */; };
 		C837D62018EBFF2B003A86A8 /* MenuTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = C837D61F18EBFF2B003A86A8 /* MenuTableController.m */; };
 		C837D62318ECE6EE003A86A8 /* MenuLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = C837D62218ECE6EE003A86A8 /* MenuLoader.m */; };
 		C83E006518E9160500F3EE1B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C83E006418E9160500F3EE1B /* CoreGraphics.framework */; };
@@ -69,6 +70,8 @@
 /* Begin PBXFileReference section */
 		846F8A33195BDFBB000401E8 /* DiningHoursViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiningHoursViewController.h; sourceTree = "<group>"; };
 		846F8A34195BDFBB000401E8 /* DiningHoursViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiningHoursViewController.m; sourceTree = "<group>"; };
+		C815328D199CBDE60060D1AC /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		C815328E199CBDE60060D1AC /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		C837D61E18EBFF2B003A86A8 /* MenuTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableController.h; sourceTree = "<group>"; };
 		C837D61F18EBFF2B003A86A8 /* MenuTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableController.m; sourceTree = "<group>"; };
 		C837D62118ECE6EE003A86A8 /* MenuLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuLoader.h; sourceTree = "<group>"; };
@@ -302,6 +305,8 @@
 		C8DC4BD61984B4AB00897069 /* VC */ = {
 			isa = PBXGroup;
 			children = (
+				C815328D199CBDE60060D1AC /* SearchViewController.m */,
+				C815328E199CBDE60060D1AC /* SearchViewController.h */,
 				C83E007718E9160600F3EE1B /* ViewController.h */,
 				C83E007818E9160600F3EE1B /* ViewController.m */,
 				C837D61E18EBFF2B003A86A8 /* MenuTableController.h */,
@@ -438,6 +443,7 @@
 				C8DC4BDA1984B5C300897069 /* Hours.m in Sources */,
 				C83E006F18E9160500F3EE1B /* main.m in Sources */,
 				C83E00AC18E916B500F3EE1B /* DiningHall.m in Sources */,
+				C815328F199CBDE60060D1AC /* SearchViewController.m in Sources */,
 				C83E00A918E916B500F3EE1B /* MenuItem.m in Sources */,
 				C83E009D18E9167700F3EE1B /* TFHpple.m in Sources */,
 				C8DC4BE01984B66600897069 /* HourHalls.m in Sources */,
