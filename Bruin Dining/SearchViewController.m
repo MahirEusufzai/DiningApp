@@ -76,24 +76,38 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+/*
+    //old way
     static NSString *identifier = @"TVWGCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
     if (cell == nil)
     {
         NSLog(@"Making new menucell!");
+        //cell = [[MenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
+ */
     
+    MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuCell"];
+    
+    if (cell == nil){
+        cell = [[MenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MenuCell"];
+    }
     
     //When you give me food data we can load it here, we can display random foods for now but I'm not sure how to fetch that data using your API.
+    MenuItem* food;
     
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        cell.textLabel.text= [_searchResults objectAtIndex:indexPath.row];
+    if (tableView == self.searchDisplayController.searchResultsTableView){
+        food = [_searchResults objectAtIndex:indexPath.row];
     }
-    else {
-        cell.textLabel.text = [self.allFoodData objectAtIndex:indexPath.row];
+    else{
+        food= [self.allFoodData objectAtIndex:indexPath.row];
     }
+    
+    cell.foodLabel.text= food.name;
+    if (food.isVegetarian || food.isVegan)
+        cell.textLabel.textColor = [UIColor colorWithRed:0/255.0f green:100/255.0f blue:0/255.0f alpha:1]; //possibly distinguish vegetarian and vegan later
     
     return cell;
 }
@@ -169,30 +183,33 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    
-    //FOR TESTING: Loading a fake array of data
-    /*
-    MenuItem *item0 = [[MenuItem alloc] initWithName:@"Eggs" andURL:nil];
-    MenuItem *item1 = [[MenuItem alloc] initWithName:@"Ham" andURL:nil];
-    MenuItem *item2 = [[MenuItem alloc] initWithName:@"Fruit" andURL:nil];
-    MenuItem *item3 = [[MenuItem alloc] initWithName:@"Burger" andURL:nil];
-    MenuItem *item4 = [[MenuItem alloc] initWithName:@"Panakes" andURL:nil];
-    
-    _allFoodData = [[NSMutableArray alloc]init];
-    
-    [_allFoodData addObject:item0];
-    [_allFoodData addObject:item1];
-    [_allFoodData addObject:item2];
-    [_allFoodData addObject:item3];
-    [_allFoodData addObject:item4];
-     */
-    _allFoodData = [[NSMutableArray alloc] initWithArray:@[@"Eggs",@"Ham",@"Fruit",@"Burger",@"Pancakes",@"Yum"]];
-    
+    _allFoodData = [NSMutableArray array];
+    //fills allFoodData with MenuItem objects
+    [self addFoodsToArray:_allFoodData];
     
 }
 
+- (void) addFoodsToArray:(NSMutableArray*)targetArray {
+    
+    PFQuery * foodQuery = [PFQuery queryWithClassName:@"Food"];
+    
+    [foodQuery findObjectsInBackgroundWithBlock:^(NSArray * foods, NSError * error) {
+        if (error) {
+            NSLog(@"ERROR");
+        } else {
+            for (PFObject *foodRaw in foods) {
+                MenuItem *food = [[MenuItem alloc] initWithName:[foodRaw valueForKey:@"name"]  andURL:nil];
+                [targetArray addObject:food];
+            }
+            [self.tableView reloadData];
+        }
+    }];
+}
+
+- (void) hideViews {
+    
+    
+}
 -(void)viewDidAppear:(BOOL)animated
 {
     
