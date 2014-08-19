@@ -69,16 +69,17 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
 }
 
 - (Hours*)parseHoursFromServer {
-    
     Hours *h = [[Hours alloc] init];
     //set hours
     TFHpple *urlData = [self getNodeDataForURL:HOURS];
     
     NSArray *tables = [urlData searchWithXPathQuery:@"//table"];
     TFHppleElement *hoursTable;
-    for (TFHppleElement *table in tables)
-        if ([table childrenWithTagName:@"tr"].count>=4) //largest table
+    for (TFHppleElement *table in tables){
+        if ([table childrenWithTagName:@"tr"].count>=4) {//largest table
             hoursTable = table;
+        }
+    }
     if (!hoursTable)
         hoursTable = tables[8];
     
@@ -143,6 +144,7 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     
     NSArray *tableCells = [self getTableEntriesForMeal:meal Type:spec];
     
+    NSArray *halls = [tableCells]
     NSArray *hallNames = [NSArray arrayWithObjects: @"Covel", @"Hedrick", @"B Plate", @"Feast", nil];
     
     int count = 0;

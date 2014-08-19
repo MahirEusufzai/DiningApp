@@ -66,7 +66,6 @@
     }
     else
     {
-        NSLog(@"COUNT ROWS: %lu", (unsigned long)[self.allFoodData count]);
         return [self.allFoodData count];
     }
     
@@ -183,6 +182,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view addSubview:_spinner];
+    
+    
     _allFoodData = [NSMutableArray array];
     //fills allFoodData with MenuItem objects
     [self addFoodsToArray:_allFoodData];
@@ -190,6 +192,10 @@
 }
 
 - (void) addFoodsToArray:(NSMutableArray*)targetArray {
+   
+    _spinner.hidden = NO;
+    _spinner.center = self.view.center;
+    [_spinner startAnimating];
     
     PFQuery * foodQuery = [PFQuery queryWithClassName:@"Food"];
     
@@ -201,7 +207,9 @@
                 MenuItem *food = [[MenuItem alloc] initWithName:[foodRaw valueForKey:@"name"]  andURL:nil];
                 [targetArray addObject:food];
             }
+            [_spinner stopAnimating];
             [self.tableView reloadData];
+
         }
     }];
 }

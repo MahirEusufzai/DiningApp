@@ -246,8 +246,12 @@
         <scene sceneID="Nwz-rn-nsy">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zCH-a9-1Z3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" id="MQ2-eT-fIU">
+                    <rect key="frame" x="1" y="1" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </activityIndicatorView>
                 <tableViewController id="0RV-cY-xLJ" customClass="SearchViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="p6F-Ob-d7G">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="p6F-Ob-d7G">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -299,6 +303,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="3Aj-lk-Wyf" id="b0K-D0-45N"/>
+                        <outlet property="spinner" destination="MQ2-eT-fIU" id="Cqt-9Y-iZU"/>
                     </connections>
                 </tableViewController>
                 <searchDisplayController id="3Aj-lk-Wyf">
@@ -311,7 +316,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-507" y="860"/>
+            <point key="canvasLocation" x="-226" y="855"/>
         </scene>
     </scenes>
     <resources>

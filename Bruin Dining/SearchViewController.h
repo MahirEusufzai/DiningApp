@@ -12,5 +12,7 @@
 
 @property (nonatomic, strong) NSMutableArray* allFoodData;
 @property (nonatomic, strong) NSArray* searchResults;
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *spinner;
+
 
 @end
