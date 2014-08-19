@@ -144,7 +144,6 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     
     NSArray *tableCells = [self getTableEntriesForMeal:meal Type:spec];
     
-    NSArray *halls = [tableCells]
     NSArray *hallNames = [NSArray arrayWithObjects: @"Covel", @"Hedrick", @"B Plate", @"Feast", nil];
     
     int count = 0;
