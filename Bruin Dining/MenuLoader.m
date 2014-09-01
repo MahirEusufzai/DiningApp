@@ -24,15 +24,16 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     return self;
 }
 
-- (MealType)determineMealFromTime:(NSDate*)time data:(TFHpple*)data {
+- (MealType)determineCurrentMeal {
     
  //   [self setHours];
+    NSDate *currentDate = [NSDate date];
     
     NSDate *lunch = [self dateFromString:@"11:00am"];
     NSDate *dinner = [self dateFromString:@"5:00pm"];
     
-    NSComparisonResult lunchComparison = [[NSDate date] compare : lunch];
-    NSComparisonResult dinnerComparison = [[NSDate date] compare : dinner];
+    NSComparisonResult lunchComparison = [currentDate compare : lunch];
+    NSComparisonResult dinnerComparison = [currentDate compare : dinner];
     
     if (lunchComparison == NSOrderedAscending) //<lunch
         return MealTypeBreakfast;
@@ -102,6 +103,7 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     return h;
     
 }
+
 - (void)setRow:(TFHppleElement*)row Named:(NSString*)hallName ForHours:(Hours*)h {
     NSArray *meals = [NSArray arrayWithObjects:
                       [NSNumber numberWithInt:MealTypeBreakfast],
@@ -141,10 +143,17 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
         //NSArray *data = [self getHourDataForHall:hall.name Meal:meal data:urlData];
         [hall setHoursFromData:data];
     }
-    
+    TFHppleElement *table = [self gridTable:meal Type:spec];
+    NSArray *halls = [table searchWithXPathQuery:@"//td[starts-with(@class, 'menulocheader')]"];
+    NSMutableArray *hallNames = [NSMutableArray array];
+    for (TFHppleElement *hall in halls){
+        TFHppleElement* a = [hall firstChildWithTagName:@"a"];
+        TFHppleElement* text = [a firstChildWithTagName:@"text"];
+        [hallNames addObject:text.content];
+    }
     NSArray *tableCells = [self getTableEntriesForMeal:meal Type:spec];
     
-    NSArray *hallNames = [NSArray arrayWithObjects: @"Covel", @"Hedrick", @"B Plate", @"Feast", nil];
+    //NSArray *hallNames = [NSArray arrayWithObjects: @"Covel", @"Hedrick", @"B Plate", @"Feast", nil];
     
     int count = 0;
     
@@ -180,8 +189,8 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
                     [station addFood:food];
                 }
             }
-            DiningHall *curr = [m.hallList objectForKey:[hallNames objectAtIndex:count%4]];
-            [curr addStation:station];
+            NSString *hallName = [hallNames objectAtIndex:count%(hallNames.count)];
+            [m addStation:station ToHall:[DiningHall convertName:hallName]];
         }
         count++;
         
@@ -190,7 +199,7 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     return m;
 }
 
-- (NSArray*)getTableEntriesForMeal:(MealType)mealType Type:(Specificity)spec {
+- (TFHppleElement*) gridTable:(MealType)mealType Type:(Specificity)spec {
     
     NSString *url;
     NSString* meal = [Meal stringForMealType:mealType];
@@ -216,21 +225,26 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     
     TFHpple *parser = [self getNodeDataForURL:url];
     
+    NSString *queryString = @"//table[starts-with(@class, 'menugridtable')]";
+    NSArray *mealCells = [parser searchWithXPathQuery:queryString];
+    
+    if (spec == specificitySummary) {
+        if (mealType == MealTypeLunch)
+            return mealCells[0];
+        else if (mealType == MealTypeDinner)
+            return mealCells[1];
+    }
+    
+    return mealCells[0];
+
+}
+
+- (NSArray*)getTableEntriesForMeal:(MealType)mealType Type:(Specificity)spec {
+    
+    TFHppleElement *table = [self gridTable:mealType Type:spec];
     NSString *TDString = @"//td[starts-with(@class, 'menugridcell')]";
     
-    if ((mealType != MealTypeBreakfast) && spec == specificitySummary) {
-        
-        NSString *queryString = @"//table[starts-with(@class, 'menugridtable')]";
-        NSArray *mealCells = [parser searchWithXPathQuery:queryString];
-        
-        if (mealType == MealTypeLunch)
-            return [mealCells[0] searchWithXPathQuery:TDString];
-        else
-            return [mealCells[1] searchWithXPathQuery:TDString];
-        
-    }
-    return [parser searchWithXPathQuery:TDString];
-    
+    return [table searchWithXPathQuery:TDString];
 }
 
 #pragma mark -- hour data
@@ -383,4 +397,19 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     else
         return currentMeal-1;
 }
+
+- (BOOL)checkForWeekend:(NSDate *)aDate {
+    BOOL isWeekendDate = NO;
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSRange weekdayRange = [calendar maximumRangeOfUnit:NSWeekdayCalendarUnit];
+    NSDateComponents *components = [calendar components:NSWeekdayCalendarUnit fromDate:aDate];
+    NSUInteger weekdayOfDate = [components weekday];
+    
+    if (weekdayOfDate == weekdayRange.location || weekdayOfDate == weekdayRange.length) {
+        // The date falls somewhere on the first or last days of the week.
+        isWeekendDate = YES;
+    }
+    return isWeekendDate;
+}
+
 @end

@@ -45,6 +45,9 @@
 		C88904B61975542E003B8588 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C88904B51975542E003B8588 /* HMSegmentedControl.m */; };
 		C88904B819766767003B8588 /* open.png in Resources */ = {isa = PBXBuildFile; fileRef = C88904B719766767003B8588 /* open.png */; };
 		C88FEB9B1979452C002AFCEB /* closed.png in Resources */ = {isa = PBXBuildFile; fileRef = C88FEB9A1979452C002AFCEB /* closed.png */; };
+		C8A30BA119A9D6FC00249732 /* settingsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A30BA019A9D6FC00249732 /* settingsIcon.png */; };
+		C8A30BA319A9D8CA00249732 /* settingsIcon2.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A30BA219A9D8CA00249732 /* settingsIcon2.png */; };
+		C8A30BA719B4543500249732 /* Menu.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A30BA619B4543500249732 /* Menu.png */; };
 		C8C7BADC19613F2F005C862B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C83E006218E9160500F3EE1B /* Foundation.framework */; };
 		C8D1B08C1962ADB300A823AA /* star_full.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D1B08A1962ADB300A823AA /* star_full.png */; };
 		C8D1B08D1962ADB300A823AA /* star_none.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D1B08B1962ADB300A823AA /* star_none.png */; };
@@ -55,6 +58,8 @@
 		C8DC4BE21989F33200897069 /* hours@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8DC4BE11989F33100897069 /* hours@2x.png */; };
 		C8DC4BE4198A58A600897069 /* hours.png in Resources */ = {isa = PBXBuildFile; fileRef = C8DC4BE3198A58A600897069 /* hours.png */; };
 		C8DC4BE6198A59DF00897069 /* hours_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = C8DC4BE5198A59DF00897069 /* hours_selected.png */; };
+		C8F74B9319A89651002BCE6F /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8F74B9219A89651002BCE6F /* SettingsController.m */; };
+		C8F74B9619A89673002BCE6F /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8F74B9519A89673002BCE6F /* SettingsCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +130,9 @@
 		C88904B51975542E003B8588 /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
 		C88904B719766767003B8588 /* open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = open.png; path = "Bruin Dining/open.png"; sourceTree = "<group>"; };
 		C88FEB9A1979452C002AFCEB /* closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = closed.png; path = "Bruin Dining/closed.png"; sourceTree = "<group>"; };
+		C8A30BA019A9D6FC00249732 /* settingsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsIcon.png; sourceTree = "<group>"; };
+		C8A30BA219A9D8CA00249732 /* settingsIcon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsIcon2.png; sourceTree = "<group>"; };
+		C8A30BA619B4543500249732 /* Menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Menu.png; sourceTree = "<group>"; };
 		C8D1B08A1962ADB300A823AA /* star_full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_full.png; sourceTree = "<group>"; };
 		C8D1B08B1962ADB300A823AA /* star_none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_none.png; sourceTree = "<group>"; };
 		C8D1B08E196B447B00A823AA /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
@@ -137,6 +145,10 @@
 		C8DC4BE11989F33100897069 /* hours@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hours@2x.png"; sourceTree = "<group>"; };
 		C8DC4BE3198A58A600897069 /* hours.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hours.png; sourceTree = "<group>"; };
 		C8DC4BE5198A59DF00897069 /* hours_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hours_selected.png; sourceTree = "<group>"; };
+		C8F74B9119A89651002BCE6F /* SettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsController.h; sourceTree = "<group>"; };
+		C8F74B9219A89651002BCE6F /* SettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsController.m; sourceTree = "<group>"; };
+		C8F74B9419A89673002BCE6F /* SettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsCell.h; sourceTree = "<group>"; };
+		C8F74B9519A89673002BCE6F /* SettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,7 +195,10 @@
 				C88FEB9A1979452C002AFCEB /* closed.png */,
 				C8DC4BE11989F33100897069 /* hours@2x.png */,
 				C8DC4BE3198A58A600897069 /* hours.png */,
+				C8A30BA619B4543500249732 /* Menu.png */,
 				C8DC4BE5198A59DF00897069 /* hours_selected.png */,
+				C8A30BA019A9D6FC00249732 /* settingsIcon.png */,
+				C8A30BA219A9D8CA00249732 /* settingsIcon2.png */,
 				C83E00A018E9168800F3EE1B /* TFHpple */,
 				C83E006818E9160500F3EE1B /* Bruin Dining */,
 				C83E008718E9160600F3EE1B /* Bruin DiningTests */,
@@ -237,6 +252,10 @@
 				C8463F081957E1830028E1DD /* MenuCell.m */,
 				C88904B41975542E003B8588 /* HMSegmentedControl.h */,
 				C88904B51975542E003B8588 /* HMSegmentedControl.m */,
+				C8F74B9119A89651002BCE6F /* SettingsController.h */,
+				C8F74B9219A89651002BCE6F /* SettingsController.m */,
+				C8F74B9419A89673002BCE6F /* SettingsCell.h */,
+				C8F74B9519A89673002BCE6F /* SettingsCell.m */,
 				C88904B119711015003B8588 /* Main.storyboard */,
 				C83E007A18E9160600F3EE1B /* Images.xcassets */,
 				C83E006918E9160500F3EE1B /* Supporting Files */,
@@ -409,14 +428,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8A30BA319A9D8CA00249732 /* settingsIcon2.png in Resources */,
 				C8D1B08D1962ADB300A823AA /* star_none.png in Resources */,
 				C8DC4BE4198A58A600897069 /* hours.png in Resources */,
 				C88904B319711015003B8588 /* Main.storyboard in Resources */,
 				C8DC4BE21989F33200897069 /* hours@2x.png in Resources */,
 				C88904B819766767003B8588 /* open.png in Resources */,
+				C8A30BA119A9D6FC00249732 /* settingsIcon.png in Resources */,
 				C8D1B08C1962ADB300A823AA /* star_full.png in Resources */,
 				C83E007B18E9160600F3EE1B /* Images.xcassets in Resources */,
 				C88FEB9B1979452C002AFCEB /* closed.png in Resources */,
+				C8A30BA719B4543500249732 /* Menu.png in Resources */,
 				C83E006D18E9160500F3EE1B /* InfoPlist.strings in Resources */,
 				C8DC4BE6198A59DF00897069 /* hours_selected.png in Resources */,
 			);
@@ -440,12 +462,14 @@
 				C83E007918E9160600F3EE1B /* ViewController.m in Sources */,
 				C83E007318E9160500F3EE1B /* AppDelegate.m in Sources */,
 				C837D62018EBFF2B003A86A8 /* MenuTableController.m in Sources */,
+				C8F74B9319A89651002BCE6F /* SettingsController.m in Sources */,
 				C8DC4BDA1984B5C300897069 /* Hours.m in Sources */,
 				C83E006F18E9160500F3EE1B /* main.m in Sources */,
 				C83E00AC18E916B500F3EE1B /* DiningHall.m in Sources */,
 				C815328F199CBDE60060D1AC /* SearchViewController.m in Sources */,
 				C83E00A918E916B500F3EE1B /* MenuItem.m in Sources */,
 				C83E009D18E9167700F3EE1B /* TFHpple.m in Sources */,
+				C8F74B9619A89673002BCE6F /* SettingsCell.m in Sources */,
 				C8DC4BE01984B66600897069 /* HourHalls.m in Sources */,
 				C83E009F18E9167700F3EE1B /* XPathQuery.m in Sources */,
 				C8463F091957E1830028E1DD /* MenuCell.m in Sources */,

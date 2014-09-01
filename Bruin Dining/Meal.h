@@ -25,6 +25,7 @@ typedef enum MealType : NSUInteger {
 
 - (id) initWithType:(MealType)meal;
 - (void) addHall:(DiningHall*)hall;
+- (void) addStation:(Station*)station ToHall:(NSString*)hall;
 - (Station*)getStation:(int)stationIndex ForHall:(NSString*)hallName;
 + (NSString*)stringForMealType:(MealType)mealType;
 @end

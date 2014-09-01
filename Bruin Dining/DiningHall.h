@@ -28,4 +28,5 @@
 - (NSInteger) getTimeUntilOpens;
 - (NSInteger) getTimeUntilCloses;
 
++ (NSString*)convertName:(NSString*)name;
 @end

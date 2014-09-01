@@ -8,6 +8,7 @@
 
 #import "MenuTableController.h"
 
+const int PREFERENCE_TRANSLATION_HEIGHT = 120;
 @interface MenuTableController ()
 
 @end
@@ -28,10 +29,9 @@
     self = [super initWithCoder:coder];
     if (self) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-
         MenuLoader *mL = [[MenuLoader alloc] init];
-        self.currentMeal = [mL determineMealFromTime:nil data:nil];
-        self.title = [Meal stringForMealType: self.currentMeal];
+        self.currentMeal = [mL determineCurrentMeal];
+        
     }
     return self;
 }
@@ -39,10 +39,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
-    currentSpec = specificitySummary;
+    [self.navigationItem setTitle:[Meal stringForMealType: self.currentMeal]];
+    preferencesShowing = false;
+    currentSpec = [self summaryPreference];
+    _summarySwitch.on = (currentSpec == specificitySummary ? true : false);
     [self setCurrentMenu];
+    _vegSwitch.on = ([self getVegPreference] == VegPrefAll) ? false: true;
     
     [self.specificPicker addTarget:self action:@selector(switchSpecific) forControlEvents:UIControlEventValueChanged];
     
@@ -94,12 +96,7 @@
     NSString *key =  [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];
     Station *s = [currentMenu getStation:indexPath.section ForHall:key];
     MenuItem* food = [[s foodListForVegPref:[self getVegPreference]] objectAtIndex:indexPath.row];
-    
-    cell.foodLabel.text = food.name;
-    //  cell.foodLabel.font = [UIFont fontWithName:@"Helvetica Neue Light" size:12];
-    
-    if (food.isVegetarian || food.isVegan)
-        cell.foodLabel.textColor = [UIColor colorWithRed:0/255.0f green:100/255.0f blue:0/255.0f alpha:1]; //possibly distinguish vegetarian and vegan later
+    cell.menuItem = food;
     
     return cell;
 }
@@ -149,6 +146,11 @@
     
     //hide table while loading data
     self.table.hidden=YES;
+    self.summarySwitch.hidden = YES;
+    self.vegSwitch.hidden = YES;
+    _summaryLabel.hidden = YES;
+    _vegLabel.hidden = YES;
+    _hideSettingsButton.hidden = YES;
     self.spinner.hidden = NO;
     [self.spinner startAnimating];
     
@@ -156,11 +158,16 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         MenuLoader *mL = [[MenuLoader alloc] init];
-        currentMenu = [mL loadDiningDataForMeal:self.currentMeal Specificity:currentSpec];
+        currentMenu = [mL loadDiningDataForMeal:self.currentMeal Specificity:[self summaryPreference]];
         
         dispatch_async(dispatch_get_main_queue(), ^(void) {
             [self.spinner stopAnimating];
             self.table.hidden = NO;
+            _vegSwitch.hidden = NO;
+            _summarySwitch.hidden = NO;
+            _vegLabel.hidden = NO;
+            _summaryLabel.hidden = NO;
+            _hideSettingsButton.hidden = NO;
             [self setHours];
             [self.table reloadData];
             
@@ -188,7 +195,6 @@
     self.hallSelector.type = HMSegmentedControlTypeTextImages;
     self.hallSelector.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     self.hallSelector.font = [UIFont fontWithName:@"Helvetica Light" size:14];
-    // self.hallSelector.textColor = [UIColor whiteColor];
     self.hallSelector.backgroundColor = [UIColor colorWithRed:233/256.0 green:233/256.0 blue:233/256.0  alpha:1];
     
     self.hallSelector.sectionImages =  hallImages;
@@ -222,6 +228,9 @@
 -(void)swipeleft:(UISwipeGestureRecognizer*)gestureRecognizer
 {
     NSLog(@"left");
+    
+    if (preferencesShowing)
+        return; //temporary fix so that swiping uiswitch doesn't trigger function
     int newMeal = [MenuLoader MealAfterMeal:_currentMeal];
     if (newMeal == -1)
         return;
@@ -233,6 +242,10 @@
 -(void)swiperight:(UISwipeGestureRecognizer*)gestureRecognizer
 {
     NSLog(@"right");
+    
+    if (preferencesShowing)
+        return; //temporary fix so that swiping uiswitch doesn't trigger function
+
     int newMeal = [MenuLoader MealBeforeMeal:_currentMeal];
     if (newMeal == -1)
         return;
@@ -259,17 +272,67 @@
     NSString *pref = [defaults stringForKey:@"vegPref"];
     
     if (!pref) {
-        [defaults setObject:[NSNumber numberWithInt:VegPrefAll] forKey:@"parseID"];
+        [defaults setObject:[NSNumber numberWithInt:VegPrefAll] forKey:@"vegPref"];
         [defaults synchronize];
-        return VegPrefAll;
     }
-    else
-        return [[defaults objectForKey:@"vegPref"]intValue];
+    
+    return [[defaults objectForKey:@"vegPref"]intValue];
 }
 
+- (Specificity)summaryPreference {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *pref = [defaults stringForKey:@"summaryPref"];
+    
+    if (!pref) {
+        [defaults setObject:[NSNumber numberWithInt:specificitySummary] forKey:@"summaryPref"];
+        [defaults synchronize];
+    }
+    
+    return [[defaults objectForKey:@"summaryPref"]intValue];
+
+}
 -(void) vegPrefChanged {
     
     [_table reloadData];
 }
 
+- (void) changeVegPref:(id)sender {
+    VegPreference pref;
+    UISwitch *s = (UISwitch*)sender;
+    pref = (s.isOn ? VegPrefVegetarian : VegPrefAll);
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[NSNumber numberWithInt:pref] forKey:@"vegPref"];
+    [defaults synchronize];
+    [self vegPrefChanged];
+    
+}
+
+- (void)changeSummaryPref:(id)sender {
+    
+    UISwitch *s = (UISwitch*)sender;
+    currentSpec = s.isOn ? specificitySummary : specificityExplicit;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[NSNumber numberWithInt:currentSpec] forKey:@"summaryPref"];
+    [defaults synchronize];
+    [self setCurrentMenu];
+    
+}
+- (void)showPreferences:(id)sender {
+    int translation;
+    if (preferencesShowing)
+        translation = -PREFERENCE_TRANSLATION_HEIGHT;
+    else
+        translation = PREFERENCE_TRANSLATION_HEIGHT;
+    //animate tableview down
+    [UIView animateWithDuration:0.3
+                          delay:0
+                        options: UIViewAnimationCurveEaseOut
+                     animations:^{
+                         _table.center = CGPointMake(_table.center.x, _table.center.y+translation);
+                     }
+                     completion:^(BOOL finished){
+                     }];
+    preferencesShowing = !preferencesShowing;
+}
 @end

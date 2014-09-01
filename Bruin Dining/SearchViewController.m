@@ -104,10 +104,7 @@
         food= [self.allFoodData objectAtIndex:indexPath.row];
     }
     
-    cell.foodLabel.text= food.name;
-    if (food.isVegetarian || food.isVegan)
-        cell.textLabel.textColor = [UIColor colorWithRed:0/255.0f green:100/255.0f blue:0/255.0f alpha:1]; //possibly distinguish vegetarian and vegan later
-    
+    cell.menuItem = food;
     return cell;
 }
 

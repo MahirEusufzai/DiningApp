@@ -91,4 +91,15 @@
 - (BOOL)closedForNextMeal {
     return (_nextOpeningTime == nil);
 }
+
++ (NSString *)convertName:(NSString *)name {
+    
+    if ([name isEqualToString:@"FEAST at Rieber"]) {
+        return @"Feast";
+    }
+    else if ([name isEqualToString:@"Sproul"]){
+        return @"B Plate";
+    }
+    return name;
+}
 @end

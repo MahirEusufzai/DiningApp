@@ -50,8 +50,12 @@ Parse.Cloud.httpRequest({
         
         }
 
+        var foodArray = new Array();
+        var hallArray = new Array();
+        var mealArray = new Array();
 
         var count = 0;
+        console.log(gridCellArray.length);
         for (i = 0; i < gridCellArray.length; i++, count++) {
           
           var cellText = gridCellArray[i];
@@ -66,11 +70,12 @@ Parse.Cloud.httpRequest({
             start = cellText.indexOf(";\">");
 
             //if (i < 2) //for test
-             Parse.Cloud.run('push', {"food":food, "hall":halls[count%4], "meal":request.params.meal}, {});
-
+             //Parse.Cloud.run('push', {"food":food, "hall":halls[count%4], "meal":request.params.meal}, {});
+             foodArray.push(food);
+             hallArray.push(halls[count%4]);
           }
         }
-
+        Parse.Cloud.run('push', {"foodList":foodArray, "hallList":hallArray, "meal":request.params.meal}, {});
         response.success();
 
      },
@@ -140,15 +145,16 @@ Parse.Cloud.define("pushFavorites", function(request, response) {
 
 
 Parse.Cloud.define("push", function(request, response) {
-  
+  var foodList = request.params.foodList;
+  var hallList = request.params.hallList;
+
+  console.log("c " + foodList[0]);
+
+for (i = 0; i < foodList.length; i++) {
 var query = new Parse.Query(Parse.Installation);
-	query.equalTo("favorites", request.params.food);
- 	var message = request.params.hall + " is serving " + request.params.food + " for " + request.params.meal;
-	//response.success(message);
-	
-  var query = new Parse.Query(Parse.Installation);
-  query.equalTo("favorites", request.params.food);
- 
+	query.equalTo("favorites", foodList[i]);
+ 	var message = hallList[i]+ " is serving " + foodList[i] + " for " + request.params.meal;
+  //console.log(message);
   Parse.Push.send({
     where: query, // Set our Installation query
         data: {
@@ -163,6 +169,7 @@ var query = new Parse.Query(Parse.Installation);
     }
       });  
 
+}
 });
 
 
@@ -173,7 +180,6 @@ Parse.Cloud.job("pushTest", function(request, status) {
 	
 	var query = new Parse.Query(Parse.Installation);
 	query.equalTo("favorites", "Fried Eggs");
- 
 	Parse.Push.send({
 		where: query, // Set our Installation query
 		    data: {
@@ -324,13 +330,12 @@ Parse.Cloud.define("recordFavorite", function(request, response) {
       var name = foodList[i];
       //console.log("before name is " + name);
       var query = new Parse.Query(Food);
-      query.exists("name", name);
+      query.equalTo("name", name);
 
-      query.find({
-      success: function(results) {
-        console.log(results.length);
-        if(results.length == 0){
-          //console.log("before " + foodListCorrected.length);
+      query.count({
+      success: function(number) {
+        console.log(number);
+        if(number==0){
           var food = new Food();
           food.set("name", name);
           foodListCorrected.push(food);
@@ -342,7 +347,7 @@ Parse.Cloud.define("recordFavorite", function(request, response) {
 
       },
       error: function(error) {
-        console.log("error");
+        console.log(error);
       }
     });
 
@@ -353,3 +358,37 @@ Parse.Cloud.define("recordFavorite", function(request, response) {
   
 
 });
+
+
+
+
+
+/*
+Parse.Cloud.define("recordFavorite", function(request, response) {
+
+  var foodList = request.params.foodList; //string array of food names
+  var foodListCorrected = new Array();
+  var Food = Parse.Object.extend("Food");
+
+  var query = new Parse.Query(Food);
+  query.find().then(function(foods) {
+      for (i = 0; i < foodList.length; i++) {
+            var j;
+            for (j = 0; j < foods.length; j++){
+                if (foodList[i] == foods[j])
+                  break;
+            }
+            if (j==foods.length)
+                foodListCorrected.push(foodList[i]);
+      }
+      console.log(foodListCorrected.length);
+      return Parse.Object.saveAll(foodListCorrected);
+  }).then(function() {
+  // Everything is done!
+     
+  })
+ 
+});
+
+*/
+

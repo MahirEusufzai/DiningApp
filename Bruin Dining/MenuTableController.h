@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 #import "Meal.h"
 #import "MenuLoader.h"
 #import "MenuCell.h"
@@ -16,6 +17,7 @@
     
     Meal *currentMenu;
     Specificity currentSpec;
+    BOOL preferencesShowing;
     
 }
 
@@ -29,7 +31,18 @@
 @property (nonatomic, retain) IBOutlet UILabel *hallName;
 @property (nonatomic, retain) IBOutlet UILabel *timeLabel;
 
+@property (nonatomic, retain) IBOutlet UISwitch *vegSwitch;
+@property (nonatomic, retain) IBOutlet UISwitch *summarySwitch;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *preferencesButton;
+
+@property (nonatomic, retain) IBOutlet UILabel *vegLabel;
+@property (nonatomic, retain) IBOutlet UILabel *summaryLabel;
+@property (nonatomic, retain) IBOutlet UIButton *hideSettingsButton;
 @property (nonatomic, assign) MealType currentMeal;
 - (void) switchSpecific;
 - (void) switchHall;
+- (IBAction)showPreferences:(id)sender;
+- (IBAction)changeVegPref:(id)sender;
+- (IBAction)changeSummaryPref:(id)sender;
+
 @end

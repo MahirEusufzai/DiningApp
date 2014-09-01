@@ -49,4 +49,11 @@
     NSArray *m = [NSArray arrayWithObjects:@"Breakfast", @"Lunch", @"Dinner", nil];
     return m[mealType];
 }
+
+- (void)addStation:(Station *)station ToHall:(NSString *)hall {
+    
+    DiningHall *curr = [self.hallList objectForKey:hall];
+    [curr addStation:station];
+    
+}
 @end
