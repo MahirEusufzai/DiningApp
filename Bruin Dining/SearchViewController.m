@@ -60,38 +60,22 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (tableView == self.searchDisplayController.searchResultsTableView)
-    {
+    if (tableView == self.searchDisplayController.searchResultsTableView){
         return [_searchResults count];
     }
-    else
-    {
+    else{
         return [self.allFoodData count];
     }
-    
-    // return 10; //INCOMPLETE FOR NOW
-    
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-/*
-    //old way
-    static NSString *identifier = @"TVWGCell";
-    MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    
-    if (cell == nil)
-    {
-        NSLog(@"Making new menucell!");
-        //cell = [[MenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    }
- */
-    
+
     MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuCell"];
     
-    if (cell == nil){
-        cell = [[MenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MenuCell"];
+    if (!cell){
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MenuCell" owner:self options:nil];
+        cell = (MenuCell *)[nib objectAtIndex:0];
     }
     
     //When you give me food data we can load it here, we can display random foods for now but I'm not sure how to fetch that data using your API.
