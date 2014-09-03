@@ -24,20 +24,20 @@
 }
 - (void)setOpening:(NSDate *)opening ForMeal:(MealType)meal {
     
-    HourMeal *m = [self.mealList objectForKey:[Meal stringForMealType:meal]];
+    HourMeal *m = [self.mealList objectForKey:[MealTypes stringForMealType:meal]];
     m.openingTime = opening;
 
 }
 
 - (void)setClosing:(NSDate *)closing ForMeal:(MealType)meal {
   
-    HourMeal *m = [self.mealList objectForKey:[Meal stringForMealType:meal]];
+    HourMeal *m = [self.mealList objectForKey:[MealTypes stringForMealType:meal]];
     m.closingTime = closing;
 
 }
 
-- (NSArray *)HoursForMeal:(MealType)meal {
-    HourMeal *m = [self.mealList objectForKey:[Meal stringForMealType:meal]];
-    return [m getHours];
+- (HourMeal*)HoursForMeal:(MealType)meal {
+    return [self.mealList objectForKey:[MealTypes stringForMealType:meal]];
+    //return [m getHours];
 }
 @end

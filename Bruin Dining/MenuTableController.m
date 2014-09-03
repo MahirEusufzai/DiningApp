@@ -29,9 +29,7 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     self = [super initWithCoder:coder];
     if (self) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-        MenuLoader *mL = [[MenuLoader alloc] init];
-        self.currentMeal = [mL determineCurrentMeal];
-        
+        _currentMeal = MealTypeUnknown;
     }
     return self;
 }
@@ -39,10 +37,12 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.navigationItem setTitle:[Meal stringForMealType: self.currentMeal]];
     preferencesShowing = false;
     currentSpec = [self summaryPreference];
     _summarySwitch.on = (currentSpec == specificitySummary ? true : false);
+    if (_currentMeal != MealTypeUnknown){
+        [self.navigationItem setTitle:[MealTypes stringForMealType:_currentMeal]];
+    }
     [self setCurrentMenu];
     _vegSwitch.on = ([self getVegPreference] == VegPrefAll) ? false: true;
     
@@ -156,10 +156,8 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        MenuLoader *mL = [[MenuLoader alloc] init];
-        currentMenu = [mL loadDiningDataForMeal:self.currentMeal Specificity:[self summaryPreference]];
-        
+        MenuLoader *ml = [[MenuLoader alloc] init];
+        currentMenu = [ml mealForType:_currentMeal Specificity:[self summaryPreference]];
         dispatch_async(dispatch_get_main_queue(), ^(void) {
             [self.spinner stopAnimating];
             self.table.hidden = NO;
@@ -168,6 +166,7 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
             _vegLabel.hidden = NO;
             _summaryLabel.hidden = NO;
             _hideSettingsButton.hidden = NO;
+            [self.navigationItem setTitle:currentMenu.name];
             [self setHours];
             [self.table reloadData];
             
@@ -219,7 +218,7 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     else{
         NSInteger time = [currHall getTimeUntilOpens];
         if (time<0) //hall isn't open for current or subsequent meal
-            self.timeLabel.text = [NSString stringWithFormat:@"Closed for %@", [Meal stringForMealType: _currentMeal]];
+            self.timeLabel.text = [NSString stringWithFormat:@"Closed for %@", currentMenu.name];
         else
             self.timeLabel.text = [NSString stringWithFormat:@"Opens in %d hours %d minutes", time/3600, (time/60) %60];
     }
@@ -231,7 +230,8 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     
     if (preferencesShowing)
         return; //temporary fix so that swiping uiswitch doesn't trigger function
-    int newMeal = [MenuLoader MealAfterMeal:_currentMeal];
+    int newMeal = [MenuLoader MealAfterMeal:currentMenu.type];
+    NSLog(@"%d", newMeal);
     if (newMeal == -1)
         return;
     MenuTableController *newMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"Menu"];
@@ -246,7 +246,7 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     if (preferencesShowing)
         return; //temporary fix so that swiping uiswitch doesn't trigger function
 
-    int newMeal = [MenuLoader MealBeforeMeal:_currentMeal];
+    int newMeal = [MenuLoader MealBeforeMeal:currentMenu.type];
     if (newMeal == -1)
         return;
     

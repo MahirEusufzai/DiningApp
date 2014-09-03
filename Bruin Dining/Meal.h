@@ -8,12 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "DiningHall.h"
+#import "MealType.h"
 
-typedef enum MealType : NSUInteger {
-    MealTypeBreakfast,
-    MealTypeLunch,
-    MealTypeDinner
-} MealType;
 
 @interface Meal : NSObject {
     
@@ -21,12 +17,13 @@ typedef enum MealType : NSUInteger {
 
 @property (nonatomic, retain) NSMutableDictionary *hallList;
 @property (nonatomic, retain) NSString* name;
+@property (nonatomic, assign) MealType type;
+
 
 
 - (id) initWithType:(MealType)meal;
 - (void) addHall:(DiningHall*)hall;
 - (void) addStation:(Station*)station ToHall:(NSString*)hall;
 - (Station*)getStation:(int)stationIndex ForHall:(NSString*)hallName;
-+ (NSString*)stringForMealType:(MealType)mealType;
 @end
 

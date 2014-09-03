@@ -15,5 +15,5 @@
 
 -(void)setOpening:(NSDate*)opening ForMeal:(MealType)meal;
 -(void)setClosing:(NSDate*)closing ForMeal:(MealType)meal;
--(NSArray*)HoursForMeal:(MealType)meal;
+-(HourMeal*)HoursForMeal:(MealType)meal;
 @end

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Station.h"
+#import "HourMeal.h"
 
 @interface DiningHall : NSObject
 
@@ -21,7 +22,7 @@
 
 - (id) initWithName:(NSString*)n;
 - (void) addStation:(Station*)station;
-- (void) setHoursFromData:(NSArray*)data;
+- (void) setHoursFromData:(HourMeal*)data;
 - (BOOL) isOpen;
 - (BOOL) closedForCurrentMeal;
 - (BOOL) closedForNextMeal;

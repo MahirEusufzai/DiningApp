@@ -330,36 +330,6 @@
                                 <outlet property="delegate" destination="0RV-cY-xLJ" id="zta-bj-uae"/>
                             </connections>
                         </searchBar>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MenuCell" id="GCg-6f-eHH" customClass="MenuCell">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GCg-6f-eHH" id="QYJ-F7-x4z">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jjI-2D-hjg">
-                                            <rect key="frame" x="59" y="11" width="261" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="15"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="UR8-MO-DFz">
-                                            <rect key="frame" x="4" y="4" width="38" height="33"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" image="star_none.png">
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="registerFavorite:" destination="GCg-6f-eHH" eventType="touchUpInside" id="ttx-9r-3DW"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="favButton" destination="UR8-MO-DFz" id="ZSG-In-AmW"/>
-                                    <outlet property="name" destination="jjI-2D-hjg" id="2Dl-J0-oQO"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="0RV-cY-xLJ" id="kZF-QR-4KL"/>
                             <outlet property="delegate" destination="0RV-cY-xLJ" id="3ld-Pc-Guw"/>

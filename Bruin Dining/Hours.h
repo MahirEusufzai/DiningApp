@@ -16,5 +16,8 @@
 - (void) addHall:(NSString*)hallName;
 - (void) addOpeningTime:(NSDate*)opening ToMeal:(MealType)meal Hall:(NSString*)hall;
 - (void) addClosingTime:(NSDate*)closing ToMeal:(MealType)meal Hall:(NSString*)hall;
-- (NSArray*) getHoursForMeal:(MealType) meal Hall:(NSString*) hall;
+- (HourMeal*) getHoursForMeal:(MealType) meal Hall:(NSString*) hall;
+-(NSDate*)earliestOpeningForMeal:(MealType)meal;
+-(NSDate*)latestClosingForMeal:(MealType)meal;
+
 @end

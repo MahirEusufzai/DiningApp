@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Meal.h"
+#import "MealType.h"
 @interface HourMeal : NSObject
 
 
@@ -16,5 +16,4 @@
 
 -(NSArray*)getHours;
 + (NSString*)stringForMealType:(MealType)mealType;
-
 @end

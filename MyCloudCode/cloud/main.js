@@ -221,14 +221,15 @@ Parse.Cloud.define("checkForNewFoods", function(request, response) {
 for (i = 0; i < 1; i++) {
       var d = new Date();
       d.setDate(d.getDate()+i);
+      console.log("date is " + d.getDate());
       var month = d.getMonth()+1; //months start at 0
       var date = d.getDate();
       var year = d.getFullYear();
 
-      var urlTemplate= "http://menu.ha.ucla.edu/foodpro/default.asp?date=" + month + "%2F" + date + "%2F" + year +"&meal=" ; 
-      for (j = 1; j <=3; j++) {
+      var urlTemplate= "http://menu.ha.ucla.edu/foodpro/default.asp?date=" + month + "%2F" + date + "%2F" + year; 
+      //for (j = 1; j <=3; j++) {
 
-        Parse.Cloud.run('checkMeal2', {"url":(urlTemplate+j)}, {
+        Parse.Cloud.run('checkMeal2', {"url":(urlTemplate)}, {
           
           success: function(){
             //response.success();
@@ -239,8 +240,8 @@ for (i = 0; i < 1; i++) {
           }
         });
 
-      }
-}
+ }
+
 });
 
 
@@ -303,92 +304,93 @@ Parse.Cloud.httpRequest({
 
 });
 
-
-
-Parse.Cloud.define("recordFavorite", function(request, response) {
-
-  var foodList = request.params.foodList; //string array of food names
-  var foodListCorrected = new Array();
-  var Food = Parse.Object.extend("Food");
-
-  // Wrap your logic in a function
-  function process_food(i) {
-      // Are we done?
-      if (i == foodList.length) {
-          //console.log("count is " + foodListCorrected.length);
-          Parse.Object.saveAll(foodListCorrected, {
-              success: function(foodListCorrected) {
-                
-              },
-              error: function(foodListCorrected) {
-           
-              }
-          });
-          return;
-      }
-
-      var name = foodList[i];
-      //console.log("before name is " + name);
-      var query = new Parse.Query(Food);
-      query.equalTo("name", name);
-
-      query.count({
-      success: function(number) {
-        console.log(number);
-        if(number==0){
-          var food = new Food();
-          food.set("name", name);
-          foodListCorrected.push(food);
-        //  console.log(foodListCorrected.length);
-        } else {
-          //don't create new food
-        }
-        process_food(i+1)
-
-      },
-      error: function(error) {
-        console.log(error);
-      }
-    });
-
-  }
-
-  // Go! Call the function with the first food.
-  process_food(0);
-  
-
-});
-
-
-
-
-
 /*
+
 Parse.Cloud.define("recordFavorite", function(request, response) {
 
-  var foodList = request.params.foodList; //string array of food names
-  var foodListCorrected = new Array();
-  var Food = Parse.Object.extend("Food");
+    var foodList = request.params.foodList; //string array of food names
+    var foodListCorrected = new Array();
+    var Food = Parse.Object.extend("Food");
 
-  var query = new Parse.Query(Food);
-  query.find().then(function(foods) {
-      for (i = 0; i < foodList.length; i++) {
-            var j;
-            for (j = 0; j < foods.length; j++){
-                if (foodList[i] == foods[j])
-                  break;
+    // Wrap your logic in a function
+    function process_food(i) {
+        // Are we done?
+        if (i == foodList.length) {
+            //console.log("count is " + foodListCorrected.length);
+            Parse.Object.saveAll(foodListCorrected, {
+                success: function(foodListCorrected) {},
+                error: function(foodListCorrected) {}
+            });
+            return;
+        }
+
+        var name = foodList[i];
+        //console.log("before name is " + name);
+        var query = new Parse.Query(Food);
+        query.equalTo("name", name);
+
+        query.first({
+            success: function(results) {
+                if(!results){
+                    console.log("new");
+                    var food = new Food();
+                    food.set("name", name);
+                    foodListCorrected.push(food);
+                    // console.log(foodListCorrected.length);
+                } else {
+                    //don't create new food
+                    console.log("exists");
+                }
+                process_food(i+1)
+            },
+            error: function(error) {
+                console.log("error");
             }
-            if (j==foods.length)
-                foodListCorrected.push(foodList[i]);
-      }
-      console.log(foodListCorrected.length);
-      return Parse.Object.saveAll(foodListCorrected);
-  }).then(function() {
-  // Everything is done!
-     
-  })
- 
+        });
+
+    }
+
+    // Go! Call the function with the first food.
+    process_food(0);
+
 });
 
 */
 
+
+
+Parse.Cloud.define("recordFavorite", function(request, response) { 
+var foodList = request.params.foodList; //string array of food names 
+var saveThese = []; 
+
+for(var i = 0; i < foodList.length; ++i){ 
+var FoodClass = Parse.Object.extend("Food"); 
+var food = new FoodClass(); 
+food.set("name", foodList[i]); 
+saveThese.push(food); 
+} 
+Parse.Object.saveAll(saveThese, { 
+success: function(list){ 
+response.success(); 
+}, 
+error: function(error){ 
+response.error("Failure on saving food"); 
+} 
+}); 
+}); 
+
+Parse.Cloud.beforeSave("Food", function(request, response){ 
+var query = new Parse.Query("Food"); 
+query.equalTo("name", request.object.get("name")); 
+query.count({ 
+success: function(count){ 
+if(count > 0) 
+response.error("Food already exists"); 
+else 
+response.success(); 
+}, 
+error: function(error){ 
+response.error(); 
+} 
+}); 
+});

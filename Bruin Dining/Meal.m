@@ -16,8 +16,8 @@
 {
     self = [super init];
     if (self) {
-        
-        self.name = [Meal stringForMealType:meal];
+        self.type = meal;
+        self.name = [MealTypes stringForMealType:meal];
         self.hallList = [[NSMutableDictionary alloc] init];
       
         //TO DO: Don't hard code dining hall names
@@ -30,6 +30,7 @@
     }
     return self;
 }
+
 
 - (void)addHall:(DiningHall *)hall{
     [self.hallList setValue:hall forKey:hall.name];
@@ -45,10 +46,7 @@
     
 }
 
-+ (NSString *)stringForMealType:(MealType)mealType {
-    NSArray *m = [NSArray arrayWithObjects:@"Breakfast", @"Lunch", @"Dinner", nil];
-    return m[mealType];
-}
+
 
 - (void)addStation:(Station *)station ToHall:(NSString *)hall {
     

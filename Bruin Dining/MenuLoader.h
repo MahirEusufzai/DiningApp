@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Meal.h"
 #import "TFHpple.h"
+#import "Hours.h"
 
 typedef NS_ENUM(NSInteger, Specificity) {
     specificitySummary,
@@ -24,9 +25,9 @@ typedef NS_ENUM(NSInteger, Specificity) {
 }
 
 //specificity = summary vs full menu
-- (Meal*) loadDiningDataForMeal:(MealType)meal Specificity:(Specificity)spec;
+- (Meal*) mealForType:(MealType)meal Specificity:(Specificity)spec;
 - (void) loadHours;
-- (MealType)determineCurrentMeal;
+- (MealType)determineCurrentMealForHours:(Hours*)h;
 +(MealType)MealAfterMeal:(MealType)currentMeal;
 +(MealType)MealBeforeMeal:(MealType)currentMeal;
 

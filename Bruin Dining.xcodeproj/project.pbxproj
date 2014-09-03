@@ -48,6 +48,8 @@
 		C8A30BA119A9D6FC00249732 /* settingsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A30BA019A9D6FC00249732 /* settingsIcon.png */; };
 		C8A30BA319A9D8CA00249732 /* settingsIcon2.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A30BA219A9D8CA00249732 /* settingsIcon2.png */; };
 		C8A30BA719B4543500249732 /* Menu.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A30BA619B4543500249732 /* Menu.png */; };
+		C8A30BAB19B6ACCC00249732 /* MealType.m in Sources */ = {isa = PBXBuildFile; fileRef = C8A30BAA19B6ACCC00249732 /* MealType.m */; };
+		C8A30BAD19B7165100249732 /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8A30BAC19B7165100249732 /* MenuCell.xib */; };
 		C8C7BADC19613F2F005C862B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C83E006218E9160500F3EE1B /* Foundation.framework */; };
 		C8D1B08C1962ADB300A823AA /* star_full.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D1B08A1962ADB300A823AA /* star_full.png */; };
 		C8D1B08D1962ADB300A823AA /* star_none.png in Resources */ = {isa = PBXBuildFile; fileRef = C8D1B08B1962ADB300A823AA /* star_none.png */; };
@@ -133,6 +135,10 @@
 		C8A30BA019A9D6FC00249732 /* settingsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsIcon.png; sourceTree = "<group>"; };
 		C8A30BA219A9D8CA00249732 /* settingsIcon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsIcon2.png; sourceTree = "<group>"; };
 		C8A30BA619B4543500249732 /* Menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Menu.png; sourceTree = "<group>"; };
+		C8A30BA819B6A91200249732 /* MealTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MealTypes.h; sourceTree = "<group>"; };
+		C8A30BA919B6ACCC00249732 /* MealType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MealType.h; sourceTree = "<group>"; };
+		C8A30BAA19B6ACCC00249732 /* MealType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MealType.m; sourceTree = "<group>"; };
+		C8A30BAC19B7165100249732 /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
 		C8D1B08A1962ADB300A823AA /* star_full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_full.png; sourceTree = "<group>"; };
 		C8D1B08B1962ADB300A823AA /* star_none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_none.png; sourceTree = "<group>"; };
 		C8D1B08E196B447B00A823AA /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
@@ -250,6 +256,7 @@
 				C837D62218ECE6EE003A86A8 /* MenuLoader.m */,
 				C8463F071957E1830028E1DD /* MenuCell.h */,
 				C8463F081957E1830028E1DD /* MenuCell.m */,
+				C8A30BAC19B7165100249732 /* MenuCell.xib */,
 				C88904B41975542E003B8588 /* HMSegmentedControl.h */,
 				C88904B51975542E003B8588 /* HMSegmentedControl.m */,
 				C8F74B9119A89651002BCE6F /* SettingsController.h */,
@@ -317,6 +324,9 @@
 				C83E00A618E916B500F3EE1B /* Meal.m */,
 				C83E00A718E916B500F3EE1B /* DiningHall.h */,
 				C83E00A818E916B500F3EE1B /* DiningHall.m */,
+				C8A30BA819B6A91200249732 /* MealTypes.h */,
+				C8A30BA919B6ACCC00249732 /* MealType.h */,
+				C8A30BAA19B6ACCC00249732 /* MealType.m */,
 			);
 			name = "Food Data";
 			sourceTree = "<group>";
@@ -430,6 +440,7 @@
 			files = (
 				C8A30BA319A9D8CA00249732 /* settingsIcon2.png in Resources */,
 				C8D1B08D1962ADB300A823AA /* star_none.png in Resources */,
+				C8A30BAD19B7165100249732 /* MenuCell.xib in Resources */,
 				C8DC4BE4198A58A600897069 /* hours.png in Resources */,
 				C88904B319711015003B8588 /* Main.storyboard in Resources */,
 				C8DC4BE21989F33200897069 /* hours@2x.png in Resources */,
@@ -475,6 +486,7 @@
 				C8463F091957E1830028E1DD /* MenuCell.m in Sources */,
 				C88904B61975542E003B8588 /* HMSegmentedControl.m in Sources */,
 				C837D62318ECE6EE003A86A8 /* MenuLoader.m in Sources */,
+				C8A30BAB19B6ACCC00249732 /* MealType.m in Sources */,
 				C8DC4BDD1984B64400897069 /* HourMeal.m in Sources */,
 				C83E00AA18E916B500F3EE1B /* Station.m in Sources */,
 				846F8A35195BDFBB000401E8 /* DiningHoursViewController.m in Sources */,

@@ -29,18 +29,14 @@
     
 }
 
-- (void) setHoursFromData:(NSArray*)data {
+- (void) setHoursFromData:(HourMeal*)data {
     
-    if (data[0] != [NSNull null] && data[1] != [NSNull null]){
-    _openingTime = data[0];
-    _closingTime = data[1];
+    if (data.openingTime && data.closingTime){
+    _openingTime = data.openingTime;
+    _closingTime = data.closingTime;
     
     }
-   /*
-    if (data[2] != [NSNull null])
-    _nextOpeningTime = data[2];
-    */
-    
+
 }
 
 - (BOOL)isOpen {

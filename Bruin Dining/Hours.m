@@ -39,11 +39,9 @@
     
 }
 
--(NSArray *)getHoursForMeal:(MealType)meal Hall:(NSString *)hall {
-    NSLog(@"%d", meal);
+-(HourMeal*)getHoursForMeal:(MealType)meal Hall:(NSString *)hall {
     HourHalls* hall1 = [self.hallList objectForKey:[self realHallName:hall]];
     return [hall1 HoursForMeal:meal];
-    
 }
 
 - (NSString*) realHallName:(NSString*)oldName {
@@ -54,5 +52,31 @@
         return @"FEAST at Rieber";
     else
         return oldName;
+}
+
+- (NSDate *)earliestOpeningForMeal:(MealType)meal {
+   
+    NSDate *earliest;
+    
+    for (HourHalls *hall in [_hallList allValues]) {
+        NSDate *cur = [hall HoursForMeal:meal].openingTime;
+        if (cur && (!earliest || [earliest compare : cur] == NSOrderedAscending)){
+            earliest = cur;
+        }
+    }
+    return earliest;
+}
+
+- (NSDate *)latestClosingForMeal:(MealType)meal {
+    
+    NSDate *latest;
+    
+    for (HourHalls *hall in [_hallList allValues]) {
+        NSDate *cur = [hall HoursForMeal:meal].closingTime;
+        if (cur && (!latest || [cur compare : latest] == NSOrderedAscending)){
+            latest = cur;
+        }
+    }
+    return latest;
 }
 @end
