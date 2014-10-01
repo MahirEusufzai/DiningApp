@@ -13,7 +13,7 @@
 
 @property (nonatomic, retain) NSMutableDictionary *hallList;
 
-- (void) addHall:(NSString*)hallName;
+- (BOOL) addHall:(NSString*)hallName;
 - (void) addOpeningTime:(NSDate*)opening ToMeal:(MealType)meal Hall:(NSString*)hall;
 - (void) addClosingTime:(NSDate*)closing ToMeal:(MealType)meal Hall:(NSString*)hall;
 - (HourMeal*) getHoursForMeal:(MealType) meal Hall:(NSString*) hall;

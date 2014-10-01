@@ -10,24 +10,36 @@
 	<string>Bruin Dining</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>705C1BDD0A30BE1000BD5B9CFC2E19206697790B</key>
+		<string>https://github.com/MahirEusufzai/DiningApp.git</string>
 		<key>FEBD49DA-73ED-45BA-9113-AC3D5EC82B7F</key>
 		<string>https://github.com/willgu29/DiningApp.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Bruin Dining.xcodeproj/project.xcworkspace</string>
+	<string>Bruin Dining.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>FEBD49DA-73ED-45BA-9113-AC3D5EC82B7F</key>
+		<key>705C1BDD0A30BE1000BD5B9CFC2E19206697790B</key>
 		<string>../..</string>
+		<key>FEBD49DA-73ED-45BA-9113-AC3D5EC82B7F</key>
+		<string>../../../DiningApp</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/willgu29/DiningApp.git</string>
+	<string>https://github.com/MahirEusufzai/DiningApp.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>FEBD49DA-73ED-45BA-9113-AC3D5EC82B7F</string>
+	<string>705C1BDD0A30BE1000BD5B9CFC2E19206697790B</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>705C1BDD0A30BE1000BD5B9CFC2E19206697790B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Bruin%20Dining</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

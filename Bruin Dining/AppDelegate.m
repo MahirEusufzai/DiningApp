@@ -25,19 +25,26 @@
  
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
    
-    if (IS_OS_8_OR_LATER)
-        //NSLog(@"filler");
-        [application registerForRemoteNotifications];
-    else
+    if (IS_OS_8_OR_LATER){
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert) categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    }
+    else{
         [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+    }
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (![defaults objectForKey:@"needsTutorial"]){
+        [defaults setObject:[NSNumber numberWithBool:true] forKey:@"needsTutorial"];
+    }
+        
     return YES;
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 
 {
-    NSLog(@"device token method called");
+    //NSLog(@"device token method called");
     // Store the deviceToken in the current installation and save it to Parse.
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
@@ -49,7 +56,7 @@
 - (void)application:(UIApplication *)application
 didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    NSLog(@"failed");
+    //NSLog(@"failed");
 }
 
 - (void)application:(UIApplication *)application

@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Bruin Dining/MenuTableController.m"
-            timestampString = "431427477.022938"
+            timestampString = "432454260.421102"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -57,28 +57,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Bruin Dining/MenuLoader.m"
-            timestampString = "431426573.732511"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
-            landmarkName = "-mealForType:Specificity:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Bruin Dining/MenuTableController.m"
-            timestampString = "431427477.022938"
+            timestampString = "432454260.421102"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "-switchHall"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,13 +74,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Bruin Dining/MenuLoader.m"
-            timestampString = "431426573.732511"
+            timestampString = "433830351.198115"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "276"
-            endingLineNumber = "276"
-            landmarkName = "-getHourDataForHall:Meal:data:"
-            landmarkType = "5">
+            startingLineNumber = "333"
+            endingLineNumber = "333"
+            landmarkName = "@implementation MenuLoader"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -106,13 +90,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Bruin Dining/MenuLoader.m"
-            timestampString = "431426573.732511"
+            timestampString = "433830351.198115"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "295"
-            endingLineNumber = "295"
-            landmarkName = "-getHourDataForHall:Meal:data:"
-            landmarkType = "5">
+            startingLineNumber = "351"
+            endingLineNumber = "351"
+            landmarkName = "@implementation MenuLoader"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -138,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Bruin Dining/MenuLoader.m"
-            timestampString = "431414993.288705"
+            timestampString = "433830351.198115"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "-setRow:Named:ForHours:"
             landmarkType = "5">
          </BreakpointContent>
@@ -154,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Bruin Dining/MenuLoader.m"
-            timestampString = "431414993.288705"
+            timestampString = "433830351.198115"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "-setRow:Named:ForHours:"
             landmarkType = "5">
          </BreakpointContent>
@@ -170,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Bruin Dining/MenuLoader.m"
-            timestampString = "431414993.288705"
+            timestampString = "433830351.198115"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
             landmarkName = "-setRow:Named:ForHours:"
             landmarkType = "5">
          </BreakpointContent>
@@ -186,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Bruin Dining/MenuLoader.m"
-            timestampString = "431414993.288705"
+            timestampString = "433830351.198115"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
             landmarkName = "-setRow:Named:ForHours:"
             landmarkType = "5">
          </BreakpointContent>
@@ -202,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Bruin Dining/MenuLoader.m"
-            timestampString = "431426573.732511"
+            timestampString = "433830351.198115"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "247"
-            endingLineNumber = "247"
+            startingLineNumber = "248"
+            endingLineNumber = "248"
             landmarkName = "-gridTable:Type:"
             landmarkType = "5">
          </BreakpointContent>

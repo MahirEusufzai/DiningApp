@@ -28,7 +28,7 @@
     //We'll search through the data here once you give me data to use
     // NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"string CONTAINS[c] %@", searchText];
     
-    NSString *predicateFormat = @"%K CONTAINS[cd] %@";
+    NSString *predicateFormat = @"%K BEGINSWITH[cd] %@";
     NSString *searchAttribute = @"name";
     NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchAttribute, searchText];
     
@@ -57,7 +57,10 @@
 {
     [self.tableView reloadData];
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 50;
+}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView == self.searchDisplayController.searchResultsTableView){
@@ -70,7 +73,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
     MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuCell"];
     
     if (!cell){
@@ -166,23 +169,29 @@
     [self.view addSubview:_spinner];
     
     
+    UINib *cellNIB = [UINib nibWithNibName:@"MenuCell" bundle:[NSBundle mainBundle]];
+    [self.searchDisplayController.searchResultsTableView registerNib:cellNIB forCellReuseIdentifier:@"MenuCell"];
+    
     _allFoodData = [NSMutableArray array];
     //fills allFoodData with MenuItem objects
     [self addFoodsToArray:_allFoodData];
+    NSArray *a2  = [_allFoodData sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    NSLog(@"count is %d %d", _allFoodData.count, a2.count);
+    //[self.tableView reloadData];
     
 }
 
 - (void) addFoodsToArray:(NSMutableArray*)targetArray {
-   
+    
     _spinner.hidden = NO;
     _spinner.center = self.view.center;
     [_spinner startAnimating];
     
     PFQuery * foodQuery = [PFQuery queryWithClassName:@"Food"];
-    
+    foodQuery.limit = 1000;
     [foodQuery findObjectsInBackgroundWithBlock:^(NSArray * foods, NSError * error) {
         if (error) {
-            NSLog(@"ERROR");
+           // NSLog(@"ERROR");
         } else {
             for (PFObject *foodRaw in foods) {
                 MenuItem *food = [[MenuItem alloc] initWithName:[foodRaw valueForKey:@"name"]  andURL:nil];
@@ -193,6 +202,8 @@
 
         }
     }];
+    
+
 }
 
 - (void) hideViews {

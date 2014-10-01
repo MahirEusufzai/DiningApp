@@ -38,6 +38,8 @@
 @property (nonatomic, retain) IBOutlet UILabel *vegLabel;
 @property (nonatomic, retain) IBOutlet UILabel *summaryLabel;
 @property (nonatomic, retain) IBOutlet UIButton *hideSettingsButton;
+
+@property (nonatomic, retain) IBOutlet UIView *tutorial;
 @property (nonatomic, assign) MealType currentMeal;
 - (void) switchSpecific;
 - (void) switchHall;

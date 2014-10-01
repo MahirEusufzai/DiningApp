@@ -93,7 +93,7 @@
     if ([name isEqualToString:@"FEAST at Rieber"]) {
         return @"Feast";
     }
-    else if ([name isEqualToString:@"Sproul"]){
+    else if ([name isEqualToString:@"Sproul"] || [name isEqualToString:@"Bruin Plate"]){
         return @"B Plate";
     }
     return name;

@@ -90,8 +90,10 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     
     MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuCell"];
     
-    if (cell == nil)
-        cell = (MenuCell*)[tableView dequeueReusableCellWithIdentifier:@"MenuCell"];
+    if (!cell){
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MenuCell" owner:self options:nil];
+        cell = (MenuCell *)[nib objectAtIndex:0];
+    }
     
     NSString *key =  [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];
     Station *s = [currentMenu getStation:indexPath.section ForHall:key];
@@ -168,6 +170,7 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
             _hideSettingsButton.hidden = NO;
             [self.navigationItem setTitle:currentMenu.name];
             [self setHours];
+            [self showSwipeTutorialIfNeeded];
             [self.table reloadData];
             
             
@@ -226,12 +229,11 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
 
 -(void)swipeleft:(UISwipeGestureRecognizer*)gestureRecognizer
 {
-    NSLog(@"left");
     
     if (preferencesShowing)
         return; //temporary fix so that swiping uiswitch doesn't trigger function
+    [self disableTutorial];
     int newMeal = [MenuLoader MealAfterMeal:currentMenu.type];
-    NSLog(@"%d", newMeal);
     if (newMeal == -1)
         return;
     MenuTableController *newMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"Menu"];
@@ -241,11 +243,10 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
 
 -(void)swiperight:(UISwipeGestureRecognizer*)gestureRecognizer
 {
-    NSLog(@"right");
     
     if (preferencesShowing)
         return; //temporary fix so that swiping uiswitch doesn't trigger function
-
+    [self disableTutorial];
     int newMeal = [MenuLoader MealBeforeMeal:currentMenu.type];
     if (newMeal == -1)
         return;
@@ -334,5 +335,42 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
                      completion:^(BOOL finished){
                      }];
     preferencesShowing = !preferencesShowing;
+}
+
+- (void) showSwipeTutorialIfNeeded {
+    
+    //determine if needed
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL shouldSet = [[defaults objectForKey:@"needsTutorial"] boolValue];
+    if (shouldSet) {
+        [UIView animateWithDuration:0.5
+                              delay:2.0
+                            options:UIViewAnimationOptionCurveEaseIn animations:^{
+            
+            _tutorial.alpha = 1.0;
+        }
+            completion:^(BOOL finished) {
+                             
+            [self disappearTheView];
+                             
+                         }];    }
+    
+}
+
+-(void)disappearTheView {
+    
+    [UIView animateWithDuration:.5
+                          delay:5.0
+                        options:UIViewAnimationCurveEaseOut
+                     animations:^{
+                         _tutorial.alpha = 0;
+                     }
+                     completion:NULL];
+}
+- (void)disableTutorial {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[NSNumber numberWithBool:false] forKey:@"needsTutorial"];
+    
 }
 @end

@@ -3,7 +3,7 @@
 // For example:
 
 
-Parse.Cloud.define("sendPushAlerts", function(request, response) { 
+Parse.Cloud.job("sendPushAlerts", function(request, response) { 
 
 var urlTemplate = "http://menu.ha.ucla.edu/foodpro/default.asp?meal="; //append number to end
 var meals = ["breakfast", "lunch", "dinner"];
@@ -87,8 +87,33 @@ Parse.Cloud.httpRequest({
 });
 
 });
+///******************
+Parse.Cloud.define("t", function(request, response) {   
 
 
+        Parse.Cloud.httpRequest({
+      url: "http://menu.ha.ucla.edu/foodpro/default.asp",
+      //url: "wwww.example.com",
+      success: function(httpResponse) {
+        // console.log(httpResponse.text);
+        var text = httpResponse.text;
+        var xpath = require("cloud/xpath.js"), dom = require("cloud/dom-parser.js").DOMParser;
+        var doc = new dom().parseFromString(text);
+        //var cells = xpath.select("//ul", doc);
+        var cells = xpath.select("//td[starts-with(@class, 'menugridcell')]", doc);
+
+        response.success("test " + cells.count);
+        var listNode = xpath.select("//ul", cells[0])[0]; //idk if works
+
+        //var cells = xpath.select("//head", doc);
+     },
+     error: function(httpResponse) {
+        console.error('Request failed with response code ' + httpResponse.status);
+      }
+});
+}); 
+
+//***********************
 Parse.Cloud.define("pushFavorites", function(request, response) {   	
 
 	Parse.Cloud.httpRequest({
@@ -104,7 +129,7 @@ Parse.Cloud.define("pushFavorites", function(request, response) {
     		text = text.substring(0,end+4);
 
     		var xpath = require("cloud/xpath.js"), dom = require("cloud/dom-parser.js").DOMParser;
-    		var doc = new dom().parseFromString(text);
+    		var doc = new dom().parseFromString(text, 'text/html');
     		var cells = xpath.select("//ul", doc);
     		//response.success(text);
     		//var cells = xpath.select("//td[starts-with(@class, 'menugridcell')]", doc);
@@ -216,12 +241,11 @@ Parse.Cloud.define("separateCells", function(request, response) {
 
 // getting all the food names
 
-Parse.Cloud.define("checkForNewFoods", function(request, response) { 
+Parse.Cloud.job("checkForNewFoods", function(request, response) { 
 
-for (i = 0; i < 1; i++) {
+for (i = 0; i < 30; i++) {
       var d = new Date();
       d.setDate(d.getDate()+i);
-      console.log("date is " + d.getDate());
       var month = d.getMonth()+1; //months start at 0
       var date = d.getDate();
       var year = d.getFullYear();

@@ -19,12 +19,21 @@
     return self;
 }
 
-- (void)addHall:(NSString *)hallName {
+- (BOOL)addHall:(NSString *)hallName {
+    NSLog(@"name is %@", hallName);
     
-    [self.hallList setValue:[[HourHalls alloc]init] forKey:hallName];
-     
+    if ([self isValidHallName:hallName]){
+        [self.hallList setValue:[[HourHalls alloc]init] forKey:hallName];
+        NSLog(@"is valid");
+        return true;
+    }
+    return false;
 }
 
+- (BOOL)isValidHallName:(NSString*)name {
+    
+    return  ([name isEqualToString:@"Covel"] || [name isEqualToString:@"De Neve"] || [name isEqualToString:@"Bruin Plate"] || [name isEqualToString:@"FEAST at Rieber"]);
+}
 - (void)addOpeningTime:(NSDate *)opening ToMeal:(MealType)meal Hall:(NSString *)hall {
     
     HourHalls* hall1 = [self.hallList objectForKey:hall];
@@ -47,7 +56,7 @@
 - (NSString*) realHallName:(NSString*)oldName {
     
     if ([oldName isEqualToString:@"B Plate"])
-        return @"Sproul";
+        return @"Bruin Plate";
     else if ([oldName isEqualToString:@"Feast"])
         return @"FEAST at Rieber";
     else
@@ -57,12 +66,20 @@
 - (NSDate *)earliestOpeningForMeal:(MealType)meal {
    
     NSDate *earliest;
-    
+    int count = 0;
     for (HourHalls *hall in [_hallList allValues]) {
+        NSLog(@"%d", _hallList.allValues.count);
         NSDate *cur = [hall HoursForMeal:meal].openingTime;
+       /*
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"h:mma"];
+        NSString *mealTime = [formatter stringFromDate:cur];
+        NSLog(@"%@ d is %@", hall mealTime);
+        */
         if (cur && (!earliest || [earliest compare : cur] == NSOrderedAscending)){
             earliest = cur;
         }
+        count++;
     }
     return earliest;
 }

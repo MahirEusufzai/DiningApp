@@ -22,7 +22,7 @@
       
         //TO DO: Don't hard code dining hall names
         
-        NSArray *names = [NSArray arrayWithObjects: @"Covel", @"Hedrick", @"B Plate", @"Feast", nil];
+        NSArray *names = [NSArray arrayWithObjects: @"Covel", @"De Neve", @"B Plate", @"Feast", nil];
         
         for (NSString *name in names)
             [self addHall:[[DiningHall alloc] initWithName:name]];
