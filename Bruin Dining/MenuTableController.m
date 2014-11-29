@@ -37,7 +37,9 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    preferencesShowing = false;
+    initialTablePosition = _table.frame.origin;
+    menuIsLoading = false;
+    //preferencesShowing = false;
     currentSpec = [self summaryPreference];
     _summarySwitch.on = (currentSpec == specificitySummary ? true : false);
     if (_currentMeal != MealTypeUnknown){
@@ -146,6 +148,21 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
 # pragma mark -- helper functions
 - (void) setCurrentMenu {
     
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    if (networkStatus == NotReachable) {
+        self.table.hidden = NO;
+        UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:@"Connection Error"
+                                                         message:@"Cannot connect to internet. Close app and try again later."
+                                                        delegate:self
+                                               cancelButtonTitle:nil
+                                               otherButtonTitles: nil];
+        [alert addButtonWithTitle:@"Ok"];
+        [alert show];
+        return;
+    }
+    
+    menuIsLoading = TRUE;
     //hide table while loading data
     self.table.hidden=YES;
     self.summarySwitch.hidden = YES;
@@ -172,7 +189,7 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
             [self setHours];
             [self showSwipeTutorialIfNeeded];
             [self.table reloadData];
-            
+            menuIsLoading = false;
             
         });
     });
@@ -196,7 +213,7 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     self.hallSelector.sectionTitles = hallNames;
     self.hallSelector.type = HMSegmentedControlTypeTextImages;
     self.hallSelector.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-    self.hallSelector.font = [UIFont fontWithName:@"Helvetica Light" size:14];
+    self.hallSelector.font = [UIFont fontWithName:@"Helvetica Light" size:13];
     self.hallSelector.backgroundColor = [UIColor colorWithRed:233/256.0 green:233/256.0 blue:233/256.0  alpha:1];
     
     self.hallSelector.sectionImages =  hallImages;
@@ -229,11 +246,14 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
 
 -(void)swipeleft:(UISwipeGestureRecognizer*)gestureRecognizer
 {
-    
-    if (preferencesShowing)
+    if ([self preferencesVisible])
         return; //temporary fix so that swiping uiswitch doesn't trigger function
     [self disableTutorial];
-    int newMeal = [MenuLoader MealAfterMeal:currentMenu.type];
+    //TO DO: Temporary fix, menutype isn't updated until loading finishes
+    //MealType curMeal = ((menuIsLoading && currentMenu.type == MealTypeUnknown) ? currentMenu.type + 1 : currentMenu.type);
+    MealType curMeal = currentMenu.type;
+    int newMeal = [MenuLoader MealAfterMeal:curMeal];
+    //NSLog(@"%d", newMeal);
     if (newMeal == -1)
         return;
     MenuTableController *newMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"Menu"];
@@ -243,11 +263,15 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
 
 -(void)swiperight:(UISwipeGestureRecognizer*)gestureRecognizer
 {
-    
-    if (preferencesShowing)
+    if ([self preferencesVisible])
         return; //temporary fix so that swiping uiswitch doesn't trigger function
     [self disableTutorial];
-    int newMeal = [MenuLoader MealBeforeMeal:currentMenu.type];
+    //TO DO: Temporary fix, menutype isn't updated until loading finishes
+    //MealType curMeal = ((menuIsLoading && currentMenu.type == MealTypeUnknown) ? currentMenu.type - 1 : currentMenu.type);
+    MealType curMeal = currentMenu.type;
+    int newMeal = [MenuLoader MealBeforeMeal:curMeal];
+    //NSLog(@"%d", newMeal);
+
     if (newMeal == -1)
         return;
     
@@ -321,7 +345,7 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
 }
 - (void)showPreferences:(id)sender {
     int translation;
-    if (preferencesShowing)
+    if ([self preferencesVisible])
         translation = -PREFERENCE_TRANSLATION_HEIGHT;
     else
         translation = PREFERENCE_TRANSLATION_HEIGHT;
@@ -334,15 +358,25 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
                      }
                      completion:^(BOOL finished){
                      }];
-    preferencesShowing = !preferencesShowing;
 }
 
 - (void) showSwipeTutorialIfNeeded {
     
     //determine if needed
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL shouldSet = [[defaults objectForKey:@"needsTutorial"] boolValue];
+    BOOL shouldSet = [[defaults objectForKey:@"needsSwipeTutorial"] boolValue];
     if (shouldSet) {
+        
+            //ios7
+            UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:@"Tutorial"
+                                                             message:@"Swipe left and right to change meals."
+                                                            delegate:self
+                                                   cancelButtonTitle:@"Cancel"
+                                                   otherButtonTitles: nil];
+            [alert addButtonWithTitle:@"Got it!"];
+            [alert show];
+        
+        /*
         [UIView animateWithDuration:0.5
                               delay:2.0
                             options:UIViewAnimationOptionCurveEaseIn animations:^{
@@ -353,14 +387,15 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
                              
             [self disappearTheView];
                              
-                         }];    }
+                         }];   */
+    }
     
 }
 
 -(void)disappearTheView {
     
     [UIView animateWithDuration:.5
-                          delay:5.0
+                          delay:10.0
                         options:UIViewAnimationCurveEaseOut
                      animations:^{
                          _tutorial.alpha = 0;
@@ -370,7 +405,23 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
 - (void)disableTutorial {
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[NSNumber numberWithBool:false] forKey:@"needsTutorial"];
+    [defaults setObject:[NSNumber numberWithBool:false] forKey:@"needsSwipeTutorial"];
     
+}
+
+# pragma mark -- iAD delegate
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+    
+    
+}
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner {
+}
+
+
+- (BOOL)preferencesVisible {
+    
+    return _table.frame.origin.y > initialTablePosition.y;
 }
 @end

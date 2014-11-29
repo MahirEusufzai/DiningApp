@@ -28,7 +28,7 @@
     //We'll search through the data here once you give me data to use
     // NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"string CONTAINS[c] %@", searchText];
     
-    NSString *predicateFormat = @"%K BEGINSWITH[cd] %@";
+    NSString *predicateFormat = @"%K CONTAINS[cd] %@";
     NSString *searchAttribute = @"name";
     NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchAttribute, searchText];
     
@@ -175,10 +175,26 @@
     _allFoodData = [NSMutableArray array];
     //fills allFoodData with MenuItem objects
     [self addFoodsToArray:_allFoodData];
-    NSArray *a2  = [_allFoodData sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-    NSLog(@"count is %d %d", _allFoodData.count, a2.count);
-    //[self.tableView reloadData];
+    [self showFavoriteTutorialIfNeeded];
     
+}
+
+- (void) showFavoriteTutorialIfNeeded {
+    
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL shouldSet = [[defaults objectForKey:@"needsFavoriteTutorial"] boolValue];
+    if (shouldSet) {
+        //ios7
+        UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:@"Tutorial"
+                                                         message:@"'Favorite' foods to receive push alerts when they reappear on the menu."
+                                                        delegate:self
+                                               cancelButtonTitle:@"Cancel"
+                                               otherButtonTitles: nil];
+        [alert addButtonWithTitle:@"Got it!"];
+        [alert show];
+        //ios8
+    }
 }
 
 - (void) addFoodsToArray:(NSMutableArray*)targetArray {

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C83E005E18E9160400F3EE1B"
-               BuildableName = "Bruin Dining.app"
-               BlueprintName = "Bruin Dining"
-               ReferencedContainer = "container:Bruin Dining.xcodeproj">
+               BuildableName = "Bruin Bites.app"
+               BlueprintName = "Bruin Bites"
+               ReferencedContainer = "container:Bruin Bites.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C83E007F18E9160600F3EE1B"
-               BuildableName = "Bruin DiningTests.xctest"
-               BlueprintName = "Bruin DiningTests"
-               ReferencedContainer = "container:Bruin Dining.xcodeproj">
+               BuildableName = "Bruin BitesTests.xctest"
+               BlueprintName = "Bruin BitesTests"
+               ReferencedContainer = "container:Bruin Bites.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C83E005E18E9160400F3EE1B"
-            BuildableName = "Bruin Dining.app"
-            BlueprintName = "Bruin Dining"
-            ReferencedContainer = "container:Bruin Dining.xcodeproj">
+            BuildableName = "Bruin Bites.app"
+            BlueprintName = "Bruin Bites"
+            ReferencedContainer = "container:Bruin Bites.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -54,7 +54,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
+      buildConfiguration = "Distribution"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
@@ -62,17 +62,12 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C83E005E18E9160400F3EE1B"
-            BuildableName = "Bruin Dining.app"
-            BlueprintName = "Bruin Dining"
-            ReferencedContainer = "container:Bruin Dining.xcodeproj">
+            BuildableName = "Bruin Bites.app"
+            BlueprintName = "Bruin Bites"
+            ReferencedContainer = "container:Bruin Bites.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
-         <AdditionalOption
-            key = "NSZombieEnabled"
-            value = "YES"
-            isEnabled = "YES">
-         </AdditionalOption>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
@@ -85,9 +80,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C83E005E18E9160400F3EE1B"
-            BuildableName = "Bruin Dining.app"
-            BlueprintName = "Bruin Dining"
-            ReferencedContainer = "container:Bruin Dining.xcodeproj">
+            BuildableName = "Bruin Bites.app"
+            BlueprintName = "Bruin Bites"
+            ReferencedContainer = "container:Bruin Bites.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

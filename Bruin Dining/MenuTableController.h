@@ -12,15 +12,20 @@
 #import "MenuLoader.h"
 #import "MenuCell.h"
 #import "HMSegmentedControl.h"
+#import "Reachability.h"
+#import <iAd/iAd.h>
+
 @interface MenuTableController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 {
     
     Meal *currentMenu;
     Specificity currentSpec;
     BOOL preferencesShowing;
-    
-}
+    BOOL menuIsLoading;
+    CGPoint initialTablePosition;
 
+}
+@property (nonatomic, retain) IBOutlet ADBannerView *banner;
 @property (nonatomic, retain) NSMutableDictionary *menuList;
 @property (nonatomic, retain) IBOutlet UITableView* table;
 @property (nonatomic, retain) IBOutlet UISegmentedControl* hallPicker;
@@ -46,5 +51,6 @@
 - (IBAction)showPreferences:(id)sender;
 - (IBAction)changeVegPref:(id)sender;
 - (IBAction)changeSummaryPref:(id)sender;
+- (BOOL)preferencesVisible;
 
 @end

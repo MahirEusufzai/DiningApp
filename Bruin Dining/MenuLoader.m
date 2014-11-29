@@ -10,7 +10,7 @@
 static const NSString *BREAKFAST_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=1&threshold=2";
 static const NSString *LUNCH_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=2&threshold=2";
 static const NSString *DINNER_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=3&threshold=2";
-static const NSString *SUMMARY = @"http://menu.ha.ucla.edu/foodpro/default.asp";
+static const NSString *SUMMARY = @"http://menu.ha.ucla.edu/foodpro/default.asp?date=12%2F1%2F2014";
 static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/dining-hall-hours-by-day.cfm";
 @implementation MenuLoader
 
@@ -26,8 +26,9 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
 - (MealType)determineCurrentMealForHours:(Hours*)h {
     
     NSDate *currentDate = [NSDate date];
-    
-    NSDate *d = [h earliestOpeningForMeal:MealTypeLunch];
+    NSDate *bTime = [h earliestOpeningForMeal:MealTypeBreakfast];
+
+    NSDate *lTime = [h earliestOpeningForMeal:MealTypeLunch];
     
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -35,15 +36,14 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     
     
     NSString *nowTime = [formatter stringFromDate:currentDate];
-    NSString *mealTime = [formatter stringFromDate:d];
-    NSLog(@"now is %@ and d is %@", nowTime, mealTime);
+    NSString *mealTime = [formatter stringFromDate:lTime];
 
-    if (d && [currentDate compare: d] == NSOrderedAscending)
+    if (bTime && lTime && [currentDate compare: lTime] == NSOrderedAscending)
         return MealTypeBreakfast;
     
-    NSDate *d2 = [h earliestOpeningForMeal:MealTypeDinner];
+    NSDate *dTime = [h earliestOpeningForMeal:MealTypeDinner];
     
-    if (d2 && [currentDate compare:d2] == NSOrderedAscending)
+    if (dTime && [currentDate compare:dTime] == NSOrderedAscending)
         return MealTypeLunch;
     
     return MealTypeDinner;

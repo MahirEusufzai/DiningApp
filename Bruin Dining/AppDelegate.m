@@ -34,8 +34,13 @@
     }
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if (![defaults objectForKey:@"needsTutorial"]){
-        [defaults setObject:[NSNumber numberWithBool:true] forKey:@"needsTutorial"];
+    //swipeTutorial
+    if (![defaults objectForKey:@"needsSwipeTutorial"]){
+        [defaults setObject:[NSNumber numberWithBool:true] forKey:@"needsSwipeTutorial"];
+    }
+    //favoriteTutorial
+    if (![defaults objectForKey:@"needsFavoriteTutorial"]){
+        [defaults setObject:[NSNumber numberWithBool:true] forKey:@"needsFavoriteTutorial"];
     }
         
     return YES;
@@ -44,7 +49,6 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 
 {
-    //NSLog(@"device token method called");
     // Store the deviceToken in the current installation and save it to Parse.
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
@@ -56,7 +60,6 @@
 - (void)application:(UIApplication *)application
 didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    //NSLog(@"failed");
 }
 
 - (void)application:(UIApplication *)application
