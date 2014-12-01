@@ -28,8 +28,6 @@
 @property (nonatomic, retain) IBOutlet ADBannerView *banner;
 @property (nonatomic, retain) NSMutableDictionary *menuList;
 @property (nonatomic, retain) IBOutlet UITableView* table;
-@property (nonatomic, retain) IBOutlet UISegmentedControl* hallPicker;
-@property (nonatomic, retain) IBOutlet UISegmentedControl* specificPicker; //curently removed from storyboard
 @property (nonatomic, retain) IBOutlet HMSegmentedControl *hallSelector;
 
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *spinner;
@@ -48,7 +46,7 @@
 @property (nonatomic, assign) MealType currentMeal;
 - (void) switchSpecific;
 - (void) switchHall;
-- (IBAction)showPreferences:(id)sender;
+- (IBAction)togglePreferencePageVisibility:(id)sender;
 - (IBAction)changeVegPref:(id)sender;
 - (IBAction)changeSummaryPref:(id)sender;
 - (BOOL)preferencesVisible;

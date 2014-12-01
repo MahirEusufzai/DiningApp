@@ -25,8 +25,6 @@
 #pragma mark- Helper Methods
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
-    //We'll search through the data here once you give me data to use
-    // NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"string CONTAINS[c] %@", searchText];
     
     NSString *predicateFormat = @"%K CONTAINS[cd] %@";
     NSString *searchAttribute = @"name";
@@ -34,9 +32,7 @@
     
     //BEGINSWITH, ENDSWITH LIKE MATCHES CONTAINS
     _searchResults = [_allFoodData filteredArrayUsingPredicate:predicate];
-    //self.searchResults = [[NSArray alloc] initWithArray:[_allFoodData filteredArrayUsingPredicate:resultPredicate]];
-    
-    
+  
 }
 
 
@@ -80,16 +76,9 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MenuCell" owner:self options:nil];
         cell = (MenuCell *)[nib objectAtIndex:0];
     }
+    MenuItem* food = (tableView == self.searchDisplayController.searchResultsTableView) ? [_searchResults objectAtIndex:indexPath.row] : [self.allFoodData objectAtIndex:indexPath.row] ;
     
-    //When you give me food data we can load it here, we can display random foods for now but I'm not sure how to fetch that data using your API.
-    MenuItem* food;
-    
-    if (tableView == self.searchDisplayController.searchResultsTableView){
-        food = [_searchResults objectAtIndex:indexPath.row];
-    }
-    else{
-        food= [self.allFoodData objectAtIndex:indexPath.row];
-    }
+   
     
     cell.menuItem = food;
     return cell;
@@ -207,7 +196,6 @@
     foodQuery.limit = 1000;
     [foodQuery findObjectsInBackgroundWithBlock:^(NSArray * foods, NSError * error) {
         if (error) {
-           // NSLog(@"ERROR");
         } else {
             for (PFObject *foodRaw in foods) {
                 MenuItem *food = [[MenuItem alloc] initWithName:[foodRaw valueForKey:@"name"]  andURL:nil];
@@ -218,10 +206,25 @@
 
         }
     }];
-    
-
 }
 
+/*
+- (NSArray*) allFoods {
+    
+    NSMutableArray *foodArr = [NSMutableArray array];
+    PFQuery * foodQuery = [PFQuery queryWithClassName:@"Food"];
+    foodQuery.limit = 5000;
+    [foodQuery findObjectsInBackgroundWithBlock:^(NSArray * foods, NSError * error) {
+            for (PFObject *foodRaw in foods) {
+                MenuItem *food = [[MenuItem alloc] initWithName:[foodRaw valueForKey:@"name"]  andURL:nil];
+                [foodArr addObject:food];
+            }
+        
+        return foodArr;
+
+    }];
+}
+ */
 - (void) hideViews {
     
     

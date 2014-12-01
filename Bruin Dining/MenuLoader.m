@@ -322,43 +322,7 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
 }
 
 #pragma mark -- hour data
-/*
--(NSArray*) getHourDataForHall:(NSString*)hall Meal:(NSString*)meal data:(TFHppleElement*)pageData {
-    
-    NSArray *tables = [pageData searchWithXPathQuery:@"//table"];
-    TFHppleElement *hoursTable;
-    for (TFHppleElement *table in tables)
-        if ([table childrenWithTagName:@"tr"].count>=4) //largest table
-            hoursTable = table;
-    if (!hoursTable)
-        hoursTable = tables[8];
-    
-    NSArray *rows = [hoursTable childrenWithTagName:@"tr"];
-    
-    TFHppleElement *desiredRow;
-    for (TFHppleElement *row in rows) {
-        TFHppleElement* td = [row firstChildWithTagName:@"td"];
-        TFHppleElement* strong = [td firstChildWithTagName:@"strong"];
-        TFHppleElement* text = [strong firstChildWithTagName:@"text"];
-        
-        
-        NSString *title = text.content;
-    
-        if ([hall isEqualToString:@"Covel"] && [title isEqualToString:@"Covel"])
-            desiredRow = row;
-        
-        else if ([hall isEqualToString:@"Feast"] && [title isEqualToString:@"FEAST at Rieber"])
-            desiredRow = row;
-        else if ([hall isEqualToString:@"De Neve"] && [title isEqualToString:@"De Neve"])
-            desiredRow = row;
-        else if ([hall isEqualToString:@"B Plate"] && [title isEqualToString:@"Bruin Plate"]){
-            desiredRow = row;
-        }
-        
-    }
-    return [self getHourDataForRow:desiredRow Meal:meal];
-}
- */
+
 
 - (NSArray*) getHourDataForRow:(TFHppleElement*)row Meal:(NSString*)meal {
     

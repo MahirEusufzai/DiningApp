@@ -39,17 +39,16 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     [super viewDidLoad];
     initialTablePosition = _table.frame.origin;
     menuIsLoading = false;
-    //preferencesShowing = false;
-    currentSpec = [self summaryPreference];
-    _summarySwitch.on = (currentSpec == specificitySummary ? true : false);
+    
+    _summarySwitch.on = ([self summaryPreference] == specificitySummary);
+    _vegSwitch.on = ([self getVegPreference] != VegPrefAll);
+
     if (_currentMeal != MealTypeUnknown){
         [self.navigationItem setTitle:[MealTypes stringForMealType:_currentMeal]];
     }
-    [self setCurrentMenu];
-    _vegSwitch.on = ([self getVegPreference] == VegPrefAll) ? false: true;
     
-    [self.specificPicker addTarget:self action:@selector(switchSpecific) forControlEvents:UIControlEventValueChanged];
-    
+
+    //gesture setup
     UISwipeGestureRecognizer * swipeleft=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeleft:)];
     swipeleft.direction=UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:swipeleft];
@@ -60,15 +59,13 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     
     [self.navigationItem setHidesBackButton:YES];
 
-    
-    
-    
+    [self setCurrentMenu];
+
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSString *key =  [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];
-    //NSString *key = [self.hallPicker titleForSegmentAtIndex:self.hallPicker.selectedSegmentIndex];
     Station *s = [currentMenu getStation:section ForHall:key];
     return [s foodListForVegPref:[self getVegPreference]].count;
 }
@@ -135,15 +132,6 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
 }
 
 
-- (void)switchSpecific {
-    //loads new page data if necessary
-    
-    Specificity old = currentSpec;
-    currentSpec = (Specificity)(self.specificPicker.selectedSegmentIndex);
-    
-    if (old != currentSpec)
-        [self setCurrentMenu];
-}
 
 # pragma mark -- helper functions
 - (void) setCurrentMenu {
@@ -318,14 +306,16 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
 
 }
 -(void) vegPrefChanged {
-    
+    NSLog(@"before %@", NSStringFromCGRect(_table.frame));
     [_table reloadData];
+    _table.frame = CGRectMake(initialTablePosition.x, initialTablePosition.y+PREFERENCE_TRANSLATION_HEIGHT, _table.frame.size.width, _table.frame.size.height);
+    NSLog(@"after %@", NSStringFromCGRect(_table.frame));
+
 }
 
 - (void) changeVegPref:(id)sender {
-    VegPreference pref;
     UISwitch *s = (UISwitch*)sender;
-    pref = (s.isOn ? VegPrefVegetarian : VegPrefAll);
+    VegPreference pref = (s.isOn ? VegPrefVegetarian : VegPrefAll);
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[NSNumber numberWithInt:pref] forKey:@"vegPref"];
     [defaults synchronize];
@@ -343,12 +333,9 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     [self setCurrentMenu];
     
 }
-- (void)showPreferences:(id)sender {
-    int translation;
-    if ([self preferencesVisible])
-        translation = -PREFERENCE_TRANSLATION_HEIGHT;
-    else
-        translation = PREFERENCE_TRANSLATION_HEIGHT;
+- (void)togglePreferencePageVisibility:(id)sender {
+    int translation = [self preferencesVisible] ? -PREFERENCE_TRANSLATION_HEIGHT :    PREFERENCE_TRANSLATION_HEIGHT;
+   
     //animate tableview down
     [UIView animateWithDuration:0.3
                           delay:0
@@ -357,6 +344,7 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
                          _table.center = CGPointMake(_table.center.x, _table.center.y+translation);
                      }
                      completion:^(BOOL finished){
+                         
                      }];
 }
 
@@ -376,18 +364,7 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
             [alert addButtonWithTitle:@"Got it!"];
             [alert show];
         
-        /*
-        [UIView animateWithDuration:0.5
-                              delay:2.0
-                            options:UIViewAnimationOptionCurveEaseIn animations:^{
-            
-            _tutorial.alpha = 1.0;
-        }
-            completion:^(BOOL finished) {
-                             
-            [self disappearTheView];
-                             
-                         }];   */
+        
     }
     
 }
