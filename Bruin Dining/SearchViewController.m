@@ -193,6 +193,7 @@
     [_spinner startAnimating];
     
     PFQuery * foodQuery = [PFQuery queryWithClassName:@"Food"];
+    [foodQuery orderByAscending:@"name"];
     foodQuery.limit = 1000;
     [foodQuery findObjectsInBackgroundWithBlock:^(NSArray * foods, NSError * error) {
         if (error) {

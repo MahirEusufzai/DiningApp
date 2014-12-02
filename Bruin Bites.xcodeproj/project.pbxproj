@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D99B8291A2D67A900292398 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D99B8251A2D67A900292398 /* Bolts.framework */; };
+		4D99B82A1A2D67A900292398 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D99B8261A2D67A900292398 /* Parse.framework */; };
+		4D99B82B1A2D67A900292398 /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D99B8271A2D67A900292398 /* ParseFacebookUtils.framework */; };
+		4D99B82C1A2D67A900292398 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D99B8281A2D67A900292398 /* ParseUI.framework */; };
 		846F8A35195BDFBB000401E8 /* DiningHoursViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F8A34195BDFBB000401E8 /* DiningHoursViewController.m */; };
 		C815328F199CBDE60060D1AC /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C815328D199CBDE60060D1AC /* SearchViewController.m */; };
 		C82A56C319F45D3300233D91 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C82A56C219F45D3300233D91 /* Reachability.m */; };
@@ -19,11 +23,6 @@
 		C83E007318E9160500F3EE1B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C83E007218E9160500F3EE1B /* AppDelegate.m */; };
 		C83E007918E9160600F3EE1B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C83E007818E9160600F3EE1B /* ViewController.m */; };
 		C83E007B18E9160600F3EE1B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C83E007A18E9160600F3EE1B /* Images.xcassets */; };
-		C83E008218E9160600F3EE1B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C83E008118E9160600F3EE1B /* XCTest.framework */; };
-		C83E008318E9160600F3EE1B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C83E006218E9160500F3EE1B /* Foundation.framework */; };
-		C83E008418E9160600F3EE1B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C83E006618E9160500F3EE1B /* UIKit.framework */; };
-		C83E008C18E9160600F3EE1B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C83E008A18E9160600F3EE1B /* InfoPlist.strings */; };
-		C83E008E18E9160600F3EE1B /* Bruin_DiningTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C83E008D18E9160600F3EE1B /* Bruin_DiningTests.m */; };
 		C83E009D18E9167700F3EE1B /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = C83E009818E9167700F3EE1B /* TFHpple.m */; };
 		C83E009E18E9167700F3EE1B /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C83E009A18E9167700F3EE1B /* TFHppleElement.m */; };
 		C83E009F18E9167700F3EE1B /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C83E009C18E9167700F3EE1B /* XPathQuery.m */; };
@@ -74,17 +73,11 @@
 		C8F74B9619A89673002BCE6F /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8F74B9519A89673002BCE6F /* SettingsCell.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		C83E008518E9160600F3EE1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C83E005718E9160400F3EE1B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C83E005E18E9160400F3EE1B;
-			remoteInfo = "Bruin Dining";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		4D99B8251A2D67A900292398 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		4D99B8261A2D67A900292398 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		4D99B8271A2D67A900292398 /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtils.framework; sourceTree = "<group>"; };
+		4D99B8281A2D67A900292398 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		846F8A33195BDFBB000401E8 /* DiningHoursViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiningHoursViewController.h; sourceTree = "<group>"; };
 		846F8A34195BDFBB000401E8 /* DiningHoursViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiningHoursViewController.m; sourceTree = "<group>"; };
 		C815328D199CBDE60060D1AC /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
@@ -108,7 +101,6 @@
 		C83E007718E9160600F3EE1B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		C83E007818E9160600F3EE1B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		C83E007A18E9160600F3EE1B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		C83E008018E9160600F3EE1B /* Bruin BitesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bruin BitesTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C83E008118E9160600F3EE1B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		C83E008918E9160600F3EE1B /* Bruin BitesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Bruin BitesTests-Info.plist"; sourceTree = "<group>"; };
 		C83E008B18E9160600F3EE1B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -186,16 +178,20 @@
 			files = (
 				C8A4584A19F493F00074D253 /* iAd.framework in Frameworks */,
 				C8DE7BCC19D43096007B45FC /* Bolts.framework in Frameworks */,
+				4D99B82C1A2D67A900292398 /* ParseUI.framework in Frameworks */,
 				C8DE7BCD19D43096007B45FC /* Parse.framework in Frameworks */,
 				C8C7BADC19613F2F005C862B /* Foundation.framework in Frameworks */,
 				C8463F1D195A1D0E0028E1DD /* SystemConfiguration.framework in Frameworks */,
+				4D99B82B1A2D67A900292398 /* ParseFacebookUtils.framework in Frameworks */,
 				C8463F1B195A1D030028E1DD /* StoreKit.framework in Frameworks */,
 				C8463F19195A1CFD0028E1DD /* Security.framework in Frameworks */,
 				C8463F17195A1CF60028E1DD /* QuartzCore.framework in Frameworks */,
 				C8463F15195A1CEF0028E1DD /* MobileCoreServices.framework in Frameworks */,
 				C8463F13195A1CE90028E1DD /* libz.dylib in Frameworks */,
+				4D99B82A1A2D67A900292398 /* Parse.framework in Frameworks */,
 				C8463F11195A1CDF0028E1DD /* CoreLocation.framework in Frameworks */,
 				C83E006518E9160500F3EE1B /* CoreGraphics.framework in Frameworks */,
+				4D99B8291A2D67A900292398 /* Bolts.framework in Frameworks */,
 				C8463F0F195A1CD00028E1DD /* CFNetwork.framework in Frameworks */,
 				C8463F0D195A1CCA0028E1DD /* AudioToolbox.framework in Frameworks */,
 				C83E00AF18E9188E00F3EE1B /* libxml2.dylib in Frameworks */,
@@ -203,19 +199,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C83E007D18E9160600F3EE1B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C83E008218E9160600F3EE1B /* XCTest.framework in Frameworks */,
-				C83E008418E9160600F3EE1B /* UIKit.framework in Frameworks */,
-				C83E008318E9160600F3EE1B /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D99B8241A2D67A900292398 /* parse-library-1.5.0 */ = {
+			isa = PBXGroup;
+			children = (
+				4D99B8251A2D67A900292398 /* Bolts.framework */,
+				4D99B8261A2D67A900292398 /* Parse.framework */,
+				4D99B8271A2D67A900292398 /* ParseFacebookUtils.framework */,
+				4D99B8281A2D67A900292398 /* ParseUI.framework */,
+			);
+			path = "parse-library-1.5.0";
+			sourceTree = "<group>";
+		};
 		C83E005618E9160400F3EE1B = {
 			isa = PBXGroup;
 			children = (
@@ -250,7 +247,6 @@
 			isa = PBXGroup;
 			children = (
 				C83E005F18E9160500F3EE1B /* Bruin Bites.app */,
-				C83E008018E9160600F3EE1B /* Bruin BitesTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -258,6 +254,7 @@
 		C83E006118E9160500F3EE1B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D99B8241A2D67A900292398 /* parse-library-1.5.0 */,
 				C8A4584919F493F00074D253 /* iAd.framework */,
 				C8DE7BCA19D43096007B45FC /* Bolts.framework */,
 				C8DE7BCB19D43096007B45FC /* Parse.framework */,
@@ -415,24 +412,6 @@
 			productReference = C83E005F18E9160500F3EE1B /* Bruin Bites.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C83E007F18E9160600F3EE1B /* Bruin BitesTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C83E009418E9160600F3EE1B /* Build configuration list for PBXNativeTarget "Bruin BitesTests" */;
-			buildPhases = (
-				C83E007C18E9160600F3EE1B /* Sources */,
-				C83E007D18E9160600F3EE1B /* Frameworks */,
-				C83E007E18E9160600F3EE1B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C83E008618E9160600F3EE1B /* PBXTargetDependency */,
-			);
-			name = "Bruin BitesTests";
-			productName = "Bruin DiningTests";
-			productReference = C83E008018E9160600F3EE1B /* Bruin BitesTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -450,9 +429,6 @@
 							};
 						};
 					};
-					C83E007F18E9160600F3EE1B = {
-						TestTargetID = C83E005E18E9160400F3EE1B;
-					};
 				};
 			};
 			buildConfigurationList = C83E005A18E9160400F3EE1B /* Build configuration list for PBXProject "Bruin Bites" */;
@@ -469,7 +445,6 @@
 			projectRoot = "";
 			targets = (
 				C83E005E18E9160400F3EE1B /* Bruin Bites */,
-				C83E007F18E9160600F3EE1B /* Bruin BitesTests */,
 			);
 		};
 /* End PBXProject section */
@@ -500,14 +475,6 @@
 				C846DC2519C7E89700C5B6ED /* star_empty.png in Resources */,
 				C83E006D18E9160500F3EE1B /* InfoPlist.strings in Resources */,
 				C8DC4BE6198A59DF00897069 /* hours_selected.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C83E007E18E9160600F3EE1B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C83E008C18E9160600F3EE1B /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,23 +511,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C83E007C18E9160600F3EE1B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C83E008E18E9160600F3EE1B /* Bruin_DiningTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		C83E008618E9160600F3EE1B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C83E005E18E9160400F3EE1B /* Bruin Bites */;
-			targetProxy = C83E008518E9160600F3EE1B /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C83E006B18E9160500F3EE1B /* InfoPlist.strings */ = {
@@ -676,6 +627,7 @@
 					/Users/Gu/Downloads,
 					"$(PROJECT_DIR)",
 					"/Users/mahireusufzai/Downloads/parse-library-1.4.1",
+					"$(PROJECT_DIR)/parse-library-1.5.0",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bruin Dining/Bruin Bites-Prefix.pch";
@@ -702,6 +654,7 @@
 					/Users/Gu/Downloads,
 					"$(PROJECT_DIR)",
 					"/Users/mahireusufzai/Downloads/parse-library-1.4.1",
+					"$(PROJECT_DIR)/parse-library-1.5.0",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bruin Dining/Bruin Bites-Prefix.pch";
@@ -711,46 +664,6 @@
 				PRODUCT_NAME = "Bruin Bites";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		C83E009518E9160600F3EE1B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Bruin Dining.app/Bruin Dining";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Bruin Dining/Bruin Dining-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "Bruin DiningTests/Bruin BitesTests-Info.plist";
-				PRODUCT_NAME = "Bruin BitesTests";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		C83E009618E9160600F3EE1B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Bruin Dining.app/Bruin Dining";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Bruin Dining/Bruin Dining-Prefix.pch";
-				INFOPLIST_FILE = "Bruin DiningTests/Bruin BitesTests-Info.plist";
-				PRODUCT_NAME = "Bruin BitesTests";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};
@@ -801,6 +714,7 @@
 					/Users/Gu/Downloads,
 					"$(PROJECT_DIR)",
 					"/Users/mahireusufzai/Downloads/parse-library-1.4.1",
+					"$(PROJECT_DIR)/parse-library-1.5.0",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bruin Dining/Bruin Bites-Prefix.pch";
@@ -810,24 +724,6 @@
 				PRODUCT_NAME = "Bruin Bites";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
-			};
-			name = Distribution;
-		};
-		C8D7605119E2436100E592D6 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Bruin Dining.app/Bruin Dining";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Bruin Dining/Bruin Dining-Prefix.pch";
-				INFOPLIST_FILE = "Bruin DiningTests/Bruin BitesTests-Info.plist";
-				PRODUCT_NAME = "Bruin BitesTests";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
 			};
 			name = Distribution;
 		};
@@ -850,16 +746,6 @@
 				C83E009218E9160600F3EE1B /* Debug */,
 				C83E009318E9160600F3EE1B /* Release */,
 				C8D7605019E2436100E592D6 /* Distribution */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C83E009418E9160600F3EE1B /* Build configuration list for PBXNativeTarget "Bruin BitesTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C83E009518E9160600F3EE1B /* Debug */,
-				C83E009618E9160600F3EE1B /* Release */,
-				C8D7605119E2436100E592D6 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
