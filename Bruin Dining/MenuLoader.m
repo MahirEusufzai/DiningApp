@@ -10,8 +10,9 @@
 static const NSString *BREAKFAST_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=1&threshold=2";
 static const NSString *LUNCH_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=2&threshold=2";
 static const NSString *DINNER_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=3&threshold=2";
-static const NSString *SUMMARY = @"http://menu.ha.ucla.edu/foodpro/default.asp?date=12%2F1%2F2014";
+static const NSString *SUMMARY = @"http://menu.ha.ucla.edu/foodpro/default.asp?";
 static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/dining-hall-hours-by-day.cfm";
+static const int INDEX_NOT_FOUND = 1;
 @implementation MenuLoader
 
 - (id)init
@@ -130,7 +131,8 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     //NSArray *hallNames = [NSArray arrayWithObjects: @"Covel", @"Hedrick", @"B Plate", @"Feast", nil];
     
     int count = 0;
-    NSArray *tableCells = [self getTableEntriesFromTable:table ForMeal:mealType Type:spec];
+    NSArray *tableCells = [table searchWithXPathQuery:@"//td[starts-with(@class, 'menugridcell')]"];
+    
     for (TFHppleElement *cell in tableCells) {
         
         TFHppleElement *listNode = [cell firstChildWithTagName:@"ul"]; //contains a cell's list
@@ -185,82 +187,18 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
         [hall setHoursFromData:hm];
     }
     NSArray *tableList = [self gridTables:meal Type:spec];
-    //NSMutableArray *hallNamesRaw =[NSMutableArray array];
     for (TFHppleElement *table in tableList) {
         NSArray *hallsInCurrentTable = [table searchWithXPathQuery:@"//td[starts-with(@class, 'menulocheader')]"];
-        //[hallNamesRaw addObjectsFromArray:hallsInCurrentTable];
-//        NSArray *tableCells = [self getTableEntriesFromTable:table ForMeal:meal Type:spec];
         [self setFoodsInMeal:m ForData:table MealType:meal Specificity:spec];
 
     }
-    //**********
-   /* TFHppleElement *table = [self gridTable:meal Type:spec];
-    NSArray *halls = [table searchWithXPathQuery:@"//td[starts-with(@class, 'menulocheader')]"];
-    NSMutableArray *hallNames = [NSMutableArray array];
-    for (TFHppleElement *hall in halls){
-        TFHppleElement* a = [hall firstChildWithTagName:@"a"];
-        TFHppleElement* text = [a firstChildWithTagName:@"text"];
-        [hallNames addObject:text.content];
-    }
-    */
-    
-    
-    
+
     return m;
 }
 
-- (TFHppleElement*) gridTable:(MealType)mealType Type:(Specificity)spec {
-    
-    NSString *url;
-    NSString* meal = [MealTypes stringForMealType:mealType];
-    //no summary menu available for breakfast, so always so full menu
-    switch (mealType) {
-        case MealTypeBreakfast:
-            url = BREAKFAST_COMPLETE; //there is no breakfast summary
-            break;
-        case MealTypeLunch:
-            if (spec == specificitySummary) {
-                url = SUMMARY;
-            } else{
-                url = LUNCH_COMPLETE;
-            }
-            break;
-        case MealTypeDinner:
-            if (spec == specificitySummary) {
-                url = SUMMARY;
-            } else {
-                url = DINNER_COMPLETE;
-            }
-        default:
-            break;
-    }
-    
-    TFHpple *parser = [self getNodeDataForURL:url];
-    //array of gridtable
-    /*
-     summmary -- first 2 lunch, next 2 dinner
-     breakfast -- first 1
-     lunch -- first 2
-     dinner -- first 2
-     */
-    NSString *queryString = @"//table[starts-with(@class, 'menugridtable')]";
-    NSArray *mealCells = [parser searchWithXPathQuery:queryString];
-    
-    if (spec == specificitySummary) {
-        if (mealType == MealTypeLunch)
-            return mealCells[0];
-        else if (mealType == MealTypeDinner)
-            return mealCells[1];
-    }
-    
-    return mealCells[0];
-
-}
 
 - (NSArray*) gridTables:(MealType)mealType Type:(Specificity)spec {
-    
     NSString *url;
-    NSString* meal = [MealTypes stringForMealType:mealType];
     //no summary menu available for breakfast, so always so full menu
     switch (mealType) {
         case MealTypeBreakfast:
@@ -284,42 +222,41 @@ static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/din
     }
     
     TFHpple *parser = [self getNodeDataForURL:url];
-    //array of gridtable
-    /*
-     summmary -- first 2 lunch, next 2 dinner
-     breakfast -- first 1
-     lunch -- first 2
-     dinner -- first 2
-     */
     NSString *queryString = @"//table[starts-with(@class, 'menugridtable')]";
     NSArray *mealCells = [parser searchWithXPathQuery:queryString];
+    if (!mealCells)
+        return nil;
+    int lunchIndex = INDEX_NOT_FOUND, dinnerIndex = INDEX_NOT_FOUND; // determine which cells correspond to l/d
+    int i = 0;
+    for (TFHppleElement *cell in mealCells) {
+        TFHppleElement *mealHeader = [[[cell firstChildWithTagName:@"tbody"]
+                                        firstChildWithTagName:@"tr"]firstChildWithClassName:@"menumealheader"];
+        if (mealHeader && lunchIndex == INDEX_NOT_FOUND)
+            lunchIndex = i;
+        else if (mealHeader)
+            dinnerIndex = i;
+        i++;
+    }
     
-    if (mealType == MealTypeBreakfast) {
-        return [NSArray arrayWithObject:mealCells[0]];
+    
+    if (spec == specificitySummary && mealType!=MealTypeBreakfast) {
+        if (mealType == MealTypeLunch && lunchIndex != INDEX_NOT_FOUND) {
+            NSLog(@"lunch index is %d, dinner index is %d", lunchIndex, dinnerIndex);
+            int length = dinnerIndex != INDEX_NOT_FOUND ? dinnerIndex - lunchIndex : mealCells.count;
+            return [mealCells subarrayWithRange:NSMakeRange(lunchIndex, length)];
+        }
+        else if (mealType == MealTypeDinner && dinnerIndex != INDEX_NOT_FOUND)
+            return [mealCells subarrayWithRange:NSMakeRange(dinnerIndex, mealCells.count - dinnerIndex)];
+        //return empty if index not found
+        return nil;
     }
-    if (spec == specificitySummary) {
-        if (mealType == MealTypeLunch)
-            return [mealCells subarrayWithRange:NSMakeRange(0, 2)];
-        else if (mealType == MealTypeDinner)
-            return [mealCells subarrayWithRange:NSMakeRange(2, 2)];
-    }
-    //full length, lunch or dinner
-    return [mealCells subarrayWithRange:NSMakeRange(0, 2)];
+    //explicit or breakfast
+    return [mealCells subarrayWithRange:NSMakeRange(0, mealCells.count)];
+
+
 }
 
 
-- (NSArray*)getTableEntriesFromTable:(TFHppleElement *) table ForMeal:(MealType)mealType Type:(Specificity)spec {
-    //NSArray *tables = [self gridTables:mealType Type:spec];
-    
-    //TFHppleElement *table = [self gridTable:mealType Type:spec];
-    NSString *TDString = @"//td[starts-with(@class, 'menugridcell')]";
-    //NSMutableArray *tableCells = [NSMutableArray array];
-    //for (TFHppleElement *table in tables) {
-     //   [tableCells addObjectsFromArray:[table searchWithXPathQuery:TDString]];
-    //}
-    return [table searchWithXPathQuery:TDString];
-    //return tableCells;
-}
 
 #pragma mark -- hour data
 
