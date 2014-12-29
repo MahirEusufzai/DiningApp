@@ -13,6 +13,6 @@
 @property (nonatomic, strong) NSMutableArray* allFoodData;
 @property (nonatomic, strong) NSArray* searchResults;
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *spinner;
-
+@property (nonatomic, retain) IBOutlet UITableView *table;
 
 @end

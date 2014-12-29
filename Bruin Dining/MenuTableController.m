@@ -241,7 +241,6 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     //MealType curMeal = ((menuIsLoading && currentMenu.type == MealTypeUnknown) ? currentMenu.type + 1 : currentMenu.type);
     MealType curMeal = currentMenu.type;
     int newMeal = [MenuLoader MealAfterMeal:curMeal];
-    //NSLog(@"%d", newMeal);
     if (newMeal == -1)
         return;
     MenuTableController *newMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"Menu"];
@@ -258,7 +257,6 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     //MealType curMeal = ((menuIsLoading && currentMenu.type == MealTypeUnknown) ? currentMenu.type - 1 : currentMenu.type);
     MealType curMeal = currentMenu.type;
     int newMeal = [MenuLoader MealBeforeMeal:curMeal];
-    //NSLog(@"%d", newMeal);
 
     if (newMeal == -1)
         return;

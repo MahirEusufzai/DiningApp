@@ -21,7 +21,10 @@
 @implementation SearchViewController
 
 
-
+-(void)viewWillAppear:(BOOL)animated {
+    //added in case user changes favorites in edit screen and returns to this vc
+    [_table reloadData];
+}
 #pragma mark- Helper Methods
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
@@ -77,10 +80,9 @@
         cell = (MenuCell *)[nib objectAtIndex:0];
     }
     MenuItem* food = (tableView == self.searchDisplayController.searchResultsTableView) ? [_searchResults objectAtIndex:indexPath.row] : [self.allFoodData objectAtIndex:indexPath.row] ;
+    cell.menuItem = food; //cell updates UI based on data
+
     
-   
-    
-    cell.menuItem = food;
     return cell;
 }
 
@@ -230,10 +232,7 @@
     
     
 }
--(void)viewDidAppear:(BOOL)animated
-{
-    
-}
+
 
 - (void)didReceiveMemoryWarning
 {

@@ -12,7 +12,7 @@ static const NSString *LUNCH_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/defaul
 static const NSString *DINNER_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=3&threshold=2";
 static const NSString *SUMMARY = @"http://menu.ha.ucla.edu/foodpro/default.asp?";
 static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/dining-hall-hours-by-day.cfm";
-static const int INDEX_NOT_FOUND = 1;
+static const int INDEX_NOT_FOUND = -1;
 @implementation MenuLoader
 
 - (id)init
@@ -63,12 +63,15 @@ static const int INDEX_NOT_FOUND = 1;
     NSArray *tables = [urlData searchWithXPathQuery:@"//table"];
     TFHppleElement *hoursTable;
     for (TFHppleElement *table in tables){
+        //NSLog(@"%d", tables.count);
         if ([table childrenWithTagName:@"tr"].count>=4) {//largest table
             hoursTable = table;
         }
     }
-    if (!hoursTable)
-        hoursTable = tables[8];
+    if (!hoursTable){
+        return nil;
+        //hoursTable = tables[8];
+    }
     
     NSArray *rows = [hoursTable childrenWithTagName:@"tr"];
     int count = 0;

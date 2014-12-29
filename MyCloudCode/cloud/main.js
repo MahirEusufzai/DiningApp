@@ -4,7 +4,7 @@
 
 
 Parse.Cloud.job("sendPushAlerts", function(request, response) { 
-
+//http://menu.ha.ucla.edu/foodpro/default.asp?date=1%2F12%2F2015&meal=2
 var urlTemplate = "http://menu.ha.ucla.edu/foodpro/default.asp?meal="; //append number to end
 var meals = ["breakfast", "lunch", "dinner"];
 
@@ -32,49 +32,71 @@ Parse.Cloud.httpRequest({
       url: request.params.url,
       
       success: function(httpResponse) {
-        var halls = ["Covel", "Hedrick", "B Plate", "Feast"];
+        var halls1 = ["Covel", "De Neve"];
+        var halls2 = ["B Plate", "Feast"];
+        var foodArray = new Array();
+        var hallArray = new Array();
+
         var text = httpResponse.text;
         text = text.replace(/&amp;/g, '&');
 
-        var gridCellArray = new Array();
-        var start = text.indexOf("<td class=\"menugridcell");
+        var gridTableArray = new Array();
+        var tableStart = text.indexOf("<table class=\"menugridtable");
 
-        while (start > 0) {
+        while (tableStart > 0) {
 
-          text = text.substring(start);
-          var end = text.indexOf("<\/td") + 4; // 4 is length
-          gridCellArray.push(text.substring(0, end));
+                  text = text.substring(tableStart);
+                  var end = text.indexOf("<\/table") + 7; // 7 is length
+                  gridTableArray.push(text.substring(0, end));
+                  text = text.substring(end);
+                  tableStart  = text.indexOf("<table class=\"menugridtable");
 
-          text = text.substring(end);
-          start  = text.indexOf("<td class=\"menugridcell");
-        
-        }
+       }
+       //// grouped by table
+       var k;
+       for (k = 0; k < gridTableArray.length; k++) {
+            var halls;
+            if (k==0)
+              halls = halls1;
+            else
+              halls = halls2;
 
-        var foodArray = new Array();
-        var hallArray = new Array();
-        var mealArray = new Array();
+            text = gridTableArray[k];
 
-        var count = 0;
-        console.log(gridCellArray.length);
-        for (i = 0; i < gridCellArray.length; i++, count++) {
+            var gridCellArray = new Array();
+            var start = text.indexOf("<td class=\"menugridcell");
+
+            while (start > 0) {
+
+            text = text.substring(start);
+            var end = text.indexOf("<\/td") + 4; // 4 is length
+            gridCellArray.push(text.substring(0, end));
+
+            text = text.substring(end);
+            start  = text.indexOf("<td class=\"menugridcell");
+            }
+
+            var count = 0;
+            //console.log(gridCellArray.length);
+            for (i = 0; i < gridCellArray.length; i++, count++) {
           
-          var cellText = gridCellArray[i];
-          var start = cellText.indexOf(";\">");
+                  var cellText = gridCellArray[i];
+                  var start = cellText.indexOf(";\">");
 
-          while (start > 0) {
+                  while (start > 0) {
 
-            var foodPlusExcess = cellText.substring(start+3);
-            var end = foodPlusExcess.indexOf("<\/a>");
-            food = foodPlusExcess.substring(0,end);
-            cellText = foodPlusExcess.substring(end+4);
-            start = cellText.indexOf(";\">");
+                    var foodPlusExcess = cellText.substring(start+3);
+                    var end = foodPlusExcess.indexOf("<\/a>");
+                    food = foodPlusExcess.substring(0,end);
+                    cellText = foodPlusExcess.substring(end+4);
+                    start = cellText.indexOf(";\">");
+                     foodArray.push(food);
+                     hallArray.push(halls[count%2]);
+                  }
+           }
 
-            //if (i < 2) //for test
-             //Parse.Cloud.run('push', {"food":food, "hall":halls[count%4], "meal":request.params.meal}, {});
-             foodArray.push(food);
-             hallArray.push(halls[count%4]);
-          }
-        }
+       }
+
         Parse.Cloud.run('push', {"foodList":foodArray, "hallList":hallArray, "meal":request.params.meal}, {});
         response.success();
 
@@ -172,8 +194,6 @@ Parse.Cloud.define("pushFavorites", function(request, response) {
 Parse.Cloud.define("push", function(request, response) {
   var foodList = request.params.foodList;
   var hallList = request.params.hallList;
-
-  console.log("c " + foodList[0]);
 
 for (i = 0; i < foodList.length; i++) {
 var query = new Parse.Query(Parse.Installation);
@@ -276,7 +296,7 @@ Parse.Cloud.httpRequest({
       url: request.params.url,
       
       success: function(httpResponse) {
-        var halls = ["Covel", "Hedrick", "B Plate", "Feast"];
+        var halls = ["Covel", "De Neve", "B Plate", "Feast"];
         var text = httpResponse.text;
         text = text.replace(/&amp;/g, '&');
 
@@ -328,60 +348,6 @@ Parse.Cloud.httpRequest({
 
 });
 
-/*
-
-Parse.Cloud.define("recordFavorite", function(request, response) {
-
-    var foodList = request.params.foodList; //string array of food names
-    var foodListCorrected = new Array();
-    var Food = Parse.Object.extend("Food");
-
-    // Wrap your logic in a function
-    function process_food(i) {
-        // Are we done?
-        if (i == foodList.length) {
-            //console.log("count is " + foodListCorrected.length);
-            Parse.Object.saveAll(foodListCorrected, {
-                success: function(foodListCorrected) {},
-                error: function(foodListCorrected) {}
-            });
-            return;
-        }
-
-        var name = foodList[i];
-        //console.log("before name is " + name);
-        var query = new Parse.Query(Food);
-        query.equalTo("name", name);
-
-        query.first({
-            success: function(results) {
-                if(!results){
-                    console.log("new");
-                    var food = new Food();
-                    food.set("name", name);
-                    foodListCorrected.push(food);
-                    // console.log(foodListCorrected.length);
-                } else {
-                    //don't create new food
-                    console.log("exists");
-                }
-                process_food(i+1)
-            },
-            error: function(error) {
-                console.log("error");
-            }
-        });
-
-    }
-
-    // Go! Call the function with the first food.
-    process_food(0);
-
-});
-
-*/
-
-
 
 Parse.Cloud.define("recordFavorite", function(request, response) { 
 var foodList = request.params.foodList; //string array of food names 
@@ -398,7 +364,7 @@ success: function(list){
 response.success(); 
 }, 
 error: function(error){ 
-response.error("Failure on saving food"); 
+response.error("Failure on saving food, list size is " + list.length); 
 } 
 }); 
 }); 

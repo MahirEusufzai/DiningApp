@@ -24,6 +24,7 @@ typedef enum VegPreference : NSUInteger {
 
 - (id)initWithName:(NSString*)n andURL:(NSString*)url;
 - (void)toggleFavorites;
+- (void)toggleFavoritesIfNeeded;
 - (void)saveToDatabase;
 - (void)removeFromDatabase;
 @end

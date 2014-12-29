@@ -18,12 +18,12 @@
         self.name = n;
         self.isVegetarian = FALSE;
         self.link = nil;
-        self.isFavorite = [self isStarredForName:n];
+        self.isFavorite = [self isInFavoriteList:n];
     }
     return self;
 }
 
-- (BOOL) isStarredForName:(NSString*)foodName {
+- (BOOL) isInFavoriteList:(NSString*)foodName {
     
     PFInstallation *installation = [PFInstallation currentInstallation];
     NSArray *foodList = (NSArray*)[installation objectForKey:@"favorites"];
@@ -35,6 +35,11 @@
     _isFavorite = !_isFavorite;
 }
 
+- (void)toggleFavoritesIfNeeded {
+    //check if favorite changed
+    if (_isFavorite !=[self isInFavoriteList:_name])
+        [self toggleFavorites];
+}
 - (void)saveToDatabase {
     
     PFInstallation *installation = [PFInstallation currentInstallation];

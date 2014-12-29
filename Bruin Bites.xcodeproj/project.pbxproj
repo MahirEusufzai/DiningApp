@@ -13,6 +13,7 @@
 		4D99B82C1A2D67A900292398 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D99B8281A2D67A900292398 /* ParseUI.framework */; };
 		846F8A35195BDFBB000401E8 /* DiningHoursViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846F8A34195BDFBB000401E8 /* DiningHoursViewController.m */; };
 		C815328F199CBDE60060D1AC /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C815328D199CBDE60060D1AC /* SearchViewController.m */; };
+		C8249D711A4BF1580070DBF2 /* EditFavoritesController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8249D701A4BF1580070DBF2 /* EditFavoritesController.m */; };
 		C82A56C319F45D3300233D91 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C82A56C219F45D3300233D91 /* Reachability.m */; };
 		C837D62018EBFF2B003A86A8 /* MenuTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = C837D61F18EBFF2B003A86A8 /* MenuTableController.m */; };
 		C837D62318ECE6EE003A86A8 /* MenuLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = C837D62218ECE6EE003A86A8 /* MenuLoader.m */; };
@@ -82,6 +83,8 @@
 		846F8A34195BDFBB000401E8 /* DiningHoursViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiningHoursViewController.m; sourceTree = "<group>"; };
 		C815328D199CBDE60060D1AC /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		C815328E199CBDE60060D1AC /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		C8249D6F1A4BF1580070DBF2 /* EditFavoritesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditFavoritesController.h; sourceTree = "<group>"; };
+		C8249D701A4BF1580070DBF2 /* EditFavoritesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditFavoritesController.m; sourceTree = "<group>"; };
 		C82A56C119F45D3300233D91 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		C82A56C219F45D3300233D91 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		C837D61E18EBFF2B003A86A8 /* MenuTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableController.h; sourceTree = "<group>"; };
@@ -294,6 +297,8 @@
 				C88904B51975542E003B8588 /* HMSegmentedControl.m */,
 				C8F74B9119A89651002BCE6F /* SettingsController.h */,
 				C8F74B9219A89651002BCE6F /* SettingsController.m */,
+				C8249D6F1A4BF1580070DBF2 /* EditFavoritesController.h */,
+				C8249D701A4BF1580070DBF2 /* EditFavoritesController.m */,
 				C8F74B9419A89673002BCE6F /* SettingsCell.h */,
 				C8F74B9519A89673002BCE6F /* SettingsCell.m */,
 				C88904B119711015003B8588 /* Main.storyboard */,
@@ -502,6 +507,7 @@
 				C88904B61975542E003B8588 /* HMSegmentedControl.m in Sources */,
 				C837D62318ECE6EE003A86A8 /* MenuLoader.m in Sources */,
 				C8A30BAB19B6ACCC00249732 /* MealType.m in Sources */,
+				C8249D711A4BF1580070DBF2 /* EditFavoritesController.m in Sources */,
 				C82A56C319F45D3300233D91 /* Reachability.m in Sources */,
 				C8DC4BDD1984B64400897069 /* HourMeal.m in Sources */,
 				C83E00AA18E916B500F3EE1B /* Station.m in Sources */,
@@ -618,8 +624,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zaki Eusufzai (T7MU273323)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zaki Eusufzai (T7MU273323)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/mahireusufzai/Desktop/xcode_projects/Bruin,
@@ -645,8 +651,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zaki Eusufzai (T7MU273323)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zaki Eusufzai (T7MU273323)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/mahireusufzai/Desktop/xcode_projects/Bruin,
@@ -705,8 +711,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zaki Eusufzai (T7MU273323)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zaki Eusufzai (T7MU273323)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/mahireusufzai/Desktop/xcode_projects/Bruin,

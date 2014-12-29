@@ -52,6 +52,7 @@ const int NORMAL_NAME_LENGTH = 30;
 - (void)setMenuItem:(MenuItem *)menuItem {
     _menuItem = menuItem;
     _name.text = menuItem.name;
+    [_menuItem toggleFavoritesIfNeeded];
     
     if (menuItem.name.length > NORMAL_NAME_LENGTH) {
         _name.font = [[_name font] fontWithSize:13];
