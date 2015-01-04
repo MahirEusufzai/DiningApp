@@ -17,6 +17,17 @@
     if (self) {
         self.name = n;
         self.isVegetarian = FALSE;
+        self.link = [NSURL URLWithString:url];
+        self.isFavorite = [self isInFavoriteList:n];
+    }
+    return self;
+}
+
+- (id)initWithName:(NSString *)n {
+    self = [super init];
+    if (self) {
+        self.name = n;
+        self.isVegetarian = FALSE;
         self.link = nil;
         self.isFavorite = [self isInFavoriteList:n];
     }

@@ -23,6 +23,7 @@ typedef enum VegPreference : NSUInteger {
 @property (nonatomic, retain) NSURL *link;
 
 - (id)initWithName:(NSString*)n andURL:(NSString*)url;
+- (id)initWithName:(NSString*)n;
 - (void)toggleFavorites;
 - (void)toggleFavoritesIfNeeded;
 - (void)saveToDatabase;

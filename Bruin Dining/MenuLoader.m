@@ -131,8 +131,6 @@ static const int INDEX_NOT_FOUND = -1;
         [hallNames addObject:text.content];
     }
     
-    //NSArray *hallNames = [NSArray arrayWithObjects: @"Covel", @"Hedrick", @"B Plate", @"Feast", nil];
-    
     int count = 0;
     NSArray *tableCells = [table searchWithXPathQuery:@"//td[starts-with(@class, 'menugridcell')]"];
     
@@ -151,11 +149,13 @@ static const int INDEX_NOT_FOUND = -1;
                 
                 if (listElement != listChildren[0]){  //first element is title
                     
-                    TFHppleElement *aNode = [listElement firstChildWithTagName:@"a"];
-                    MenuItem *food = [[MenuItem alloc] initWithName:aNode.text andURL:nil];
+                    TFHppleElement *linkAndTextNode = [listElement firstChildWithTagName:@"a"];
+                    NSString *name = [linkAndTextNode.text stringByReplacingOccurrencesOfString:@"." withString:@""];
+                    
                     TFHppleElement *imageNode = [listElement firstChildWithTagName:@"img"];
+                    MenuItem *food = [[MenuItem alloc] initWithName:name];
                     //Add link property to food
-                    NSString *linkAddress = [aNode objectForKey:@"href"];
+                    NSString *linkAddress = [linkAndTextNode objectForKey:@"href"];
                     if (linkAddress){
                         NSMutableString *fullUrl = [NSMutableString stringWithString:@"http://menu.ha.ucla.edu/foodpro/"];
                         [fullUrl appendFormat:linkAddress];
