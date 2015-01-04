@@ -81,7 +81,7 @@
     }
     MenuItem* food = (tableView == self.searchDisplayController.searchResultsTableView) ? [_searchResults objectAtIndex:indexPath.row] : [self.allFoodData objectAtIndex:indexPath.row] ;
     cell.menuItem = food; //cell updates UI based on data
-
+    cell.accessoryType = UITableViewCellAccessoryNone;
     
     return cell;
 }

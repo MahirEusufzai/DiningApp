@@ -13,6 +13,7 @@
 #import "MenuCell.h"
 #import "HMSegmentedControl.h"
 #import "Reachability.h"
+#import "NutritionFactsController.h"
 #import <iAd/iAd.h>
 
 @interface MenuTableController : UIViewController <UITableViewDataSource, UITableViewDelegate>

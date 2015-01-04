@@ -53,7 +53,6 @@
     {
         webViewDidFinishLoad = YES;
         [self.spinner stopAnimating];
-      //  _webView.scrollView.contentOffset=CGPointMake(0, 800);
          [_webView.scrollView scrollRectToVisible:CGRectMake(0, 820, _webView.scrollView.frame.size.width, _webView.scrollView.frame.size.height) animated:YES];
     }
     

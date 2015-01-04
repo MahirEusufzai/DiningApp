@@ -93,7 +93,7 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MenuCell" owner:self options:nil];
         cell = (MenuCell *)[nib objectAtIndex:0];
     }
-    
+    //duplicated later on
     NSString *key =  [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];
     Station *s = [currentMenu getStation:indexPath.section ForHall:key];
     MenuItem* food = [[s foodListForVegPref:[self getVegPreference]] objectAtIndex:indexPath.row];
@@ -119,6 +119,19 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     [headerIndexText.textLabel setTextColor:[UIColor blackColor]];
     [headerIndexText.textLabel setFont: [UIFont fontWithName:@"Helvetica Light" size:14]];
     
+    
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    
+    NSString *key =  [self.hallSelector.sectionTitles objectAtIndex:self.hallSelector.selectedSegmentIndex];
+    Station *s = [currentMenu getStation:indexPath.section ForHall:key];
+    MenuItem* food = [[s foodListForVegPref:[self getVegPreference]] objectAtIndex:indexPath.row];
+    
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    NutritionFactsController *vc = (NutritionFactsController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"nFacts"];
+    vc.link = food.link;
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 

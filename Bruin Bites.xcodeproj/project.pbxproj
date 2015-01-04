@@ -70,6 +70,7 @@
 		C8DE7BC919D424CF007B45FC /* swipe_hand.png in Resources */ = {isa = PBXBuildFile; fileRef = C8DE7BC819D424CF007B45FC /* swipe_hand.png */; };
 		C8DE7BCC19D43096007B45FC /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8DE7BCA19D43096007B45FC /* Bolts.framework */; };
 		C8DE7BCD19D43096007B45FC /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8DE7BCB19D43096007B45FC /* Parse.framework */; };
+		C8EA87E21A56B8240059C853 /* NutritionFactsController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8EA87E11A56B8240059C853 /* NutritionFactsController.m */; };
 		C8F74B9319A89651002BCE6F /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8F74B9219A89651002BCE6F /* SettingsController.m */; };
 		C8F74B9619A89673002BCE6F /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8F74B9519A89673002BCE6F /* SettingsCell.m */; };
 /* End PBXBuildFile section */
@@ -168,6 +169,8 @@
 		C8DE7BC819D424CF007B45FC /* swipe_hand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swipe_hand.png; sourceTree = "<group>"; };
 		C8DE7BCA19D43096007B45FC /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "../../../Downloads/parse-library-1.4.1/Bolts.framework"; sourceTree = "<group>"; };
 		C8DE7BCB19D43096007B45FC /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "../../../Downloads/parse-library-1.4.1/Parse.framework"; sourceTree = "<group>"; };
+		C8EA87E01A56B8240059C853 /* NutritionFactsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NutritionFactsController.h; sourceTree = "<group>"; };
+		C8EA87E11A56B8240059C853 /* NutritionFactsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NutritionFactsController.m; sourceTree = "<group>"; };
 		C8F74B9119A89651002BCE6F /* SettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsController.h; sourceTree = "<group>"; };
 		C8F74B9219A89651002BCE6F /* SettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsController.m; sourceTree = "<group>"; };
 		C8F74B9419A89673002BCE6F /* SettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsCell.h; sourceTree = "<group>"; };
@@ -378,6 +381,8 @@
 				C83E007818E9160600F3EE1B /* ViewController.m */,
 				C837D61E18EBFF2B003A86A8 /* MenuTableController.h */,
 				C837D61F18EBFF2B003A86A8 /* MenuTableController.m */,
+				C8EA87E01A56B8240059C853 /* NutritionFactsController.h */,
+				C8EA87E11A56B8240059C853 /* NutritionFactsController.m */,
 				846F8A33195BDFBB000401E8 /* DiningHoursViewController.h */,
 				846F8A34195BDFBB000401E8 /* DiningHoursViewController.m */,
 			);
@@ -494,6 +499,7 @@
 				C83E007318E9160500F3EE1B /* AppDelegate.m in Sources */,
 				C837D62018EBFF2B003A86A8 /* MenuTableController.m in Sources */,
 				C8F74B9319A89651002BCE6F /* SettingsController.m in Sources */,
+				C8EA87E21A56B8240059C853 /* NutritionFactsController.m in Sources */,
 				C8DC4BDA1984B5C300897069 /* Hours.m in Sources */,
 				C83E006F18E9160500F3EE1B /* main.m in Sources */,
 				C83E00AC18E916B500F3EE1B /* DiningHall.m in Sources */,

@@ -10,7 +10,7 @@
 static const NSString *BREAKFAST_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=1&threshold=2";
 static const NSString *LUNCH_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=2&threshold=2";
 static const NSString *DINNER_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=3&threshold=2";
-static const NSString *SUMMARY = @"http://menu.ha.ucla.edu/foodpro/default.asp?";
+static const NSString *SUMMARY = @"http://menu.ha.ucla.edu/foodpro/default.asp?date=1%2F4%2F2015";
 static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/dining-hall-hours-by-day.cfm";
 static const int INDEX_NOT_FOUND = -1;
 @implementation MenuLoader
@@ -154,11 +154,13 @@ static const int INDEX_NOT_FOUND = -1;
                     TFHppleElement *aNode = [listElement firstChildWithTagName:@"a"];
                     MenuItem *food = [[MenuItem alloc] initWithName:aNode.text andURL:nil];
                     TFHppleElement *imageNode = [listElement firstChildWithTagName:@"img"];
-                    
                     //Add link property to food
                     NSString *linkAddress = [aNode objectForKey:@"href"];
-                    if (linkAddress)
-                        food.link = [NSURL URLWithString:linkAddress];
+                    if (linkAddress){
+                        NSMutableString *fullUrl = [NSMutableString stringWithString:@"http://menu.ha.ucla.edu/foodpro/"];
+                        [fullUrl appendFormat:linkAddress];
+                        food.link = [NSURL URLWithString:fullUrl];
+                    }
                     //Detect vegan/vegetarian
                     if ([[imageNode objectForKey:@"alt"] isEqualToString:@"Vegan Menu Option"])
                         food.isVegan = YES;
