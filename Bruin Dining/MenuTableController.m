@@ -40,11 +40,15 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     initialTablePosition = _table.frame.origin;
     menuIsLoading = false;
     
-    _summarySwitch.on = ([self summaryPreference] == specificitySummary);
+    _summarySwitch.on = ([self summaryPreference] == specificityExplicit);
     _vegSwitch.on = ([self getVegPreference] != VegPrefAll);
 
     if (_currentMeal != MealTypeUnknown){
-        [self.navigationItem setTitle:[MealTypes stringForMealType:_currentMeal]];
+        [self updateTitleForMealType:_currentMeal Date:_date];
+    }
+    
+    if (!_date){
+        _date = [NSDate date];
     }
     
 
@@ -153,13 +157,7 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
     if (networkStatus == NotReachable) {
         self.table.hidden = NO;
-        UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:@"Connection Error"
-                                                         message:@"Cannot connect to internet. Close app and try again later."
-                                                        delegate:self
-                                               cancelButtonTitle:nil
-                                               otherButtonTitles: nil];
-        [alert addButtonWithTitle:@"Ok"];
-        [alert show];
+        [self showLoadErrorMessage];
         return;
     }
     
@@ -177,8 +175,13 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         MenuLoader *ml = [[MenuLoader alloc] init];
-        currentMenu = [ml mealForType:_currentMeal Specificity:[self summaryPreference]];
+        currentMenu = [ml mealForType:_currentMeal Specificity:[self summaryPreference] Date:_date];
         dispatch_async(dispatch_get_main_queue(), ^(void) {
+            if (!currentMenu) {
+                [self showLoadErrorMessage];
+                return;
+            }
+            _currentMeal = currentMenu.type;
             [self.spinner stopAnimating];
             self.table.hidden = NO;
             _vegSwitch.hidden = NO;
@@ -186,7 +189,7 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
             _vegLabel.hidden = NO;
             _summaryLabel.hidden = NO;
             _hideSettingsButton.hidden = NO;
-            [self.navigationItem setTitle:currentMenu.name];
+            [self updateTitleForMealType:currentMenu.type Date:currentMenu.date];
             [self setHours];
             [self showSwipeTutorialIfNeeded];
             [self.table reloadData];
@@ -194,6 +197,23 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
             
         });
     });
+    
+}
+
+- (void) updateTitleForMealType:(MealType)m Date:(NSDate*)d{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"EEEE"];
+    NSString *dayName = [[dateFormatter stringFromDate:d]  substringToIndex:3];
+    
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:d];
+    
+    NSInteger day = [components day];
+    NSInteger month = [components month];
+    NSString *mealType = [MealTypes stringForMealType:m];
+    NSString *title = [NSString stringWithFormat:@"%@ %d/%d", dayName, month, day];
+    self.navigationItem.title = mealType;
+    self.dateLabel.title = title;
+    
     
 }
 
@@ -215,7 +235,7 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     self.hallSelector.type = HMSegmentedControlTypeTextImages;
     self.hallSelector.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     self.hallSelector.font = [UIFont fontWithName:@"Helvetica Light" size:13];
-    self.hallSelector.backgroundColor = [UIColor colorWithRed:233/256.0 green:233/256.0 blue:233/256.0  alpha:1];
+    self.hallSelector.backgroundColor = [UIColor colorWithRed:244/256.0 green:244/256.0 blue:244/256.0  alpha:1];
     
     self.hallSelector.sectionImages =  hallImages;
     self.hallSelector.sectionSelectedImages = self.hallSelector.sectionImages;
@@ -250,14 +270,18 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     if ([self preferencesVisible])
         return; //temporary fix so that swiping uiswitch doesn't trigger function
     [self disableTutorial];
-    //TO DO: Temporary fix, menutype isn't updated until loading finishes
-    //MealType curMeal = ((menuIsLoading && currentMenu.type == MealTypeUnknown) ? currentMenu.type + 1 : currentMenu.type);
-    MealType curMeal = currentMenu.type;
-    int newMeal = [MenuLoader MealAfterMeal:curMeal];
-    if (newMeal == -1)
-        return;
+    
+    MealType curMeal = _currentMeal;
+    int newMeal = [Meal mealAfterMeal:curMeal];
+    //if (newMeal == -1)
+       // return;
+    
     MenuTableController *newMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"Menu"];
     newMenu.currentMeal = newMeal;
+    newMenu.date = [Meal nextMealDateFromDate:_date type:curMeal];
+    
+    //check if next vc already exists
+    NSArray *vcs = self.navigationController.viewControllers;
     [self.navigationController pushViewController:newMenu animated:YES];
 }
 
@@ -266,21 +290,21 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     if ([self preferencesVisible])
         return; //temporary fix so that swiping uiswitch doesn't trigger function
     [self disableTutorial];
-    //TO DO: Temporary fix, menutype isn't updated until loading finishes
-    //MealType curMeal = ((menuIsLoading && currentMenu.type == MealTypeUnknown) ? currentMenu.type - 1 : currentMenu.type);
-    MealType curMeal = currentMenu.type;
-    int newMeal = [MenuLoader MealBeforeMeal:curMeal];
+ 
+    MealType curMeal = _currentMeal;
+    int newMeal = [Meal mealBeforeMeal:curMeal];
 
-    if (newMeal == -1)
-        return;
+  //  if (newMeal == -1)
+  //      return;
     
     MenuTableController *newMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"Menu"];
     newMenu.currentMeal = newMeal;
+    newMenu.date = [Meal prevMealDateFromDate:_date type:curMeal];
     NSMutableArray *vcs =  [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
     [vcs insertObject:newMenu atIndex:[vcs count]-1];
     [self.navigationController setViewControllers:vcs animated:NO];
     [self.navigationController popViewControllerAnimated:YES];
-    
+
 }
 - (void)didReceiveMemoryWarning
 {
@@ -317,10 +341,10 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
 
 }
 -(void) vegPrefChanged {
-    NSLog(@"before %@", NSStringFromCGRect(_table.frame));
+    //NSLog(@"before %@", NSStringFromCGRect(_table.frame));
     [_table reloadData];
     _table.frame = CGRectMake(initialTablePosition.x, initialTablePosition.y+PREFERENCE_TRANSLATION_HEIGHT, _table.frame.size.width, _table.frame.size.height);
-    NSLog(@"after %@", NSStringFromCGRect(_table.frame));
+   // NSLog(@"after %@", NSStringFromCGRect(_table.frame));
 
 }
 
@@ -337,7 +361,7 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
 - (void)changeSummaryPref:(id)sender {
     
     UISwitch *s = (UISwitch*)sender;
-    currentSpec = s.isOn ? specificitySummary : specificityExplicit;
+    currentSpec = s.isOn ? specificityExplicit : specificitySummary ;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[NSNumber numberWithInt:currentSpec] forKey:@"summaryPref"];
     [defaults synchronize];
@@ -366,18 +390,28 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     BOOL shouldSet = [[defaults objectForKey:@"needsSwipeTutorial"] boolValue];
     if (shouldSet) {
         
-            //ios7
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200/4, 282/4)];
+        UIImage *swipeImage = [UIImage imageNamed:@"swipe_hand.png"];
+        
+        
+        CGSize scaleSize = CGSizeMake(200/4, 282/4);
+        UIGraphicsBeginImageContextWithOptions(scaleSize, NO, 0.0);
+        [swipeImage drawInRect:CGRectMake(0, 0, scaleSize.width, scaleSize.height)];
+        UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+
+        imageView.contentMode=UIViewContentModeCenter;
+        [imageView setImage:resizedImage];
+        
             UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:@"Tutorial"
                                                              message:@"Swipe left and right to change meals."
                                                             delegate:self
-                                                   cancelButtonTitle:@"Cancel"
+                                                   cancelButtonTitle:@"Got it!"
                                                    otherButtonTitles: nil];
-            [alert addButtonWithTitle:@"Got it!"];
+            //[alert addButtonWithTitle:@"Got it!"];
+        [alert setValue:imageView forKey:@"accessoryView"];
             [alert show];
-        
-        
     }
-    
 }
 
 -(void)disappearTheView {
@@ -390,6 +424,7 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
                      }
                      completion:NULL];
 }
+
 - (void)disableTutorial {
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -412,4 +447,20 @@ const int PREFERENCE_TRANSLATION_HEIGHT = 120;
     
     return _table.frame.origin.y > initialTablePosition.y;
 }
+
+
+- (void) showLoadErrorMessage {
+    
+    UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:@"Connection Error"
+                                                     message:@"Cannot connect to internet. Close app and try again later."
+                                                    delegate:self
+                                           cancelButtonTitle:@"Ok"
+                                           otherButtonTitles: nil];
+    [alert show];
+
+    
+}
+
+
+
 @end

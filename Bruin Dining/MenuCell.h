@@ -23,4 +23,5 @@ typedef enum StarState : NSUInteger {
 
 - (IBAction)registerFavorite:(id)sender;
 -(void)changeStarToState:(StarState)state;
+-(void)showFavoriteAlertIfNeeded;
 @end

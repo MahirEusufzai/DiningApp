@@ -24,7 +24,8 @@
     BOOL preferencesShowing;
     BOOL menuIsLoading;
     CGPoint initialTablePosition;
-
+    NSOperationQueue *operationQueue;
+    
 }
 @property (nonatomic, retain) IBOutlet ADBannerView *banner;
 @property (nonatomic, retain) NSMutableDictionary *menuList;
@@ -42,9 +43,10 @@
 @property (nonatomic, retain) IBOutlet UILabel *vegLabel;
 @property (nonatomic, retain) IBOutlet UILabel *summaryLabel;
 @property (nonatomic, retain) IBOutlet UIButton *hideSettingsButton;
-
+@property (nonatomic, retain) NSDate *date;
 @property (nonatomic, retain) IBOutlet UIView *tutorial;
 @property (nonatomic, assign) MealType currentMeal;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *dateLabel;
 - (void) switchSpecific;
 - (void) switchHall;
 - (IBAction)togglePreferencePageVisibility:(id)sender;

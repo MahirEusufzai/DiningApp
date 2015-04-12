@@ -168,21 +168,22 @@
     [self addFoodsToArray:_allFoodData];
     [self showFavoriteTutorialIfNeeded];
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[NSNumber numberWithBool:false] forKey:@"needsSearchTutorial"];
 }
 
 - (void) showFavoriteTutorialIfNeeded {
     
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL shouldSet = [[defaults objectForKey:@"needsFavoriteTutorial"] boolValue];
+    BOOL shouldSet = [[defaults objectForKey:@"needsSearchTutorial"] boolValue];
     if (shouldSet) {
         //ios7
         UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:@"Tutorial"
-                                                         message:@"'Favorite' foods to receive push alerts when they reappear on the menu."
+                                                         message:@"Search for favorite foods here. You'll receive push alerts when they reappear on the menu."
                                                         delegate:self
-                                               cancelButtonTitle:@"Cancel"
+                                               cancelButtonTitle:@"Got it!"
                                                otherButtonTitles: nil];
-        [alert addButtonWithTitle:@"Got it!"];
         [alert show];
         //ios8
     }

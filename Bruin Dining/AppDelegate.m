@@ -42,6 +42,10 @@
     if (![defaults objectForKey:@"needsFavoriteTutorial"]){
         [defaults setObject:[NSNumber numberWithBool:true] forKey:@"needsFavoriteTutorial"];
     }
+    
+    if (![defaults objectForKey:@"needsSearchTutorial"]){
+        [defaults setObject:[NSNumber numberWithBool:true] forKey:@"needsSearchTutorial"];
+    }
         
     return YES;
 }

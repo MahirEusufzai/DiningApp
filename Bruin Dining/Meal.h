@@ -18,12 +18,16 @@
 @property (nonatomic, retain) NSMutableDictionary *hallList;
 @property (nonatomic, retain) NSString* name;
 @property (nonatomic, assign) MealType type;
+@property (nonatomic, retain) NSDate *date;
 
 
-
-- (id) initWithType:(MealType)meal;
+- (id) initWithType:(MealType)meal Date:(NSDate*)date;
 - (void) addHall:(DiningHall*)hall;
 - (void) addStation:(Station*)station ToHall:(NSString*)hall;
 - (Station*)getStation:(int)stationIndex ForHall:(NSString*)hallName;
++(MealType)mealBeforeMeal:(MealType)currentMeal;
++(MealType)mealAfterMeal:(MealType)currentMeal;
++ (NSDate *)nextMealDateFromDate:(NSDate*)currentDate type:(MealType)type;
++ (NSDate *)prevMealDateFromDate:(NSDate*)currentDate type:(MealType)type;
 @end
 

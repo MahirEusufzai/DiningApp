@@ -7,11 +7,12 @@
 //
 
 #import "MenuLoader.h"
-static const NSString *BREAKFAST_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=1&threshold=2";
-static const NSString *LUNCH_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=2&threshold=2";
-static const NSString *DINNER_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=3&threshold=2";
-static const NSString *SUMMARY = @"http://menu.ha.ucla.edu/foodpro/default.asp?date=1%2F4%2F2015";
+static const NSString *BREAKFAST_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=1&";
+static const NSString *LUNCH_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=2&";
+static const NSString *DINNER_COMPLETE = @"http://menu.ha.ucla.edu/foodpro/default.asp?meal=3&";
+static const NSString *SUMMARY = @"http://menu.ha.ucla.edu/foodpro/default.asp?";
 static const NSString *HOURS = @"https://secure5.ha.ucla.edu/restauranthours/dining-hall-hours-by-day.cfm";
+
 static const int INDEX_NOT_FOUND = -1;
 @implementation MenuLoader
 
@@ -50,12 +51,8 @@ static const int INDEX_NOT_FOUND = -1;
     return MealTypeDinner;
 }
 
-- (Hours*) getHours {
-    // check if hours exist for current date, otherwise parse from website
-    return [self parseHoursFromServer];
-}
-
-- (Hours*)parseHoursFromServer {
+- (Hours*) getHoursForDate:(NSDate*)date {
+    
     Hours *h = [[Hours alloc] init];
     //set hours
     TFHpple *urlData = [self getNodeDataForURL:HOURS];
@@ -92,7 +89,40 @@ static const int INDEX_NOT_FOUND = -1;
     }
     return h;
     
+
 }
+
+
+
+- (Hours *)approximateHours {
+    //TO DO: Implement
+    //use if web cannot be reached
+    Hours *h = [[Hours alloc] init];
+    NSString *covelBreakStart = @"CLOSED", *covelBreakEnd = @"CLOSED";
+    NSString *deNeveBreakStart = @"7:00am", *deNeveBreakEnd = @"10:00am";
+    NSString *feastBreakStart = @"ClOSED", *feastBreakEnd = @"CLOSED";
+    NSString *bPlateBreakStart = @"7:00am", *bPlateBreakEnd = @"9:00am";
+
+    NSString *covelLunchStart = @"11:00am", *covelLunchEnd = @"2:30pm";
+    NSString *deNeveLunchStart = @"11:00am", *deNeveLunchEnd = @"2:00pm";
+    NSString *feastLunchStart = @"11:00am", *feastLunchEnd = @"2:00pm";
+    NSString *bPlateLunchStart = @"11:00am", *bPlateLunchEnd = @"2:00pm";
+
+    NSString *covelDinnerStart = @"5:00pm", *covelDinnerEnd = @"9:00pm";
+    NSString *deNeveDinnerStart = @"5:00pm", *deNeveDinnerEnd = @"8:00pm";
+    NSString *feastDinnerStart = @"5:00pm", *feastDinnerEnd = @"8:00pm";
+    NSString *bPlateDinnerStart = @"5:00pm", *bPlateDinnerEnd = @"8:00pm";
+
+    
+    NSArray *halls = [[NSArray alloc] initWithObjects:@"De Neve", @"Feast", @"Bruin Plate", @"Covel",nil];
+        for (NSString *name in halls) {
+        [h addHall:name];
+        }
+    return h;
+}
+
+
+
 
 - (void)setRow:(TFHppleElement*)row Named:(NSString*)hallName ForHours:(Hours*)h {
     NSArray *meals = [NSArray arrayWithObjects:
@@ -106,12 +136,12 @@ static const int INDEX_NOT_FOUND = -1;
         NSArray *strong = [currentMeal childrenWithTagName:@"strong"];
         
         NSString *opening = [strong[0] firstChildWithTagName:@"text"].content;
-        NSDate *openingAsDate = [self dateFromString:opening];
+        NSDate *openingAsDate = [MenuLoader dateFromString:opening];
         [h addOpeningTime:openingAsDate ToMeal:[meals[i-1] intValue] Hall:hallName];
         NSDate *closingAsDate;
         if (openingAsDate){
         NSString *closing = [strong[1] firstChildWithTagName:@"text"].content;
-         closingAsDate = [self dateFromString:closing];
+         closingAsDate = [MenuLoader dateFromString:closing];
         }
         else
         closingAsDate = nil;
@@ -178,54 +208,67 @@ static const int INDEX_NOT_FOUND = -1;
     }
 }
 
-- (Meal *)mealForType:(MealType)meal Specificity:(Specificity)spec {
+- (Meal *)mealForType:(MealType)meal Specificity:(Specificity)spec Date:(NSDate *)date{
     
-    //set hours
-    Hours *h = [self getHours];
+    //set hours, make repeated calls to server if first time doesn't work
+    Hours *h;
+    for (int i = 0; i < 3 && !h; i++) {
+        h = [self getHoursForDate:date];
+    }
     
+    if (!h) {
+        return nil;
+    }
     if (meal == MealTypeUnknown)
         meal = [self determineCurrentMealForHours:h];
     
-    Meal *m = [[Meal alloc] initWithType:meal];
+    Meal *m = [[Meal alloc] initWithType:meal Date:date];
     for (DiningHall *hall in [m.hallList allValues]) {
         HourMeal *hm = [h getHoursForMeal:meal Hall:hall.name];
         [hall setHoursFromData:hm];
     }
-    NSArray *tableList = [self gridTables:meal Type:spec];
+    NSArray *tableList = [self gridTables:meal Type:spec Date:date];
     for (TFHppleElement *table in tableList) {
         NSArray *hallsInCurrentTable = [table searchWithXPathQuery:@"//td[starts-with(@class, 'menulocheader')]"];
         [self setFoodsInMeal:m ForData:table MealType:meal Specificity:spec];
-
+        
     }
 
     return m;
 }
 
 
-- (NSArray*) gridTables:(MealType)mealType Type:(Specificity)spec {
-    NSString *url;
+- (NSArray*) gridTables:(MealType)mealType Type:(Specificity)spec Date:(NSDate*)date {
+    NSMutableString *url = [NSMutableString string];
     //no summary menu available for breakfast, so always so full menu
     switch (mealType) {
         case MealTypeBreakfast:
-            url = BREAKFAST_COMPLETE; //there is no breakfast summary
+            [url appendString:BREAKFAST_COMPLETE]; //there is no breakfast summary
             break;
         case MealTypeLunch:
             if (spec == specificitySummary) {
-                url = SUMMARY;
+                [url appendString:SUMMARY];
             } else{
-                url = LUNCH_COMPLETE;
+                [url appendString:LUNCH_COMPLETE];
             }
             break;
         case MealTypeDinner:
             if (spec == specificitySummary) {
-                url = SUMMARY;
+                [url appendString:SUMMARY];
             } else {
-                url = DINNER_COMPLETE;
+                [url appendString:DINNER_COMPLETE];
             }
         default:
             break;
     }
     
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
+    
+    NSInteger day = [components day];
+    NSInteger month = [components month];
+    NSInteger year = [components year];
+    
+    [url appendString:[self urlEndingForDate:date]];
     TFHpple *parser = [self getNodeDataForURL:url];
     NSString *queryString = @"//table[starts-with(@class, 'menugridtable')]";
     NSArray *mealCells = [parser searchWithXPathQuery:queryString];
@@ -246,7 +289,6 @@ static const int INDEX_NOT_FOUND = -1;
     
     if (spec == specificitySummary && mealType!=MealTypeBreakfast) {
         if (mealType == MealTypeLunch && lunchIndex != INDEX_NOT_FOUND) {
-            NSLog(@"lunch index is %d, dinner index is %d", lunchIndex, dinnerIndex);
             int length = dinnerIndex != INDEX_NOT_FOUND ? dinnerIndex - lunchIndex : mealCells.count;
             return [mealCells subarrayWithRange:NSMakeRange(lunchIndex, length)];
         }
@@ -277,11 +319,11 @@ static const int INDEX_NOT_FOUND = -1;
     NSMutableArray *retArr = [NSMutableArray array];
     
     NSString *opening = [strong[0] firstChildWithTagName:@"text"].content;
-    NSDate *openingAsDate = [self dateFromString:opening];
+    NSDate *openingAsDate = [MenuLoader dateFromString:opening];
     if (openingAsDate){
         [retArr addObject:openingAsDate];
         NSString *closing = [strong[1] firstChildWithTagName:@"text"].content;
-        [retArr addObject:[self dateFromString:closing]];
+        [retArr addObject:[MenuLoader dateFromString:closing]];
     }
     else{
         [retArr addObject:[NSNull null]];
@@ -293,7 +335,7 @@ static const int INDEX_NOT_FOUND = -1;
         TFHppleElement *nextCell = meals[index+1];
         NSArray *strong1 = [nextCell childrenWithTagName:@"strong"];
         NSString* nextOpening = [strong1[0] firstChildWithTagName:@"text"].content;
-        [retArr addObject:[self dateFromString:nextOpening]];
+        [retArr addObject:[MenuLoader dateFromString:nextOpening]];
     }
     else
         [retArr addObject:[NSNull null]];
@@ -301,7 +343,7 @@ static const int INDEX_NOT_FOUND = -1;
     return retArr;
 }
 
-- (NSDate*) dateFromString:(NSString*)time {
++ (NSDate*) dateFromString:(NSString*)time {
     
     
     if ([time isEqualToString:@"CLOSED"])
@@ -329,9 +371,32 @@ static const int INDEX_NOT_FOUND = -1;
     return [TFHpple hppleWithHTMLData:pageData];
 }
 
++ (MealType)predictCurrentMeal {
+    //use if hours cannot load in time
+    BOOL isWeekend = [MenuLoader isWeekend];
+    NSDate *breakfastEnd = !isWeekend ? [MenuLoader dateFromString:@"10:00am"] : nil;
+    NSDate *lunchEnd = isWeekend ? [MenuLoader dateFromString:@"2:30pm"] : [MenuLoader dateFromString:@"3:00pm"];
+    
+    NSDate *currentTime = [NSDate date];
+    
+    if (breakfastEnd && [currentTime compare: breakfastEnd] == NSOrderedAscending){
+        return MealTypeBreakfast;
+    }
+    else if ([currentTime compare: lunchEnd] == NSOrderedAscending){
+        return MealTypeLunch;
+    }
+    else{
+        return MealTypeDinner;
+    }
+}
 
 
 +(MealType)MealAfterMeal:(MealType)currentMeal {
+    
+    if (currentMeal == MealTypeUnknown){
+        currentMeal = [MenuLoader predictCurrentMeal];
+    }
+    
     if (currentMeal == MealTypeDinner)
         return -1;
     else
@@ -339,6 +404,10 @@ static const int INDEX_NOT_FOUND = -1;
 }
 
 +(MealType)MealBeforeMeal:(MealType)currentMeal {
+    if (currentMeal == MealTypeUnknown){
+        currentMeal = [MenuLoader predictCurrentMeal];
+    }
+    
     if (currentMeal == MealTypeBreakfast)
         return -1;
     else
@@ -346,5 +415,31 @@ static const int INDEX_NOT_FOUND = -1;
 }
 
 
++(BOOL) isWeekend {
+   
+    NSDate *aDate = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSRange weekdayRange = [calendar maximumRangeOfUnit:NSWeekdayCalendarUnit];
+    NSDateComponents *components = [calendar components:NSWeekdayCalendarUnit fromDate:aDate];
+    NSUInteger weekdayOfDate = [components weekday];
+    
+    if (weekdayOfDate == weekdayRange.location || weekdayOfDate == weekdayRange.length){
+        return true;
+    }
+    else
+        return false;
+    
+}
 
+-(NSString*) urlEndingForDate:(NSDate*)date{
+    
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
+
+    NSInteger day = [components day];
+    NSInteger month = [components month];
+    NSInteger year = [components year];
+    //NSLog(@"%d %d %d", month,day,year);
+    return [NSString stringWithFormat:@"date=%d%%2F%d%%2F%d", month, day, year];
+    
+}
 @end

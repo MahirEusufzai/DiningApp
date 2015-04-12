@@ -25,10 +25,12 @@ typedef NS_ENUM(NSInteger, Specificity) {
 }
 
 //specificity = summary vs full menu
-- (Meal*) mealForType:(MealType)meal Specificity:(Specificity)spec;
-- (void) loadHours;
+- (Meal*) mealForType:(MealType)meal Specificity:(Specificity)spec Date:(NSDate*)date;
+- (void) loadHoursForDate:(NSDate*)date;
+- (Hours*)approximateHours;
 - (MealType)determineCurrentMealForHours:(Hours*)h;
 +(MealType)MealAfterMeal:(MealType)currentMeal;
 +(MealType)MealBeforeMeal:(MealType)currentMeal;
++ (MealType)predictCurrentMeal;
 
 @end
